@@ -5,9 +5,9 @@
 </head>
 
 <body>
-  <div ng-app="htm.app">
+  <div ng-app="htm.app" class="container-fluid top">
     <header class="navbar navbar-default navbar-fixed-top" role="navigation">
-      <div class="container-fluid">
+      <div>
         <div class="navbar-header">
           <a class="navbar-brand" href="/">HTM</a>
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
@@ -17,11 +17,8 @@
               <span class="icon-bar"></span>
           </button>
         </div>
-        <ul ui-view="eventpicker" class="nav navbar-nav"></ul>
         <div class="navbar-collapse collapse">
-          <div class="nav navbar-text navbar-right">
-            <meteor-include src="loginButtons"></meteor-include>
-          </div>
+          <ul class="nav navbar-nav" ui-view="navigation"></ul>
         </div>
       </div>
     </header>

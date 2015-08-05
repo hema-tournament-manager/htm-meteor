@@ -8,12 +8,11 @@ meteor-platform
 autopublish
 insecure
 urigo:angular
-
+angularui:angular-ui-bootstrap
 angularui:angular-ui-router
 twbs:bootstrap
 accounts-ui
 accounts-password
 less
 aramk:tinycolor
-angularui:angular-ui-bootstrap
 u2622:persistent-session

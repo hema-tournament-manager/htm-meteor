@@ -1,27 +1,19 @@
 angular.module('htm.app', [
+  'angular-meteor',
   'ui.router',
   'htm.core',
-  'htm.event',
-  'htm.tournament'
+  'htm.check-in',
+  'htm.battle-station'
 ]);
 
 angular.module('htm.app').config(function($urlRouterProvider, $stateProvider, $locationProvider) {
   $locationProvider.html5Mode(true);
 
   $stateProvider
-    .state('htm', {
-      abstract: true,
-      views: {
-        'eventpicker': {
-          templateUrl: 'client/events/views/event-picker.ng.html',
-          controller: 'EventPickerCtrl',
-          controllerAs: 'picker'
-        },
-        '': {
-          templateUrl: 'client/main.ng.html'
-        }
-      }
+    .state('home', {
+      url: '/home',
+      templateUrl: 'client/home.ng.html'
     });
 
-  $urlRouterProvider.otherwise('/events');
+  $urlRouterProvider.otherwise('/home');
 });
