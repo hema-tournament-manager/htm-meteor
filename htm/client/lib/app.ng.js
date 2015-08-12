@@ -3,7 +3,9 @@ angular.module('htm.app', [
   'ui.router',
   'htm.core',
   'htm.check-in',
-  'htm.battle-station'
+  'htm.battle-station',
+  'htm.administration',
+  'htm.viewers',
 ]);
 
 angular.module('htm.app').config(function($urlRouterProvider, $stateProvider, $locationProvider) {
@@ -11,9 +13,9 @@ angular.module('htm.app').config(function($urlRouterProvider, $stateProvider, $l
 
   $stateProvider
     .state('home', {
-      url: '/home',
+      url: '/',
       templateUrl: 'client/home.ng.html'
     });
 
-  $urlRouterProvider.otherwise('/home');
+  $urlRouterProvider.otherwise('/');
 });
