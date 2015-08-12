@@ -24,9 +24,6 @@ angular.module('htm.administration').config(['$stateProvider', function($statePr
       views: {
         '': {
           templateUrl: 'client/administration/participants.ng.html'
-        },
-        'navigation': {
-          templateUrl: 'client/administration/navigation.ng.html'
         }
       }
     })
@@ -35,9 +32,6 @@ angular.module('htm.administration').config(['$stateProvider', function($statePr
       views: {
         '': {
           templateUrl: 'client/administration/event.ng.html'
-        },
-        'navigation': {
-          templateUrl: 'client/administration/navigation.ng.html'
         }
       }
     })
@@ -57,9 +51,6 @@ angular.module('htm.administration').config(['$stateProvider', function($statePr
       views: {
         '': {
           templateUrl: 'client/administration/tournaments.ng.html'
-        },
-        'navigation': {
-          templateUrl: 'client/administration/navigation.ng.html'
         }
       }
     })
