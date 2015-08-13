@@ -23,7 +23,9 @@ angular.module('htm.administration').config(['$stateProvider', function($statePr
       url: '/participants',
       views: {
         '': {
-          templateUrl: 'client/administration/participants.ng.html'
+          templateUrl: 'client/administration/participants.ng.html',
+          controller: 'ParticipantsCtrl',
+          controllerAs: 'participants'
         }
       }
     })
