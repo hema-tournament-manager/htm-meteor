@@ -15,7 +15,8 @@ angular.module('htm.administration').config(['$stateProvider', function($statePr
             template: '<ui-view/>'
         },
         'navigation': {
-          templateUrl: 'client/administration/navigation.ng.html'
+          templateUrl: 'client/administration/navigation.ng.html',
+          controller: 'CountsCtrl'
         }
       }
     })
