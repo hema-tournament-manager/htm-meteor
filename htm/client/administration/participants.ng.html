@@ -1,4 +1,15 @@
-<p><button class="btn btn-default" ng-click="participants.add()">Add Participant</button></p>
+<p>
+  <div class="btn-group" dropdown>
+    <button ng-click="participants.add()" id="split-button" type="button" class="btn btn-default">Add Participant</button>
+    <button type="button" class="btn btn-default" dropdown-toggle>
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="split-button">
+      <li role="menuitem"><a ui-sref="administration.participants.import">Import from Excel</a></li>
+    </ul>
+  </div>
+</p>
+<ui-view></ui-view>
 <table class="table">
 <thead>
   <tr>

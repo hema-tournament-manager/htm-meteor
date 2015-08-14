@@ -1,0 +1,23 @@
+<div class="well">
+  <h3>Import from Excel</h3>
+
+  <div id="drop" ng-hide="importer.hasFile">Drop an Excel file here to preview the participants to import</div>
+
+  <div ng-show="importer.hasFile">
+    <table class="table">
+    <tbody>
+      <tr ng-repeat="p in importer.participants" ng-class="p.selected ? 'success' : 'danger'" ng-click="p.selected = !p.selected">
+        <td><span class="glyphicon" ng-class="p.selected ? 'glyphicon-ok' : 'glyphicon-remove'"></span></td>
+        <td>{{p.name}}</td>
+        <td>{{p.club}}</td>
+        <td>{{p.country}}</td>
+      </tr>
+    </tbody>
+    </table>
+  </div>
+
+  <div>
+    <a class="btn btn-danger" ui-sref="administration.participants">Cancel</a>
+    <a class="btn btn-primary" ng-show="importer.hasFile" ng-click="importer.import()">Import</a>
+  </div>
+</div>

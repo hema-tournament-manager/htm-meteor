@@ -30,6 +30,12 @@ angular.module('htm.administration').config(['$stateProvider', function($statePr
         }
       }
     })
+    .state('administration.participants.import', {
+      url: '/import',
+      templateUrl: 'client/administration/participants-import.ng.html',
+      controller: 'ParticipantsImportCtrl',
+      controllerAs: 'importer'
+    })
     .state('administration.event', {
       url: '/event',
       views: {
