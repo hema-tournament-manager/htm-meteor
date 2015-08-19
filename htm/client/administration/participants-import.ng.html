@@ -17,7 +17,7 @@
   </div>
 
   <div>
-    <a class="btn btn-danger" ui-sref="administration.participants">Cancel</a>
+    <a class="btn btn-danger" ng-click="importer.cancel()">Cancel</a>
     <a class="btn btn-primary" ng-show="importer.hasFile" ng-click="importer.import()">Import</a>
   </div>
 </div>

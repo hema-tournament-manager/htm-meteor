@@ -20,6 +20,7 @@ angular.module('htm.administration').config(['$stateProvider', function($statePr
         }
       }
     })
+
     .state('administration.participants', {
       url: '/participants',
       views: {
@@ -30,12 +31,28 @@ angular.module('htm.administration').config(['$stateProvider', function($statePr
         }
       }
     })
+
     .state('administration.participants.import', {
       url: '/import',
       templateUrl: 'client/administration/participants-import.ng.html',
       controller: 'ParticipantsImportCtrl',
-      controllerAs: 'importer'
+      controllerAs: 'importer',
+      data : {
+        returnState: 'administration.participants'
+      }
     })
+
+    .state('administration.participants.add', {
+      url: '/add',
+      templateUrl: 'client/administration/participants-add.ng.html',
+      controller: 'ParticipantEditCtrl',
+      controllerAs: 'participant',
+      data : {
+        returnState: 'administration.participants'
+      }
+       
+    })
+
     .state('administration.event', {
       url: '/event',
       views: {
@@ -44,6 +61,7 @@ angular.module('htm.administration').config(['$stateProvider', function($statePr
         }
       }
     })
+
     .state('administration.schedule', {
       url: '/schedule',
       views: {
@@ -55,6 +73,7 @@ angular.module('htm.administration').config(['$stateProvider', function($statePr
         }
       }
     })
+
     .state('administration.tournaments', {
       url: '/tournaments',
       views: {
