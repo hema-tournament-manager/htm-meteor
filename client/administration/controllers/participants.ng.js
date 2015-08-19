@@ -3,6 +3,10 @@ angular.module('htm.administration')
   .controller('ParticipantEditCtrl',
     ['$meteor','$state', 
     function($meteor, $state) {
+
+      var participants = $meteor.
+
+      this.participant = {name: 'Rien Korstanje', club: {name:'HTM'}, country: {name:'The Netherlands', code:'NL'}};
     
       this.cancel = function() {
         $state.go($state.current.data.returnState);

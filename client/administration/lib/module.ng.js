@@ -44,9 +44,9 @@ angular.module('htm.administration').config(['$stateProvider', function($statePr
 
     .state('administration.participants.add', {
       url: '/add',
-      templateUrl: 'client/administration/participants-add.ng.html',
+      templateUrl: 'client/administration/participants-edit.ng.html',
       controller: 'ParticipantEditCtrl',
-      controllerAs: 'participant',
+      controllerAs: 'editor',
       data : {
         returnState: 'administration.participants'
       }
