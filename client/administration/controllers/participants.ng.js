@@ -1,8 +1,6 @@
 
 angular.module('htm.administration')
-  .controller('ParticipantEditCtrl',
-    ['$meteor','$state', 
-    function($meteor, $state) {
+  .controller('ParticipantEditCtrl', function($meteor, $state) {
 
 
       this.participant = {name: 'Rien Korstanje', club: {name:'HTM'}, country: {name:'The Netherlands', code:'NL'}};
@@ -14,12 +12,10 @@ angular.module('htm.administration')
       this.save = function(){
         $state.go($state.current.data.returnState);
       };
-}]);
+});
 
 angular.module('htm.administration')
-  .controller('ParticipantsCtrl',
-    ['$meteor','$state', 
-    function($meteor, $state) {
+  .controller('ParticipantsCtrl', function($meteor, $state) {
     
       this.list = $meteor.collection(Participants);
       
@@ -30,12 +26,10 @@ angular.module('htm.administration')
       this.import = function(){
         $state.go('administration.participants.import');
       };
-}]);
+});
 
 angular.module('htm.administration')
-  .controller('ParticipantsImportCtrl',
-    ['$scope', '$element','$window', '$meteor', '$state',
-    function($scope, $element, $window, $meteor, $state) {
+  .controller('ParticipantsImportCtrl', function($scope, $element, $window, $meteor, $state) {
       
       this.hasFile = false;
      
@@ -104,5 +98,5 @@ angular.module('htm.administration')
       drop.bind('dragenter', handleDragOver);
       drop.bind('dragover', handleDragOver);
       drop.bind('drop', readParticpants);
-}]);
+});
 

@@ -4,8 +4,8 @@ angular.module('htm.administration', [
   'ui.bootstrap'
 ]);
 
-angular.module('htm.administration').config(['$stateProvider', function($stateProvider) {
-
+angular.module('htm.administration')
+.config(function($stateProvider) {
   $stateProvider
     .state('administration', {
       abstract: true,
@@ -85,4 +85,4 @@ angular.module('htm.administration').config(['$stateProvider', function($statePr
     ;
 
 
-}]);
+});
