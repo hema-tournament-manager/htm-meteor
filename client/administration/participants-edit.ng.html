@@ -1,13 +1,51 @@
 <div class="well">
-  <h3>Add Participant</h3>
-  <form name="participantForm" class="form" novalidate>
+	<h3>Add Participant</h3>
+	<form name="participantForm" class="form" novalidate>
 		<div class="form-group">
 			<label for="name">Name</label>
 			<input ng-model="editor.participant.name" type="text" class="form-control" name="name" required="true"/>
 		</div>
+
+		<div class="form-group">
+			<label for="club">Club</label>
+			<div class="input-group" ng-hide="addNewClubVisible">
+				<span class="input-group-btn">
+					<button ng-click="showAddNewClub()" class="btn btn-default" type="button" title="Add new club">
+						<span class="glyphicon glyphicon-plus"></span>
+					</button>
+				</span>
+				<ui-select ng-model="editor.participant.club">
+					<ui-select-match placeholder="Select or search a club in the list...">{{$select.selected.name}}</ui-select-match>
+					<ui-select-choices repeat="club in editor.clubs | filter: $select.search">
+						<span ng-bind-html="club.code | highlight: $select.search"></span> - <span ng-bind-html="club.name | highlight: $select.search"></span>
+					</ui-select-choices>
+				</ui-select>
+			</div>
+			<div class="input-group" ng-show="addNewClubVisible">
+				<span class="input-group-btn">
+						<button ng-click="hideAddNewClub()" class="btn btn-success" type="button" title="Cancel add new club">	<span class="glyphicon glyphicon-plus"></span>
+						</button>
+				</span>
+				<input ng-model="participant.club.name" htm-focus-on="addNewClubVisible" type="text" class="form-control" required="true"/>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="country">Country</label>
+			<div class="input-group">
+				<span class="input-group-addon">
+					<htm-flag country="editor.participant.country"></htm-flag>
+				</span>
+				<ui-select ng-model="editor.participant.country" ng-disabled="disabled" required="true">
+					<ui-select-match placeholder="Select or search a country in the list...">{{$select.selected.name}}</ui-select-match>
+					<ui-select-choices repeat="country in editor.countries | filter: $select.search">
+						<span ng-bind-html="country.code | highlight: $select.search"></span> - <span ng-bind-html="country.name | highlight: $select.search"></span>
+					</ui-select-choices>
+				</ui-select>
+			</div>
+		</div>
 	</form>
-  <div>
-	<a class="btn btn-danger" ng-click="editor.cancel()">Cancel</a>
-	<a class="btn btn-primary" ng-click="editor.save()">Save</a>
-  </div>
+	<div>
+		<a class="btn btn-danger" ng-click="editor.cancel()">Cancel</a>
+		<a class="btn btn-primary" ng-click="editor.save()">Save</a>
+	</div>
 </div>

@@ -3,8 +3,9 @@ angular.module('htm.administration')
   .controller('ParticipantEditCtrl', function($meteor, $state) {
 
 
-      this.participant = {name: 'Rien Korstanje', club: {name:'HTM'}, country: {name:'The Netherlands', code:'NL'}};
-    
+      this.participant = {name: 'Rien Korstanje', club: {name:'HEMA Tournament Managers', code:'HTM'}, country: {name:'The Netherlands', code:'NL'}};
+      this.countries = [{name:'The Netherlands', code:'NL'}];
+      this.clubs = [{name:'HEMA Tournament Managers', code:'HTM'}]
       this.cancel = function() {
         $state.go($state.current.data.returnState);
       };
