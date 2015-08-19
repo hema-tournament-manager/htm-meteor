@@ -10,7 +10,9 @@ angular.module('htm.administration')
         $state.go($state.current.data.returnState);
       };
 
-      this.save = function(){
+      this.save = function() {
+        Meteor.call('insertParticipant', angular.copy(this.participant));
+
         $state.go($state.current.data.returnState);
       };
 });
@@ -36,18 +38,15 @@ angular.module('htm.administration')
      
       this.import = function() {
         var participants = this.participants;
-        var coll = $meteor.collection(Participants);
-        console.log(coll);
-        participants.map(function(p) {
+        Meteor.call('insertParticipants', participants.filter(function(p) {
+          return p.selected;
+        }).map(function(p) {
           return {
             name: p.name,
             club: {name: p.club},
             country: {code: p.country}
           };
-        }).forEach(function(p) {
-          coll.save(p);
-        });
-        coll.stop();
+        }));
         $state.go($state.current.data.returnState);
       };
 

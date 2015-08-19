@@ -9,5 +9,9 @@ Meteor.methods({
       }
       Participants.insert(p);
     });
+  },
+
+  insertParticipant: function(participant) {
+    Meteor.call('insertParticipants', [participant]);
   }
 });
