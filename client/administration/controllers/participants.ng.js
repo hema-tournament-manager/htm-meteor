@@ -62,7 +62,7 @@ angular.module('htm.administration')
       };
 
       var self = this;
-      var readParticpants = function(jqe) {
+      var readParticipants = function(jqe) {
         var reader = new FileReader();
         reader.onload = function(e) {
           var data = e.target.result;
@@ -97,6 +97,6 @@ angular.module('htm.administration')
       var drop = $element.find('#drop');
       drop.bind('dragenter', handleDragOver);
       drop.bind('dragover', handleDragOver);
-      drop.bind('drop', readParticpants);
+      drop.bind('drop', readParticipants);
 });
 
