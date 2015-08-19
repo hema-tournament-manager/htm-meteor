@@ -4,7 +4,6 @@ angular.module('htm.administration')
     ['$meteor','$state', 
     function($meteor, $state) {
 
-      var participants = $meteor.
 
       this.participant = {name: 'Rien Korstanje', club: {name:'HTM'}, country: {name:'The Netherlands', code:'NL'}};
     
