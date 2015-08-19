@@ -1,26 +1,37 @@
 
 angular.module('htm.administration')
-  .controller('ParticipantEditCtrl', function($meteor, $state) {
+  .controller('ParticipantEditCtrl', function($meteor, $state, $stateParams) {
 
-
-      this.participant = {name: 'Rien Korstanje', club: {name:'HEMA Tournament Managers', code:'HTM'}, country: {name:'The Netherlands', code:'NL'}};
-      this.countries = [{name:'The Netherlands', code:'NL'}];
-      this.clubs = [{name:'HEMA Tournament Managers', code:'HTM'}]
       this.cancel = function() {
-        $state.go($state.current.data.returnState);
+        $state.go('^');
       };
 
       this.save = function() {
-        Meteor.call('insertParticipant', angular.copy(this.participant));
-
-        $state.go($state.current.data.returnState);
+        if(this.isNew){
+          $meteor.call('addParticipant', angular.copy(this.participant));  
+        } 
+        
+        $state.go('^');
       };
+
+      this.isNew = angular.isUndefined($stateParams.participantId);
+
+      var emptyParticipant = {name: '', club: {}, country: {}};
+
+      if(this.isNew){
+        this.participant = emptyParticipant;
+      } else {
+        this.participant = $meteor.object(Participants, $stateParams.participantId);
+      }
+
+      this.countries = [{name:'The Netherlands', code:'NL'},{name:'Germany', code:'GE'}];
+      this.clubs = [{name:'HEMA Tournament Managers', code:'HTM'},{name:'Noorderwind', code:'NW'}]
 });
 
 angular.module('htm.administration')
-  .controller('ParticipantsCtrl', function($meteor, $state) {
+  .controller('ParticipantsCtrl', function($scope, $meteor, $state) {
     
-      this.list = $meteor.collection(Participants);
+      this.list = $scope.$meteorCollection(Participants);
       
       this.add = function() {
         $state.go('administration.participants.add');
@@ -29,6 +40,15 @@ angular.module('htm.administration')
       this.import = function(){
         $state.go('administration.participants.import');
       };
+
+      this.edit = function(participant){
+        $state.go('administration.participants.edit',{participantId:participant._id});
+      };
+
+      this.isEditorActive = function(participant){
+        //TODO: SLOW!
+        return $state.is('administration.participants.edit',{participantId:participant._id});
+      }
 });
 
 angular.module('htm.administration')
@@ -38,7 +58,7 @@ angular.module('htm.administration')
      
       this.import = function() {
         var participants = this.participants;
-        Meteor.call('insertParticipants', participants.filter(function(p) {
+        Meteor.call('addParticipants', participants.filter(function(p) {
           return p.selected;
         }).map(function(p) {
           return {
@@ -47,11 +67,11 @@ angular.module('htm.administration')
             country: {code: p.country}
           };
         }));
-        $state.go($state.current.data.returnState);
+        $state.go('^');
       };
 
       this.cancel = function(){
-        $state.go($state.current.data.returnState);
+        $state.go('^');
       };
 
       var handleDragOver = function(jqe) {

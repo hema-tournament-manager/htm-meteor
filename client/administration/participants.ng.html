@@ -37,7 +37,7 @@
   </div>
 </div>
 <!-- Add participants / Import participants -->
-<ui-view></ui-view>
+<div class="row" ui-view></div>
 
 <!--Search bar -->
 <div class="row">
@@ -67,20 +67,31 @@
 </div>
 <!--Results table-->
 <table class="table">
-<thead>
-  <tr>
-    <th>Country</th>
-    <th>Number</th>
-    <th>Name</th>
-    <th>Club</th>
-  </tr>
-</thead>
-<tbody>
-  <tr ng-repeat="p in participants.list track by p._id">
-    <td>{{p.country.code}}</td>
-    <td>{{p.number}}</td>
-    <td>{{p.name}}</td>
-    <td>{{p.club.name}}</td>
-  </tr>
-</tbody>
+  <thead>
+    <tr>
+      <th><!--Edit--></th>
+      <th>Country</th>
+      <th>Number</th>
+      <th>Name</th>
+      <th>Club</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat-start="p in participants.list track by p._id" ng-hide="participants.isEditorActive(p)">
+      <td>
+        <button class="btn btn-default btn-sm" ng-click="participants.edit(p)">
+          <span class="glyphicon glyphicon-wrench"></span>
+        </button>
+      </td>
+      <td>{{p.country.code}}</td>
+      <td>{{p.number}}</td>
+      <td>{{p.name}}</td>
+      <td>{{p.club.name}}</td>
+    </tr>
+    <tr ng-repeat-end ng-show="participants.isEditorActive(p)">
+      <td colspan="5">
+        <div class="row" ui-view="edit"></div>
+      </td>
+    </tr>
+  </tbody>
 </table>

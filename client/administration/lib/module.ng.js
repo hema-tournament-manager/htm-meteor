@@ -39,9 +39,6 @@ angular.module('htm.administration')
       templateUrl: 'client/administration/participants-import.ng.html',
       controller: 'ParticipantsImportCtrl',
       controllerAs: 'importer',
-      data : {
-        returnState: 'administration.participants'
-      }
     })
 
     .state('administration.participants.add', {
@@ -49,12 +46,17 @@ angular.module('htm.administration')
       templateUrl: 'client/administration/participants-edit.ng.html',
       controller: 'ParticipantEditCtrl',
       controllerAs: 'editor',
-      data : {
-        returnState: 'administration.participants'
-      }
-       
     })
-
+    .state('administration.participants.edit', {
+      url: '/edit/:participantId',
+      views: {
+       'edit': {
+          templateUrl: 'client/administration/participants-edit.ng.html',
+          controller: 'ParticipantEditCtrl',
+          controllerAs: 'editor',
+        }
+      }
+    })
     .state('administration.event', {
       url: '/event',
       views: {
