@@ -1,7 +1,9 @@
 angular.module('htm.administration', [
   'angular-meteor',
   'ui.router',
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'ui.select',
+  'ngSanitize',
 ]);
 
 angular.module('htm.administration')

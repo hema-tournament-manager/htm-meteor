@@ -4,8 +4,10 @@ accounts-ui@1.1.5
 accounts-ui-unstyled@1.1.7
 amplify@1.0.0
 angular:angular@1.4.2
+angular:angular-sanitize@1.4.2
 angularui:angular-ui-bootstrap@0.13.0
 angularui:angular-ui-router@0.2.15
+angularui:ui-select@0.12.0
 aramk:tinycolor@1.1.0_1
 autopublish@1.0.3
 autoupdate@1.2.1
