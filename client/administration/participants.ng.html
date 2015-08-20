@@ -80,7 +80,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr ng-repeat-start="p in participants.list" ng-if="!participants.isEditorActive(p)">
+    <tr ng-repeat-start="p in participants.list track by p._id" ng-if="!participants.isEditorActive(p)">
       <td>
         <button class="btn btn-default btn-sm" ng-click="participants.edit(p)">
           <span class="glyphicon glyphicon-wrench"></span>
