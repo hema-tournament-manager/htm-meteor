@@ -1,6 +1,6 @@
 
 angular.module('htm.administration')
-  .controller('ParticipantEditCtrl', function($meteor, $state, $stateParams) {
+  .controller('ParticipantEditCtrl', function($scope, $meteor, $state, $stateParams) {
 
       this.cancel = function() {
         $state.go('^');
@@ -24,7 +24,7 @@ angular.module('htm.administration')
         this.participant = $meteor.object(Participants, $stateParams.participantId);
       }
 
-      this.countries = [{name:'The Netherlands', code:'NL'},{name:'Germany', code:'GE'}];
+      this.countries = $scope.$meteorCollection(Countries,false);
       this.clubs = [{name:'HEMA Tournament Managers', code:'HTM'},{name:'Noorderwind', code:'NW'}]
 });
 
@@ -46,7 +46,6 @@ angular.module('htm.administration')
       };
 
       this.isEditorActive = function(participant){
-        //TODO: SLOW!
         return $state.is('administration.participants.edit',{participantId:participant._id});
       }
 });
