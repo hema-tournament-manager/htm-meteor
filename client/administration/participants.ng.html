@@ -69,7 +69,7 @@
 </div>
 
 <!--Participants table-->
-<table class="table">
+<table class="table table-condensed table-condensed">
   <thead>
     <tr>
       <th><!--Edit--></th>
@@ -90,7 +90,10 @@
       <td>{{p.country.code2}}</td>
       <td>{{p.number}}</td>
       <td>{{p.name}}</td>
-      <td>{{p.club.name}}</td>
+      <td>
+        <span class="hidden-xs">{{p.club.name}}</span>
+        <span class="visible-xs-inline">{{p.club.code}}</span>
+      </td>
     </tr>
     <tr ng-repeat-end ng-if="participants.isEditorActive(p)">
       <td colspan="6">
