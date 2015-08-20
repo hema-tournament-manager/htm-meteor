@@ -1,6 +1,8 @@
 angular.module('htm.app', [
   'angular-meteor',
   'ui.router',
+  'ct.ui.router.extras.dsr',
+
   'htm.core',
   'htm.check-in',
   'htm.battle-station',

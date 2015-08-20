@@ -3,7 +3,7 @@ angular.module('htm.administration')
   .controller('ParticipantEditCtrl', function($scope, $meteor, $state, $stateParams) {
 
       this.cancel = function() {
-        $state.go('^');
+        $state.go('^', {}, {ignoreDsr: true});
       };
 
       this.save = function() {
@@ -11,7 +11,7 @@ angular.module('htm.administration')
           $meteor.call('addParticipants', this.participant);  
         } 
         
-        $state.go('^');
+        $state.go('^', {}, {ignoreDsr: true});
       };
 
       this.isNew = angular.isUndefined($stateParams.participantId);
@@ -66,11 +66,11 @@ angular.module('htm.administration')
             country: {code: p.country}
           };
         }));
-        $state.go('^');
+        $state.go('^', {}, {ignoreDsr: true});
       };
 
       this.cancel = function(){
-        $state.go('^');
+        $state.go('^', {}, {ignoreDsr: true});
       };
 
       var handleDragOver = function(jqe) {

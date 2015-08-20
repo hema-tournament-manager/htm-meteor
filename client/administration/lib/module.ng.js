@@ -32,7 +32,8 @@ angular.module('htm.administration')
           controller: 'ParticipantsCtrl',
           controllerAs: 'participants'
         }
-      }
+      },
+      dsr: true
     })
 
     .state('administration.participants.import', {
@@ -83,7 +84,8 @@ angular.module('htm.administration')
       url: '/tournaments',
       templateUrl: 'client/administration/tournaments.ng.html',
       controller: 'TournamentsCtrl',
-      controllerAs: 'tournaments'
+      controllerAs: 'tournaments',
+      dsr: true
     })
     .state('administration.tournaments.view', {
       url: '/:tournamentIdentifier',
