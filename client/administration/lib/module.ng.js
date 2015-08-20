@@ -80,11 +80,15 @@ angular.module('htm.administration')
 
     .state('administration.tournaments', {
       url: '/tournaments',
-      views: {
-        '': {
-          templateUrl: 'client/administration/tournaments.ng.html'
-        }
-      }
+      templateUrl: 'client/administration/tournaments.ng.html',
+      controller: 'TournamentsCtrl',
+      controllerAs: 'tournaments'
+    })
+    .state('administration.tournaments.view', {
+      url: '/:tournamentIdentifier',
+      templateUrl: 'client/administration/tournaments-view.ng.html',
+      controller: 'TournamentViewCtrl',
+      controllerAs: 'tournament'
     })
     ;
 

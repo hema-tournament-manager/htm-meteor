@@ -4,12 +4,30 @@ Meteor.startup(function() {
       {
         name: 'Open Longsword',
         identifier: 'open-longsword',
-        memo: 'LS'
+        phases: [
+          {
+            type: 'pool',
+            name: 'Pools'
+          },
+          {
+            type: 'elimination',
+            name: 'Elimination'
+          }
+        ]
       },
       {
         name: 'Sabre',
         identifier: 'sabre',
-        memo: 'S'
+        phases: [
+          {
+            type: 'pool',
+            name: 'Pools'
+          },
+          {
+            type: 'elimination',
+            name: 'Elimination'
+          }
+        ]
       }
     ];
 
