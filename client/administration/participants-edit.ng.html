@@ -1,5 +1,5 @@
 <div class="well">
-	<h3>Add Participant</h3>
+	<h3>{{editor.isNew ? 'Add Participant' : 'Edit Participant'}}</h3>
 	<form name="participantForm" class="form form-participant" novalidate>
 		<div class="form-group">
 			<label for="name">Name</label>
@@ -48,8 +48,7 @@
 
 		<div>
 			<a ng-show="editor.isNew" class="btn btn-danger" ng-click="editor.cancel()">Cancel</a>
-			<a ng-show="editor.isNew" class="btn btn-primary" ng-click="editor.save()">Save</a>
-			<a ng-hide="editor.isNew" class="btn btn-primary" ng-click="editor.save()">Done</a>
+			<a class="btn btn-primary" ng-click="editor.save()">{{editor.isNew ? 'Add' : 'Done'}}</a>
 		</div>
 	</form>
 	
