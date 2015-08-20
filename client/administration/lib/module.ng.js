@@ -4,6 +4,7 @@ angular.module('htm.administration', [
   'ui.bootstrap',
   'ui.select',
   'ngSanitize',
+  'htm.core',
 ]);
 
 angular.module('htm.administration')

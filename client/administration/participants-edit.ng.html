@@ -4,7 +4,7 @@
 		<div class="form-group">
 			<label for="name">Name</label>
 			<div class="input-group">
-				<input ng-model="editor.participant.name" type="text" class="form-control" name="name" required="true"/>
+				<input htm-focus-on="true" ng-model="editor.participant.name" type="text" class="form-control" name="name" required="true"/>
 			</div>
 		</div>
 
@@ -47,8 +47,8 @@
 		</div>
 
 		<div>
-			<a ng-show="editor.isNew" class="btn btn-danger" ng-click="editor.cancel()">Cancel</a>
-			<a class="btn btn-primary" ng-click="editor.save()">{{editor.isNew ? 'Add' : 'Done'}}</a>
+		  <button ng-show="editor.isNew" class="btn btn-danger" ng-click="editor.cancel()">Cancel</button>
+			<button class="btn btn-primary" ng-click="editor.save()">{{editor.isNew ? 'Add' : 'Done'}}</button>
 		</div>
 	</form>
 	
