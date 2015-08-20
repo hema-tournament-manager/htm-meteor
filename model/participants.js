@@ -2,6 +2,10 @@ Participants = new Mongo.Collection('participants');
 
 Meteor.methods({
   addParticipants: function(participants) {
+    if(!_.isArray(participants)){
+      participants = [participants];
+    }
+
     var q = Participants.find();
     participants.forEach(function(p) {
       if (!p.number) {
@@ -10,8 +14,4 @@ Meteor.methods({
       Participants.insert(p);
     });
   },
-
-  addParticipant: function(participant) {
-    Meteor.call('insertParticipants', [participant]);
-  }
 });

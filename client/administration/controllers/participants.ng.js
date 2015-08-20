@@ -8,7 +8,7 @@ angular.module('htm.administration')
 
       this.save = function() {
         if(this.isNew){
-          $meteor.call('addParticipant', angular.copy(this.participant));  
+          $meteor.call('addParticipants', this.participant);  
         } 
         
         $state.go('^');
@@ -16,9 +16,9 @@ angular.module('htm.administration')
 
       this.isNew = angular.isUndefined($stateParams.participantId);
 
-      var emptyParticipant = {name: '', club: {}, country: {}};
 
       if(this.isNew){
+        var emptyParticipant = {name: '', club: {}, country: {}};
         this.participant = emptyParticipant;
       } else {
         this.participant = $meteor.object(Participants, $stateParams.participantId);
