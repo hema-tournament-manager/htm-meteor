@@ -91,6 +91,12 @@ angular.module('htm.administration')
       controller: 'TournamentViewCtrl',
       controllerAs: 'tournament'
     })
+    .state('administration.tournaments.view.phase', {
+      url: '/:phaseIndex',
+      templateUrl: 'client/administration/tournaments-view-phase.ng.html',
+      controller: 'TournamentViewPhaseCtrl',
+      controllerAs: 'phase'
+    })
     ;
 
 

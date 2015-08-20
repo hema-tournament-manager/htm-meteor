@@ -7,3 +7,7 @@ angular.module('htm.administration').controller('TournamentsCtrl', function($met
 angular.module('htm.administration').controller('TournamentViewCtrl', function($meteor, $scope, $stateParams) {
   this.object = $scope.$meteorObject(Tournaments, {identifier: $stateParams.tournamentIdentifier}, true);
 });
+
+angular.module('htm.administration').controller('TournamentViewPhaseCtrl', function($meteor, $scope, $stateParams) {
+  this.object = $scope.tournament.object.phases[$stateParams.phaseIndex];
+});
