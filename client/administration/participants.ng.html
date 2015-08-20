@@ -14,13 +14,15 @@
 
         <div class="pull-right">
             <div class="btn-group ">
-              <button ng-click="participants.add()" role="button" class="btn btn-default">
-                <span class="glyphicon glyphicon-plus"></span><span>Add</span>
+              <button ui-sref=".add" ui-sref-active="active" role="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-plus"></span>
+                Add
               </button>
-              <button ng-click="participants.import()" role="button" class="btn btn-default">
-                <span class="glyphicon glyphicon-upload"></span><span>Upload</span>
+              <button ui-sref=".import" ui-sref-active="active" role="button" class="btn btn-default hidden-xs">
+                <span class="glyphicon glyphicon-upload"></span>
+                Upload
               </button>
-              <button  role="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+              <button  role="button" class="btn btn-default dropdown-toggle hidden-xs" data-toggle="dropdown">
                 <span class="glyphicon glyphicon-download"></span> Download<span class="caret"></span>
               </button>
   
