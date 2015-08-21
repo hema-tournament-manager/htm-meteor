@@ -7,11 +7,11 @@ Meteor.methods({
     }
 
     var q = Participants.find();
+
     participants.forEach(function(p) {
-      if (!p.number) {
-        p.number = q.count() + 1;
-      }
+      p.number = q.count() + 1;
       Participants.insert(p);
     });
   },
 });
+
