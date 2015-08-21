@@ -78,12 +78,12 @@
 								</button>
 						</td>
 						<td><htm-flag country="p.country"></htm-flag></td>
-						<td>{{p.country.code2}}</td>
+						<td ng-bind-html="p.country.code2 | highlight:participants.query.q"></td>
 						<td>{{p.number}}</td>
-						<td>{{p.name}}</td>
+						<td ng-bind-html="p.name | highlight:participants.query.q"></td>
 						<td>
-								<span class="hidden-xs">{{p.club.name}}</span>
-								<span class="visible-xs-inline">{{p.club.code}}</span>
+								<span class="hidden-xs" ng-bind-html="p.club.name | highlight:participants.query.q"></span>
+								<span class="visible-xs-inline" ng-bind-html="p.club.code | highlight:participants.query.q"></span>
 						</td>
 				</tr>
 				<tr ng-repeat-end ng-if="participants.isEditorActive(p)">
