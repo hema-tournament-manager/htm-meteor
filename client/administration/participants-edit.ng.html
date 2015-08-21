@@ -19,7 +19,7 @@
 				<ui-select ng-model="editor.participant.club">
 					<ui-select-match placeholder="Select or search a club in the list...">{{$select.selected.name}}</ui-select-match>
 					<ui-select-choices repeat="club in editor.clubs | filter: $select.search">
-						<span ng-bind-html="club.code2 | highlight: $select.search"></span> - <span ng-bind-html="club.name | highlight: $select.search"></span>
+						<span ng-bind-html="club.code | highlight: $select.search"></span> - <span ng-bind-html="club.name | highlight: $select.search"></span>
 					</ui-select-choices>
 				</ui-select>
 			</div>
@@ -47,8 +47,9 @@
 		</div>
 
 		<div>
-		  <button ng-show="editor.isNew" class="btn btn-danger" ng-click="editor.cancel()">Cancel</button>
-			<button class="btn btn-primary" ng-click="editor.save()">{{editor.isNew ? 'Add' : 'Done'}}</button>
+			<button class="btn btn-primary" ng-click="editor.save()">{{editor.isNew ? 'Add Participant' : 'Done'}}</button>
+			<button class="btn btn-danger pull-right" ng-click="editor.cancel()" ng-show="editor.isNew">Cancel</button>
+
 		</div>
 	</form>
 	

@@ -14,18 +14,19 @@ angular.module('htm.administration')
         $state.go('^', {}, {ignoreDsr: true});
       };
 
-      this.isNew = angular.isUndefined($stateParams.participantId);
-
-
-      if(this.isNew){
-        var emptyParticipant = {name: '', club: {}, country: {}};
-        this.participant = emptyParticipant;
-      } else {
-        this.participant = $meteor.object(Participants, $stateParams.participantId);
-      }
 
       this.countries = $scope.$meteorCollection(Countries,false);
       this.clubs = [{name:'HEMA Tournament Managers', code:'HTM'},{name:'Noorderwind', code:'NW'}]
+
+      this.isNew = angular.isUndefined($stateParams.participantId);
+      if(this.isNew){
+        var emptyParticipant = {name: '', club: {name:'', code: ''}, country: {code2:'' , code3: '', name:'Unknown'}};
+        this.participant = emptyParticipant;
+      } else {
+        this.participant = $scope.$meteorObject(Participants, $stateParams.participantId);
+      }
+
+      
 });
 
 angular.module('htm.administration')
