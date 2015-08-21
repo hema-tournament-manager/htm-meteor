@@ -46,11 +46,11 @@
 			</div>
 		</div>
 
-		<div>
+		<div class="pull-right">
 			<button class="btn btn-primary" ng-click="editor.save()">{{editor.isNew ? 'Add Participant' : 'Done'}}</button>
-			<button class="btn btn-danger pull-right" ng-click="editor.cancel()" ng-show="editor.isNew">Cancel</button>
-
+			<button class="btn btn-danger" ng-click="editor.cancel()" ng-show="editor.isNew">Close</button>
 		</div>
+		<div class="clearfix"></div>
 	</form>
 	
 </div>

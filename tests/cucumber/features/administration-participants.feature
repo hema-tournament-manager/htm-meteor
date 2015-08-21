@@ -17,11 +17,22 @@ Feature: Participants administration
 
   @dev
   Scenario: Navigate to import screen
-    When I navigate to "/administration/participants/import"
+    When I navigate to "/administration/participants"
+    And I click button "Upload"
     Then I should see the text "Import from Excel"
+    And I click button "Close"
 
   @dev
   Scenario: Add participant
     When I navigate to "/administration/participants"
     And I click button "Add"
     Then I should see the text "Add Participant"
+    And I click button "Close"
+
+  @dev
+  Scenario: Close add participant
+    When I navigate to "/administration/participants"
+    And I click button "Add"
+    Then I should see the text "Add Participant"
+    And I click button "Close"
+    

@@ -16,8 +16,9 @@
     </table>
   </div>
 
-  <div>
-    <a class="btn btn-danger" ng-click="importer.cancel()">Cancel</a>
-    <a class="btn btn-primary" ng-show="importer.hasFile" ng-click="importer.import()">Import</a>
+  <div class="pull-right">
+    <button class="btn btn-primary" ng-click="importer.import()" ng-show="importer.hasFile">Import Participants</button>
+    <button class="btn btn-danger" ng-click="importer.cancel()">Close</button>
   </div>
+  <div class="clearfix"></div>  
 </div>
