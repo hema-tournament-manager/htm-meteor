@@ -85,7 +85,12 @@ angular.module('htm.administration')
       templateUrl: 'client/administration/tournaments.ng.html',
       controller: 'TournamentsCtrl',
       controllerAs: 'tournaments',
-      dsr: true
+      dsr: true,
+      resolve: {
+        subscribe: function($meteor) {
+          return $meteor.subscribe('tournaments');
+        }
+      }
     })
     .state('administration.tournaments.view', {
       url: '/:tournamentIdentifier',
