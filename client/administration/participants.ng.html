@@ -68,6 +68,9 @@
 						<th>Number</th>
 						<th>Name</th>
 						<th>Club</th>
+						<th ng-repeat="t in participants.tournaments">
+							{{t.name}}
+						</th>
 				</tr>
 		</thead>
 		<tbody>
@@ -85,9 +88,12 @@
 								<span class="hidden-xs" ng-bind-html="p.club.name | highlight:participants.query.q"></span>
 								<span class="visible-xs-inline" ng-bind-html="p.club.code | highlight:participants.query.q"></span>
 						</td>
+						<td ng-repeat="t in participants.tournaments">
+							<span class="glyphicon" ng-class="p.inTournament(t) ? 'glyphicon-ok' : 'glyphicon-remove'"></span>
+						</td>
 				</tr>
 				<tr ng-repeat-end ng-if="participants.isEditorActive(p)">
-						<td colspan="6">
+						<td colspan="{{ 6 + participants.tournaments.length }}">
 								<div class="row" ui-view="edit"></div>
 						</td>
 				</tr>

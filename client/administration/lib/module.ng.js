@@ -33,7 +33,12 @@ angular.module('htm.administration')
           controllerAs: 'participants'
         }
       },
-      dsr: true
+      dsr: true,
+      resolve: {
+        subscribe: function($meteor) {
+          return $meteor.subscribe('tournaments', {fields: {name: 1, identifier: 1}});
+        }
+      }
     })
 
     .state('administration.participants.import', {
@@ -96,7 +101,12 @@ angular.module('htm.administration')
       url: '/:tournamentIdentifier',
       templateUrl: 'client/administration/tournaments-view.ng.html',
       controller: 'TournamentViewCtrl',
-      controllerAs: 'tournament'
+      controllerAs: 'tournament',
+      resolve: {
+        subscribe: function($meteor) {
+          return $meteor.subscribe('participants');
+        }
+      }
     })
     .state('administration.tournaments.view.phase', {
       url: '/:phaseIndex',

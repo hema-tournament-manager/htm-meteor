@@ -7,4 +7,9 @@
   </a>
 </div>
 
+<h2>participants</h2>
+<div ng-repeat="p in tournament.unsubscribedParticipants" ng-click="tournament.subscribeParticipant(p)">
+  {{p.name}}
+</div>
+
 <ui-view></ui-view>
