@@ -10,42 +10,42 @@
 
 		<div class="form-group">
 			<label for="club">Club</label>
-			<div class="input-group" ng-hide="editor.addNewClubVisible">
+			<div class="input-group" ng-hide="editor.newClub">
 				<span class="input-group-btn">
-					<button ng-click="editor.showAddNewClub()" class="btn btn-default" type="button" title="Add new club">
+					<button ng-click="editor.addNewClub()" class="btn btn-default" type="button" title="Add new club">
 						<span class="glyphicon glyphicon-plus"></span>
 					</button>
 				</span>
-				<ui-select ng-model="editor.participant._clubId">
+				<ui-select ng-model="editor.participant.club">
 					<ui-select-match placeholder="Select or search a club in the list...">{{$select.selected.name}}</ui-select-match>
-					<ui-select-choices repeat="club._id as club in editor.clubs | filter: $select.search">
+					<ui-select-choices repeat="club in editor.clubs | filter: $select.search">
 						<span ng-bind-html="club.code | highlight: $select.search"></span> - <span ng-bind-html="club.name | highlight: $select.search"></span>
 					</ui-select-choices>
 				</ui-select>
 			</div>
-			<div class="input-group" ng-show="editor.addNewClubVisible">
-				<span class="input-group-btn">
-						<button ng-click="editor.hideAddNewClub()" class="btn btn-success" type="button" title="Cancel add new club">	<span class="glyphicon glyphicon-plus"></span>
+			<div class="input-group" ng-show="editor.newClub">
+				<span class="input-group-btn" ng-if="editor.canRemoveNewClub()">
+						<button ng-click="editor.removeNewClub()" class="btn btn-success" type="button" title="Cancel add new club">	<span class="glyphicon glyphicon-plus"></span>
 						</button>
 				</span>
-				<input ng-model="editor.club(editor.participant).name" htm-focus-on="editor.addNewClubVisible" type="text" class="form-control" required="true"/>
+				<input ng-model="editor.participant.club.name" htm-focus-on="editor.newClub" type="text" class="form-control" required="true"/>
 			</div>
 		</div>
-		<div class="form-group" ng-show="editor.addNewClubVisible">
+		<div class="form-group" ng-show="editor.newClub">
 			<label>Club Code</label>
 			<div class="input-group">
-				<input ng-model="editor.club(editor.participant).code" type="text" class="form-control" required="true"/>
+				<input ng-model="editor.participant.club.code" type="text" class="form-control" required="true"/>
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="country">Country</label>
 			<div class="input-group">
 				<span class="input-group-addon">
-					<htm-flag country="editor.country(editor.participant)"></htm-flag>
+					<htm-flag country="editor.participant.country"></htm-flag>
 				</span>
-				<ui-select ng-model="editor.participant._countryId" ng-disabled="disabled" required="true">
+				<ui-select ng-model="editor.participant.country" ng-disabled="disabled" required="true">
 					<ui-select-match placeholder="Select or search a country in the list...">{{$select.selected.name}}</ui-select-match>
-					<ui-select-choices repeat="country._id as country in editor.countries | filter: $select.search">
+					<ui-select-choices repeat="country in editor.countries | filter: $select.search">
 						<span ng-bind-html="country.code2 | highlight: $select.search"></span> - <span ng-bind-html="country.name | highlight: $select.search"></span>
 					</ui-select-choices>
 				</ui-select>
@@ -62,7 +62,7 @@
 		</div>
 		<div class="pull-right">
 			<button class="btn btn-primary" ng-click="editor.save()">{{editor.isNew ? 'Add Participant' : 'Done'}}</button>
-			<button class="btn btn-danger" ng-click="editor.cancel()" ng-show="editor.isNew">Close</button>
+			<button class="btn btn-danger" ng-click="editor.closeEditor()" ng-show="editor.isNew">Close</button>
 		</div>
 		<div class="clearfix"></div>
 	</form>

@@ -2,33 +2,37 @@
 angular.module('htm.administration')
 	.controller('ParticipantEditCtrl', function($scope, $meteor, $state, $stateParams) {
 
-			this.cancel = function() {
+			var self = this;
+
+			this.closeEditor = function() {
 				$state.go('^', {}, {ignoreDsr: true});
 			};
 
 			this.save = function() {
+
 				if(this.isNew){
-					$meteor.call('addParticipants', angular.copy(this.participant));  
-				} 
-				
-				$state.go('^', {}, {ignoreDsr: true});
+					//TODO: Handle exceptions
+					this.participants.save(this.participant).then(function(){
+						self.closeEditor();		
+					});
+				} else {
+					self.closeEditor();
+				}
 			};
 
-			this.addNewClubVisible = false;
-
-			this.showAddNewClub = function(){
-				this.addNewClubVisible = true;
+			this.addNewClub = function(){
+				this.newClub = true;
+				this.oldClub = this.participant.club;
+				this.participant.club = {name: '', code: ''};
 			}
 
-			this.hideAddNewClub = function(){
-				this.addNewClubVisible = false;
+			this.removeNewClub = function(){
+				this.newClub = false;
+				this.participant.club = this.oldClub;
 			}
 
-			this.country = function(participant){
-				return _.findWhere(this.countries, {_id: participant._countryId});
-			}
-			this.club = function(participant){
-				return _.findWhere(this.clubs, {_id: participant._clubId});
+			this.canRemoveNewClub = function(){
+				return !_.isEmpty(this.clubs)
 			}
 
 			this.participants = $meteor.collection(Participants);
@@ -42,9 +46,12 @@ angular.module('htm.administration')
 			this.clubs = $scope.$meteorCollection(Clubs,false);
 			this.clubs.subscribe('clubs');
 
+
 			this.isNew = angular.isUndefined($stateParams.participantId);
+			this.newClub = _.isEmpty(this.clubs);
+
 			if(this.isNew){
-				this.participant = Participants._transform({name: '', _clubId: undefined, _countryId: undefined, tournaments : []});
+				this.participant = Participants._transform({name: '', club: undefined, country: undefined, tournaments : []});
 			} else {
 				this.participant = $scope.$meteorObject(Participants, $stateParams.participantId);
 			}

@@ -1,14 +1,17 @@
 /*
- *  participants: {name: '', club: _clubId, country: _countryId} 
+ *  participants: {name, club: {name, code}, country: {code2, code3, name}} 
  */
 Participants = new Mongo.Collection('participants');
 
 Participants.before.insert(function(userId, doc) {
+  doc.number = Participants.find().count() + 1;
   Meteor.call('updateTournamentSubscriptions', doc);
+  Meteor.call('updateParticipantClub', doc);
 });
 
 Participants.before.update(function(userId, doc, fieldNames, modifier, options) {
   Meteor.call('updateTournamentSubscriptions', doc);
+  Meteor.call('updateParticipantClub', doc);
 });
 
 Participants.helpers({
@@ -23,14 +26,24 @@ Meteor.methods({
     if(!_.isArray(participants)){
       participants = [participants];
     }
-
-    var q = Participants.find();
-
     participants.forEach(function(p) {
-      p.number = q.count() + 1;
       Participants.insert(p);
     });
   },
+
+  updateParticipantClub: function(participant) {
+    if(!participant.club || !!participant.club._id){
+      return;
+    }
+
+    var insertedId = Clubs.upsert(participant.club,participant.club);
+    if(insertedId){
+      participant.club = Clubs.find(insertedId);
+    } else {
+      participant.club = Clubs.find(participant.club);
+    }
+  },
+
   subscribeParticipantToTournament: function(participantId, tournamentId) {
     Participants.update(participantId, {$addToSet: {tournaments: tournamentId}});
   },
