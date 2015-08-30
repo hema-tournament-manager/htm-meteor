@@ -1,6 +1,12 @@
+/*
+ *  participants: {name: '', club: _clubId, country: _countryId} 
+ */
 Participants = new Mongo.Collection('participants');
 
+
 Meteor.methods({
+
+
   addParticipants: function(participants) {
     if(!_.isArray(participants)){
       participants = [participants];

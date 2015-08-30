@@ -7,6 +7,8 @@ angular.module('htm.administration')
 			};
 
 			this.save = function() {
+
+
 				if(this.isNew){
 					$meteor.call('addParticipants', angular.copy(this.participant));  
 				} 
@@ -14,15 +16,34 @@ angular.module('htm.administration')
 				$state.go('^', {}, {ignoreDsr: true});
 			};
 
-			this.countries = $scope.$meteorCollection(Countries,false);
-			$scope.$meteorSubscribe('countries');
+			this.addNewClubVisible = false;
 
-			this.clubs = [{name:'HEMA Tournament Managers', code:'HTM'},{name:'Noorderwind', code:'NW'}]
+			this.showAddNewClub = function(){
+				this.addNewClubVisible = true;
+			}
+
+			this.hideAddNewClub = function(){
+				this.addNewClubVisible = false;
+			}
+
+			this.country = function(participant){
+				return _.findWhere(this.countries, {_id: participant._countryId});
+			}
+			this.club = function(participant){
+				return _.findWhere(this.clubs, {_id: participant._clubId});
+			}
+
+			this.participants = $meteor.collection(Participants);
+
+			this.countries = $scope.$meteorCollection(Countries,false);
+			this.countries.subscribe('countries');
+
+			this.clubs = $scope.$meteorCollection(Clubs,false);
+			this.clubs.subscribe('clubs');
 
 			this.isNew = angular.isUndefined($stateParams.participantId);
 			if(this.isNew){
-				var emptyParticipant = {name: '', club: {name:'', code: ''}, country: {code2:'' , code3: '', name:'Unknown'}};
-				this.participant = emptyParticipant;
+				this.participant = {name: '', _clubId: undefined, _countryId: undefined};
 			} else {
 				this.participant = $scope.$meteorObject(Participants, $stateParams.participantId);
 			}
@@ -48,6 +69,19 @@ angular.module('htm.administration')
 			this.isEditorActive = function(participant){
 				return $state.is('administration.participants.edit',{participantId:participant._id});
 			}
+
+			this.country = function(participant){
+				return _.findWhere(this.countries,{_id: participant._countryId});
+			}
+			this.club = function(participant){
+				return _.findWhere(this.clubs, {_id: participant._clubId});
+			}
+
+			this.countries = $scope.$meteorCollection(Countries,false);
+			this.countries.subscribe('countries');
+
+			this.clubs = $scope.$meteorCollection(Clubs,false);
+			this.clubs.subscribe('clubs');
 
 			this.query = {q : '' };
 			this.list = $scope.$meteorCollection(Participants);

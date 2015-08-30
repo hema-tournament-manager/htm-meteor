@@ -12,7 +12,4 @@ Meteor.publish('participants', function (query,options) {
 
 
   	, options);
-
-  // return Participants.find();
 });
-

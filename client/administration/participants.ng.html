@@ -4,13 +4,14 @@
 				<div class="page-header">
 						<h2>
 								Participants
-								<small class="totals hidden-xs" ng-show="totals.$resolved">
-														<ng-pluralize count="totals.participants" when="{'one': '1 person', 'other': '{} people'}"></ng-pluralize>
+								<!-- TODO: use counts -->
+							<!-- 	<small class="totals hidden-xs">
+														<ng-pluralize count="participants.list.length" when="{'one': '1 person', 'other': '{} people'}"></ng-pluralize>
 														from
-														<ng-pluralize count="totals.clubs" when="{'one': '1 club', 'other': '{} clubs'}"></ng-pluralize>
+														<ng-pluralize count="participants.clubs.length" when="{'one': '1 club', 'other': '{} clubs'}"></ng-pluralize>
 														in
-														<ng-pluralize count="totals.countries" when="{'one': '1 country', 'other': '{} countries'}"></ng-pluralize>
-								</small>
+														<ng-pluralize count="participants.countries.length" when="{'one': '1 country', 'other': '{} countries'}"></ng-pluralize>
+								</small> -->
 
 								<div class="pull-right">
 												<div class="btn-group ">
@@ -77,13 +78,13 @@
 										<span class="glyphicon glyphicon-wrench"></span>
 								</button>
 						</td>
-						<td><htm-flag country="p.country"></htm-flag></td>
-						<td ng-bind-html="p.country.code2 | highlight:participants.query.q"></td>
+						<td><htm-flag country="participants.country(p)"></htm-flag></td>
+						<td ng-bind-html="participants.country(p).code2 | highlight:participants.query.q"></td>
 						<td>{{p.number}}</td>
 						<td ng-bind-html="p.name | highlight:participants.query.q"></td>
 						<td>
-								<span class="hidden-xs" ng-bind-html="p.club.name | highlight:participants.query.q"></span>
-								<span class="visible-xs-inline" ng-bind-html="p.club.code | highlight:participants.query.q"></span>
+								<span class="hidden-xs" ng-bind-html="participants.club(p).name | highlight:participants.query.q"></span>
+								<span class="visible-xs-inline" ng-bind-html="participants.club(p).code | highlight:participants.query.q"></span>
 						</td>
 				</tr>
 				<tr ng-repeat-end ng-if="participants.isEditorActive(p)">
