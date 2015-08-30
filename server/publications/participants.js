@@ -1,4 +1,9 @@
-Meteor.publish('participants', function (query,options) {
+Meteor.publish('participants', function(selector, options) {
+  selector = selector || {};
+  return Participants.find(selector, options);
+});
+
+Meteor.publish('participantsSearch', function (query,options) {
   console.log("participants query " + query);
   return Participants.find(
 

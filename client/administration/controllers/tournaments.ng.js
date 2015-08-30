@@ -6,6 +6,13 @@ angular.module('htm.administration').controller('TournamentsCtrl', function($met
 
 angular.module('htm.administration').controller('TournamentViewCtrl', function($meteor, $scope, $stateParams) {
   this.object = $scope.$meteorObject(Tournaments, {identifier: $stateParams.tournamentIdentifier}, true);
+  var t = this.object;
+  this.unsubscribedParticipants = $scope.$meteorCollection(function() {
+    return Participants.find({tournaments: {$ne: t._id}});
+  });
+  this.subscribeParticipant = function(p) {
+    Meteor.call('subscribeParticipantToTournament', p._id, this.object._id);
+  };
 });
 
 angular.module('htm.administration').controller('TournamentViewPhaseCtrl', function($meteor, $scope, $stateParams) {

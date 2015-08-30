@@ -22,3 +22,5 @@ underscore
 semantic:ui
 flemay:less-autoprefixer
 xolvio:cucumber
+dburles:collection-helpers
+matb33:collection-hooks

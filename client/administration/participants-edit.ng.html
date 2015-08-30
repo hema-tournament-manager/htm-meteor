@@ -51,7 +51,11 @@
 				</ui-select>
 			</div>
 		</div>
-
+		<div class="form-group" ng-repeat="t in participants.tournaments">
+			{{t.name}}
+			<button ng-if="editor.participant.inTournament(t)" class="btn btn-danger" ng-click="editor.dropOut(t)">Drop out</button>
+			<button ng-if="!editor.participant.inTournament(t)" class="btn btn-success" ng-click="editor.dropIn(t)">Drop in</button>
+		</div>
 		<div class="pull-right">
 			<button class="btn btn-primary" ng-click="editor.save()">{{editor.isNew ? 'Add Participant' : 'Done'}}</button>
 			<button class="btn btn-danger" ng-click="editor.cancel()" ng-show="editor.isNew">Close</button>

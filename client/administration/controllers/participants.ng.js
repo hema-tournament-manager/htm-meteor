@@ -48,7 +48,20 @@ angular.module('htm.administration')
 				this.participant = $scope.$meteorObject(Participants, $stateParams.participantId);
 			}
 
-			
+			this.dropIn = function(tournament) {
+				if (!this.participant.tournaments) {
+					this.participant.tournaments = [];
+				}
+				if (tournament && tournament._id) {
+					this.participant.tournaments.push(tournament._id);
+				}
+			};
+
+			this.dropOut = function(tournament) {
+				if (this.participant.tournaments && tournament && tournament._id) {
+					this.participant.tournaments = _.without(this.participant.tournaments, tournament._id);
+				}
+			};
 });
 
 angular.module('htm.administration')
@@ -68,7 +81,9 @@ angular.module('htm.administration')
 
 			this.isEditorActive = function(participant){
 				return $state.is('administration.participants.edit',{participantId:participant._id});
-			}
+			};
+
+			this.tournaments = $scope.$meteorCollection(Tournaments);
 
 			this.country = function(participant){
 				return _.findWhere(this.countries,{_id: participant._countryId});
@@ -87,7 +102,7 @@ angular.module('htm.administration')
 			this.list = $scope.$meteorCollection(Participants);
 			$scope.$meteorAutorun(function() {
 				var q = $scope.getReactively('participants.query.q');
-				$scope.$meteorSubscribe('participants', q || '');
+				$scope.$meteorSubscribe('participantsSearch', q || '');
 			});
 });
 
