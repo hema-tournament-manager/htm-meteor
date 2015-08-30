@@ -7,8 +7,6 @@ angular.module('htm.administration')
 			};
 
 			this.save = function() {
-
-
 				if(this.isNew){
 					$meteor.call('addParticipants', angular.copy(this.participant));  
 				} 
@@ -35,6 +33,9 @@ angular.module('htm.administration')
 
 			this.participants = $meteor.collection(Participants);
 
+			this.tournaments = $scope.$meteorCollection(Tournaments);
+			this.tournaments.subscribe('tournaments');
+
 			this.countries = $scope.$meteorCollection(Countries,false);
 			this.countries.subscribe('countries');
 
@@ -43,23 +44,16 @@ angular.module('htm.administration')
 
 			this.isNew = angular.isUndefined($stateParams.participantId);
 			if(this.isNew){
-				this.participant = {name: '', _clubId: undefined, _countryId: undefined};
+				this.participant = Participants._transform({name: '', _clubId: undefined, _countryId: undefined, tournaments : []});
 			} else {
 				this.participant = $scope.$meteorObject(Participants, $stateParams.participantId);
 			}
 
-			this.dropIn = function(tournament) {
-				if (!this.participant.tournaments) {
-					this.participant.tournaments = [];
-				}
-				if (tournament && tournament._id) {
-					this.participant.tournaments.push(tournament._id);
-				}
-			};
-
-			this.dropOut = function(tournament) {
-				if (this.participant.tournaments && tournament && tournament._id) {
+			this.toggleSubscription = function(tournament) {
+				if(this.participant.inTournament(tournament)){
 					this.participant.tournaments = _.without(this.participant.tournaments, tournament._id);
+				} else {
+					this.participant.tournaments.push(tournament._id);	
 				}
 			};
 });
@@ -83,7 +77,6 @@ angular.module('htm.administration')
 				return $state.is('administration.participants.edit',{participantId:participant._id});
 			};
 
-			this.tournaments = $scope.$meteorCollection(Tournaments);
 
 			this.country = function(participant){
 				return _.findWhere(this.countries,{_id: participant._countryId});
@@ -91,6 +84,9 @@ angular.module('htm.administration')
 			this.club = function(participant){
 				return _.findWhere(this.clubs, {_id: participant._clubId});
 			}
+
+			this.tournaments = $scope.$meteorCollection(Tournaments);
+			this.tournaments.subscribe('tournaments');
 
 			this.countries = $scope.$meteorCollection(Countries,false);
 			this.countries.subscribe('countries');

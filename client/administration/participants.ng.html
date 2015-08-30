@@ -1,102 +1,105 @@
 <!--Title, add and download button -->
 <div class="row">
-		<div class="col-md-12">
-				<div class="page-header">
-						<h2>
-								Participants
-								<!-- TODO: use counts -->
-							<!-- 	<small class="totals hidden-xs">
-														<ng-pluralize count="participants.list.length" when="{'one': '1 person', 'other': '{} people'}"></ng-pluralize>
-														from
-														<ng-pluralize count="participants.clubs.length" when="{'one': '1 club', 'other': '{} clubs'}"></ng-pluralize>
-														in
-														<ng-pluralize count="participants.countries.length" when="{'one': '1 country', 'other': '{} countries'}"></ng-pluralize>
-								</small> -->
+	<div class="col-md-12">
+		<div class="page-header">
+			<h2>
+				Participants
+				<!-- TODO: use counts -->
+			 <!--  <small class="totals hidden-xs">
+							<ng-pluralize count="participants.list.length" when="{'one': '1 person', 'other': '{} people'}"></ng-pluralize>
+							from
+							<ng-pluralize count="participants.clubs.length" when="{'one': '1 club', 'other': '{} clubs'}"></ng-pluralize>
+							in
+							<ng-pluralize count="participants.countries.length" when="{'one': '1 country', 'other': '{} countries'}"></ng-pluralize>
+				</small> -->
 
-								<div class="pull-right">
-												<div class="btn-group ">
-														<button ui-sref=".add" ui-sref-active="active" role="button" class="btn btn-default">
-																<span class="glyphicon glyphicon-plus"></span>
-																Add
-														</button>
-														<button ui-sref=".import" ui-sref-active="active" role="button" class="btn btn-default hidden-xs">
-																<span class="glyphicon glyphicon-upload"></span>
-																Upload
-														</button>
-														<button  role="button" class="btn btn-default dropdown-toggle hidden-xs" data-toggle="dropdown">
-																<span class="glyphicon glyphicon-download"></span> Download<span class="caret"></span>
-														</button>
-		
-														<ul class="dropdown-menu pull-right">
-																<!--TODO: Implement links-->
-																<li><a href="/download/participants">Participant</a></li>
-																<li><a href="/download/clubs">Clubs</a></li>
-																<li><a href="/download/details">Finalist Details</a></li>
-														</ul>
-										</div>
-								</div>
-						</h2>
+				<div class="pull-right">
+						<div class="btn-group ">
+							<!-- TODO: Return focus to add button after closing add -->
+							<button ui-sref=".add" ui-sref-active="active" role="button" class="btn btn-default">
+								<span class="glyphicon glyphicon-plus"></span>
+								Add
+							</button>
+							<button ui-sref=".import" ui-sref-active="active" role="button" class="btn btn-default hidden-xs">
+								<span class="glyphicon glyphicon-upload"></span>
+								Upload
+							</button>
+							<button  role="button" class="btn btn-default dropdown-toggle hidden-xs" data-toggle="dropdown">
+								<span class="glyphicon glyphicon-download"></span> Download<span class="caret"></span>
+							</button>
+	
+							<ul class="dropdown-menu pull-right">
+								<!--TODO: Implement links-->
+								<li><a href="/download/participants">Participant</a></li>
+								<li><a href="/download/clubs">Clubs</a></li>
+								<li><a href="/download/details">Finalist Details</a></li>
+							</ul>
+					</div>
 				</div>
+			</h2>
 		</div>
+	</div>
 </div>
 <!-- Add participants / Import participants -->
 <div class="row" ui-view></div>
 
 <!--Search bar -->
 <div class="row">
-		<div class="col-md-12">
-				<form class="form" name="form" novalidate>
-						<div class="form-group" >
-								<div class="input-group">
-										<span class="input-group-btn">
-											<button role="button" class="btn btn-default">
-												<span class="glyphicon glyphicon-search" title="Search participants"></span>
-											</button>
-										</span>
-											<input ng-model="participants.query.q" type="text" class="form-control" placeholder="Search"/>
-										</div>
-								</div>
-						</form>
-		</div>    
+	<div class="col-md-12">
+		<form class="form" name="form" novalidate>
+			<div class="form-group" >
+				<div class="input-group">
+					<span class="input-group-btn">
+					 <button role="button" class="btn btn-default">
+						<span class="glyphicon glyphicon-search" title="Search participants"></span>
+					 </button>
+					</span>
+					 <input ng-model="participants.query.q" type="text" class="form-control" placeholder="Search"/>
+					</div>
+				</div>
+			</form>
+	</div>    
 </div>
 
 <!--Participants table-->
 <table class="table table-condensed table-striped">
-		<thead>
-				<tr>
-						<th><!--Edit--></th>
-						<th colspan="2">Country</th>
-						<th>Number</th>
-						<th>Name</th>
-						<th>Club</th>
-						<th ng-repeat="t in participants.tournaments">
-							{{t.name}}
-						</th>
-				</tr>
-		</thead>
-		<tbody>
-				<tr ng-repeat-start="p in participants.list track by p._id" ng-if="!participants.isEditorActive(p)">
-						<td>
-								<button class="btn btn-default btn-sm" ng-click="participants.edit(p)">
-										<span class="glyphicon glyphicon-wrench"></span>
-								</button>
-						</td>
-						<td><htm-flag country="participants.country(p)"></htm-flag></td>
-						<td ng-bind-html="participants.country(p).code2 | highlight:participants.query.q"></td>
-						<td>{{p.number}}</td>
-						<td ng-bind-html="p.name | highlight:participants.query.q"></td>
-						<td>
-								<span class="hidden-xs" ng-bind-html="participants.club(p).name | highlight:participants.query.q"></span>
-								<span class="visible-xs-inline" ng-bind-html="participants.club(p).code | highlight:participants.query.q"></span>
-						</td>
-						<td ng-repeat="t in participants.tournaments">
-							<span class="glyphicon" ng-class="p.inTournament(t) ? 'glyphicon-ok' : 'glyphicon-remove'"></span>
-						</td>
-				</tr>
-				<tr ng-repeat-end ng-if="participants.isEditorActive(p)">
-						<td colspan="{{ 6 + participants.tournaments.length }}">
-								<div class="row" ui-view="edit"></div>
-						</td>
-				</tr>
-		</tbody>
+	<thead>
+		<tr>
+			<th><!--Edit--></th>
+			<th colspan="2">Country</th>
+			<th>Number</th>
+			<th>Name</th>
+			<th>Club</th>
+			<th ng-repeat="t in participants.tournaments">
+			 {{t.name}}
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat-start="p in participants.list track by p._id" ng-if="!participants.isEditorActive(p)">
+			<td>
+				<!-- TODO: Return focus to this edit button after closing edit -->
+				<button class="btn btn-default btn-sm" ng-click="participants.edit(p)">
+					<span class="glyphicon glyphicon-wrench"></span>
+				</button>
+			</td>
+			<td><htm-flag country="participants.country(p)"></htm-flag></td>
+			<td ng-bind-html="participants.country(p).code2 | highlight:participants.query.q"></td>
+			<td>{{p.number}}</td>
+			<td ng-bind-html="p.name | highlight:participants.query.q"></td>
+			<td>
+				<span class="hidden-xs" ng-bind-html="participants.club(p).name | highlight:participants.query.q"></span>
+				<span class="visible-xs-inline" ng-bind-html="participants.club(p).code | highlight:participants.query.q"></span>
+			</td>
+			<!-- TODO: Tournaments expands horizontally in a vertically orientated table. Use a smarter solution. -->
+			<td ng-repeat="t in participants.tournaments">
+			 <span class="glyphicon" ng-class="p.inTournament(t) ? 'glyphicon-check' : 'glyphicon-unchecked'"></span>
+			</td>
+		</tr>
+		<tr ng-repeat-end ng-if="participants.isEditorActive(p)">
+			<td colspan="{{ 6 + participants.tournaments.length }}">
+				<div class="row" ui-view="edit"></div>
+			</td>
+		</tr>
+	</tbody>
 </table>
