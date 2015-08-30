@@ -6,6 +6,8 @@
     'reset': function() {
       Participants.remove({});
       Tournaments.remove({});
+      Clubs.remove({});
+
     }
   });
 

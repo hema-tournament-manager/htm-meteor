@@ -1,5 +1,5 @@
 /*
- *  participants: {name, club: {name, code}, country: {code2, code3, name}} 
+ *  participants: {name, club: {name, code}, country: {code2, code3, name}, tournaments:[]}
  */
 Participants = new Mongo.Collection('participants');
 
@@ -49,8 +49,6 @@ Meteor.methods({
   },
   updateTournamentSubscriptions: function(participant) {
     if (_.isArray(participant.tournaments)) {
-      console.log('updateTournamentSubscriptions');
-
       // every tournament that this participant is participating in should have this participant in their list of participants
       Tournaments.direct.update({_id: {$in: participant.tournaments}}, {$addToSet: {participants: participant._id}});
       // every tournament that this participant is NOT participating in should NOT have this participant in their list of participants

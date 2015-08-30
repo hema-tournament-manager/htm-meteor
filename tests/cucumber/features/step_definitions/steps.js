@@ -28,10 +28,13 @@
     this.Then(/^I should see the text "([^"]*)"$/, function (expectedText) {
       // you can use chai-as-promised in step definitions also
       return this.client.
-        waitForVisible('body *'). // WebdriverIO chain-able promise magic
+        waitForVisible('body'). // WebdriverIO chain-able promise magic
         getText('*').should.eventually.match(new RegExp(expectedText, 'g'));
     });
 
+    this.When(/^I enter the (.*): "([^"]*)"$/, function (field, value) {
+      return this.client.setValue("input[name=\""+field+"\"] ",value);
+    });
   };
-
+ 
 })(); 

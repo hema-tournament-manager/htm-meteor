@@ -28,13 +28,13 @@
 						<button ng-click="editor.removeNewClub()" class="btn btn-success" type="button" title="Cancel add new club">	<span class="glyphicon glyphicon-plus"></span>
 						</button>
 				</span>
-				<input ng-model="editor.participant.club.name" htm-focus-on="editor.newClub" type="text" class="form-control" required="true"/>
+				<input name="club name" ng-model="editor.participant.club.name" htm-focus-on="editor.newClub and editor.canRemoveNewClub()" type="text" class="form-control" required="true"/>
 			</div>
 		</div>
 		<div class="form-group" ng-show="editor.newClub">
 			<label>Club Code</label>
 			<div class="input-group">
-				<input ng-model="editor.participant.club.code" type="text" class="form-control" required="true"/>
+				<input name="club code" ng-model="editor.participant.club.code" type="text" class="form-control" required="true"/>
 			</div>
 		</div>
 		<div class="form-group">
@@ -51,7 +51,7 @@
 				</ui-select>
 			</div>
 		</div>
-		<div class="form-group">
+		<div class="form-group" ng-show="editor.tournaments.length">
 			<label for="Tournaments">Tournaments</label>
 			<div class="list-group">
   			<a href="#" class="list-group-item" ng-repeat="t in editor.tournaments" ng-click="editor.toggleSubscription(t)">
