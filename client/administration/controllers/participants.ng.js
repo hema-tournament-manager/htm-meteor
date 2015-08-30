@@ -76,7 +76,9 @@ angular.module('htm.administration')
 			this.isEditorActive = function(participant){
 				return $state.is('administration.participants.edit',{participantId:participant._id});
 			};
-
+			this.isParticipantsActive = function(){
+				return $state.is('administration.participants');
+			};
 
 			this.country = function(participant){
 				return _.findWhere(this.countries,{_id: participant._countryId});

@@ -15,7 +15,6 @@
 
 				<div class="pull-right">
 						<div class="btn-group ">
-							<!-- TODO: Return focus to add button after closing add -->
 							<button ui-sref=".add" ui-sref-active="active" role="button" class="btn btn-default">
 								<span class="glyphicon glyphicon-plus"></span>
 								Add
@@ -54,7 +53,7 @@
 						<span class="glyphicon glyphicon-search" title="Search participants"></span>
 					 </button>
 					</span>
-					 <input ng-model="participants.query.q" type="text" class="form-control" placeholder="Search"/>
+					 <input htm-focus-on="participants.isParticipantsActive()" ng-model="participants.query.q" type="text" class="form-control" placeholder="Search"/>
 					</div>
 				</div>
 			</form>
@@ -78,7 +77,6 @@
 	<tbody>
 		<tr ng-repeat-start="p in participants.list track by p._id" ng-if="!participants.isEditorActive(p)">
 			<td>
-				<!-- TODO: Return focus to this edit button after closing edit -->
 				<button class="btn btn-default btn-sm" ng-click="participants.edit(p)">
 					<span class="glyphicon glyphicon-wrench"></span>
 				</button>
