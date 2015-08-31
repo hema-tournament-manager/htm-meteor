@@ -28,7 +28,7 @@
 						<button ng-click="editor.removeNewClub()" class="btn btn-success" type="button" title="Cancel add new club">	<span class="glyphicon glyphicon-plus"></span>
 						</button>
 				</span>
-				<input name="club name" ng-model="editor.participant.club.name" htm-focus-on="editor.newClub and editor.canRemoveNewClub()" type="text" class="form-control" required="true"/>
+				<input name="club name" ng-model="editor.participant.club.name" htm-focus-on="editor.newClub && editor.canRemoveNewClub()" type="text" class="form-control" required="true"/>
 			</div>
 		</div>
 		<div class="form-group" ng-show="editor.newClub">
@@ -46,7 +46,9 @@
 				<ui-select ng-model="editor.participant.country" ng-disabled="disabled" required="true">
 					<ui-select-match placeholder="Select or search a country in the list...">{{$select.selected.name}}</ui-select-match>
 					<ui-select-choices repeat="country in editor.countries | filter: $select.search">
-						<span ng-bind-html="country.code2 | highlight: $select.search"></span> - <span ng-bind-html="country.name | highlight: $select.search"></span>
+						<span ng-bind-html="country.code2 | highlight: $select.search"></span>
+						<span ng-show="country.code2"> - </span>
+						<span ng-bind-html="country.name | highlight: $select.search"></span>
 					</ui-select-choices>
 				</ui-select>
 			</div>

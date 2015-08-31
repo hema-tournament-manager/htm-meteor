@@ -51,7 +51,8 @@ angular.module('htm.administration')
 			this.newClub = _.isEmpty(this.clubs);
 
 			if(this.isNew){
-				this.participant = Participants._transform({name: '', club: undefined, country: undefined, tournaments : []});
+				var unknownCountry = _.findWhere(this.countries,{name:"Unknown"});
+				this.participant = Participants._transform({name: '', club: {name: '', code: ''}, country: unknownCountry, tournaments : []});
 			} else {
 				this.participant = $scope.$meteorObject(Participants, $stateParams.participantId);
 			}
