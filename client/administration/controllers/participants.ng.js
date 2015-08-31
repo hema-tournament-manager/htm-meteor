@@ -124,8 +124,8 @@ angular.module('htm.administration')
 				}).map(function(p) {
 					return {
 						name: p.name,
-						club: {name: p.club},
-						country: {code: p.country}
+						club: p.club,
+						country: p.country
 					};
 				}));
 				$state.go('^', {}, {ignoreDsr: true});
@@ -157,8 +157,8 @@ angular.module('htm.administration')
 							}).map(function(p) {
 								return {
 									name: p.Name,
-									club: p.Club,
-									country: p.Country,
+									club: {name: p.Club, code: p.Code},
+									country: {code2: p.Country},
 									selected: true
 								};
 							}));

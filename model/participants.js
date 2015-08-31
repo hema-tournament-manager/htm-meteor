@@ -7,6 +7,10 @@ Participants.before.insert(function(userId, doc) {
   doc.number = Participants.find().count() + 1;
   doc.tournaments = doc.tournaments || [];
 
+  if(!doc.country._id){
+    doc.country = Countries.findOne({code2:doc.country.code2});
+  }
+
   Meteor.call('updateTournamentSubscriptions', doc);
   Meteor.call('updateParticipantClub', doc);
 });

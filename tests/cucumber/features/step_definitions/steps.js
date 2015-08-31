@@ -75,6 +75,15 @@
         .click("div[name=\""+option+"\"] .ui-select-match span")
         .click("span="+value);
     });
+
+    this.When(/^I drag "[^"]*" and drop it on "[^"]*"$/, function (relativePath) {
+      
+
+
+      return this.client.
+        url(url.resolve(process.env.ROOT_URL, relativePath));
+    });
+
   };
  
 })(); 
