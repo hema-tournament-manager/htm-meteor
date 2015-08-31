@@ -4,7 +4,7 @@
 		<div class="form-group">
 			<label for="name">Name</label>
 			<div class="input-group">
-				<input htm-focus-on="true" ng-model="editor.participant.name" type="text" class="form-control" name="name" required="true"/>
+				<input htm-focus-on="true" ng-model="editor.participant.name" type="text" class="form-control" name="name"/>
 			</div>
 		</div>
 
@@ -12,14 +12,16 @@
 			<label for="club">Club</label>
 			<div class="input-group" ng-hide="editor.newClub">
 				<span class="input-group-btn">
-					<button ng-click="editor.addNewClub()" class="btn btn-default" type="button" title="Add new club">
+					<button name="add club" ng-click="editor.addNewClub()" class="btn btn-default" type="button" title="Add new club">
 						<span class="glyphicon glyphicon-plus"></span>
 					</button>
 				</span>
-				<ui-select ng-model="editor.participant.club">
+				<ui-select name="club" ng-model="editor.participant.club">
 					<ui-select-match placeholder="Select or search a club in the list...">{{$select.selected.name}}</ui-select-match>
 					<ui-select-choices repeat="club in editor.clubs | filter: $select.search">
-						<span ng-bind-html="club.code | highlight: $select.search"></span> - <span ng-bind-html="club.name | highlight: $select.search"></span>
+						<span ng-bind-html="club.code | highlight: $select.search"></span>
+						<span> - </span>
+						<span ng-bind-html="club.name | highlight: $select.search"></span>
 					</ui-select-choices>
 				</ui-select>
 			</div>
@@ -43,7 +45,7 @@
 				<span class="input-group-addon">
 					<htm-flag country="editor.participant.country"></htm-flag>
 				</span>
-				<ui-select ng-model="editor.participant.country" ng-disabled="disabled" required="true">
+				<ui-select name="country" ng-model="editor.participant.country" ng-disabled="disabled" required="true">
 					<ui-select-match placeholder="Select or search a country in the list...">{{$select.selected.name}}</ui-select-match>
 					<ui-select-choices repeat="country in editor.countries | filter: $select.search">
 						<span ng-bind-html="country.code2 | highlight: $select.search"></span>

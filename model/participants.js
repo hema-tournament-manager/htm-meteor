@@ -5,6 +5,8 @@ Participants = new Mongo.Collection('participants');
 
 Participants.before.insert(function(userId, doc) {
   doc.number = Participants.find().count() + 1;
+  doc.tournaments = doc.tournaments || [];
+
   Meteor.call('updateTournamentSubscriptions', doc);
   Meteor.call('updateParticipantClub', doc);
 });

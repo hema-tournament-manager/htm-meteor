@@ -2,38 +2,78 @@
 
   'use strict';
 
-  // You can include npm dependencies for support files in tests/cucumber/package.json
   var _ = require('underscore');
+
+  function camelize(str) {
+   return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function(letter, index) {
+      return index == 0 ? letter.toLowerCase() : letter.toUpperCase();
+    }).replace(/\s+/g, '');
+  }
 
   module.exports = function () {
 
-    // You can use normal require here, cucumber is NOT run in a Meteor context (by design)
     var url = require('url');
 
     this.Given(/^I am a new user$/, function () {
-      // no callbacks! DDP has been promisified so you can just return it
-      return this.server.call('reset'); // this.ddp is a connection to the mirror
+      return this.server.call('reset');
     });
 
+    // Given the Land of Ooo exists will call createTheLandOfOoo
+    // Given Finn exists will call createFinn
+    this.Given(/^(.*) exists$/, function (entity) {
+      return this.server.call(camelize('create ' + entity));
+    });
+
+
     this.When(/^I navigate to "([^"]*)"$/, function (relativePath) {
-      // WebdriverIO supports Promises/A+ out the box, so you can return that too
-      return this.client. // this.browser is a pre-configured WebdriverIO + PhantomJS instance
-        url(url.resolve(process.env.ROOT_URL, relativePath)); // process.env.ROOT_URL always points to the mirror
+      return this.client.
+        url(url.resolve(process.env.ROOT_URL, relativePath));
     });
 
     this.When(/^I click (button|link) "([^"]*)"$/, function (buttonOrLink, linkText) {
       return this.client.click((buttonOrLink === 'button' ? buttonOrLink : 'a') + '=' + linkText);
     });
 
+    this.When(/^I click the ([^ ]*) icon$/, function (icon) {
+      return this.client.click(".glyphicon-" + icon);
+    });
+
+    this.When(/^I click (.*) button$/, function (name) {
+      return this.client.click("button[name=\"" + name + "\"]");
+    });
+    this.Then(/^I should see the title "([^"]*)"$/, function (expectedText) {
+      return this.client
+        .waitForVisible('h1,h2,h3,h4,h5,h6')
+        .getText('*').should.eventually.match(new RegExp(expectedText, 'g'));
+     
+    });
+    this.Then(/^I should not see the title "([^"]*)"$/, function (expectedText) {
+      return this.client
+        .waitForVisible('h1,h2,h3,h4,h5,h6')
+        .getText('*').should.eventually.not.match(new RegExp(expectedText, 'g'));
+    });
+
     this.Then(/^I should see the text "([^"]*)"$/, function (expectedText) {
-      // you can use chai-as-promised in step definitions also
-      return this.client.
-        waitForVisible('body'). // WebdriverIO chain-able promise magic
-        getText('*').should.eventually.match(new RegExp(expectedText, 'g'));
+      return this.client
+        .waitForVisible('body')
+        .getText('*').should.eventually.match(new RegExp(expectedText, 'g'));
+     
+    });
+    this.Then(/^I should not see the text "([^"]*)"$/, function (expectedText) {
+     return this.client
+       .waitForVisible('body')
+       .getText('*').should.eventually.not.match(new RegExp(expectedText, 'g'));
     });
 
     this.When(/^I enter the (.*): "([^"]*)"$/, function (field, value) {
-      return this.client.setValue("input[name=\""+field+"\"] ",value);
+      var element = "input[name=\""+field+"\"] ";
+      return this.client.clearElement(element).setValue(element,value);
+    });
+
+    this.When(/^I select the (.*): "([^"]*)"$/, function (option, value) {
+      return this.client
+        .click("div[name=\""+option+"\"] .ui-select-match span")
+        .click("span="+value);
     });
   };
  

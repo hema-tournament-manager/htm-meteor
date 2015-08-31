@@ -14,52 +14,162 @@ Feature: Participants administration
   # The background will be run for every scenario
   Background:
     Given I am a new user
+    Given the Land of Ooo exists
 
   @dev
   Scenario: Navigate to import screen
     When I navigate to "/administration/participants"
-    Then I should see the text "Participants"
-    And I click button "Upload"
-    Then I should see the text "Import from Excel"
-    And I click button "Close"
+    Then I should see the title "Participants"
+     And I click button "Upload"
+    Then I should see the title "Import from Excel"
+     And I click button "Close"
 
   @dev
   Scenario: Close add participant
     When I navigate to "/administration/participants"
-    Then I should see the text "Participants"
-    And I click button "Add"
-    Then I should see the text "Add Participant"
-    And I click button "Close"
+    Then I should see the title "Participants"
+    When I click button "Add"
+    Then I should see the title "Add Participant"
+     And I click button "Close"
     
   @dev
-  Scenario: Add Finn from the new Club Tree House from The Land of Ooo
+  Scenario: Add Finn from the new Club Tree Fort from the Candy Kingdom
     When I navigate to "/administration/participants"
-    Then I should see the text "Participants"
+    Then I should see the title "Participants"
     When I click button "Add"
-    Then I should see the text "Add Participant"
+    Then I should see the title "Add Participant"
     When I enter the name: "Finn"
-    And I enter the club name: "Tree House"
-    And I enter the club code: "TH"
-    And I click button "Add Participant"
+     And I enter the club name: "Tree Fort"
+     And I enter the club code: "TF"
+     And I select the country: "Candy Kingdom"
+     And I click button "Add Participant"
     Then I should see the text "Finn"
-    And I should see the text "Tree House"
+     And I should see the text "Tree Fort"
+     And I should see the text "CK"
+
+  @dev
+  Scenario: Add Jake from the existing club Tree Fort from The Land of Ooo
+    Given Finn exists
+    When I navigate to "/administration/participants"
+    Then I should see the title "Participants"
+    When I click button "Add"
+    Then I should see the title "Add Participant"
+    When I enter the name: "Jake"
+     And I select the club: "Tree Fort"
+     And I select the country: "Land of Ooo"
+     And I click button "Add Participant"
+    Then I should see the text "Jake"
+     And I should see the text "Tree Fort"
+     And I should see the text "IO"
 
 
   @dev
-  Scenario: Add Jake from the existing club Tree House from The Land of Ooo
+  Scenario: Close edit participant
+    Given Finn exists
+    When I navigate to "/administration/participants"
+    Then I should see the title "Participants"
+    When I click the wrench icon
+    Then I should see the title "Edit Participant"
+    When I click button "Done"
+    Then I should not see the text "Edit Participant" 
 
   @dev
-  Scenario: Change Finn's club to a new club Candy Kingdom 
+  Scenario: Change Finn's club to a new club Marceline's House
+    Given Finn exists
+    When I navigate to "/administration/participants"
+    Then I should see the title "Participants"
+    When I click the wrench icon
+    Then I should see the title "Edit Participant"
+    When I click add club button
+    Then I should see the text "Club"
+     And I should see the text "Club Code"
+     And I enter the club name: "Marceline's House"
+     And I enter the club code: "Marceline's House"
+    When I click button "Done"
+    Then I should not see the title "Edit Participant" 
+     And I should see the text "Marceline's House"
 
   @dev
-  Scenario: Change Finn's club to the existing club Nightosphere
+  Scenario: Change Finn's club to the existing club The Candy Castle
+    Given Finn exists
+    Given The Candy Castle exists
+    When I navigate to "/administration/participants"
+    Then I should see the title "Participants"
+    When I click the wrench icon
+    Then I should see the title "Edit Participant"
+     And I select the club: "The Candy Castle"
+     And I click button "Done"
+    Then I should not see the title "Edit Participant" 
+     And I should see the text "The Candy Castle"
 
   @dev
   Scenario: Change Finn's name to Fiona
+    Given Finn exists
+    When I navigate to "/administration/participants"
+    Then I should see the title "Participants"
+    When I click the wrench icon
+    Then I should see the title "Edit Participant"
+    When I enter the name: "Fiona"
+     And I click button "Done"
+    Then I should not see the title "Edit Participant" 
+     And I should see the text "Fiona"
+     But I should not see the text "Finn" 
+    
 
   @dev
-  Scenario: Change Finn's country to the Land of Aaa
+  Scenario: Change Finn's country to the Land of Ooo
+    Given Finn exists
+    When I navigate to "/administration/participants"
+    Then I should see the title "Participants"
+    When I click the wrench icon
+    Then I should see the title "Edit Participant"
+    When I select the country: "Land of Ooo"
+     And I click button "Done"
+    Then I should see the text "IO" 
+     But I should not see the text "TF" 
 
 
+  @dev
+  Scenario: Search participants by their name
+    Given Finn exists
+     And Jake exists
+     And Marceline exists
+     And Princess Bubblegum exists
+    When I enter the query: "Marceline"
+    Then I should see the text "Marceline"
+     But I should not see the text "Finn" 
+     But I should not see the text "Jake" 
+     But I should not see the text "Princess Bubblegum" 
+    When I enter the query: "Finn"
+    Then I should see the text "Finn"
+     But I should not see the text "Marceline" 
+     And I should not see the text "Jake" 
+     And I should not see the text "Princess Bubblegum" 
+    When I enter the query: ""
+    Then I should see the text "Finn"
+     And I should see the text "Marceline" 
+     And I should see the text "Jake" 
+     And I should see the text "Princess Bubblegum" 
 
-
+  @dev
+  Scenario: Search participants by their club
+    Given Finn exists
+     And Jake exists
+     And Marceline exists
+     And Princess Bubblegum exists
+    When I enter the query: "Marceline"
+    Then I should see the text "Marceline"
+     But I should not see the text "Finn" 
+     But I should not see the text "Jake" 
+     But I should not see the text "Princess Bubblegum" 
+    When I enter the query: "Finn"
+    Then I should see the text "Finn"
+     But I should not see the text "Marceline" 
+     And I should not see the text "Jake" 
+     And I should not see the text "Princess Bubblegum" 
+    When I enter the query: ""
+    Then I should see the text "Finn"
+     And I should see the text "Marceline" 
+     And I should see the text "Jake" 
+     And I should see the text "Princess Bubblegum"
+    
