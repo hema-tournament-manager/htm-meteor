@@ -1,4 +1,5 @@
 Meteor.startup(function() {
+
   if (Tournaments.find().count() === 0) {
     var tournaments = [
       {

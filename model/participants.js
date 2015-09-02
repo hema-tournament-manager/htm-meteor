@@ -1,5 +1,5 @@
 /*
- *  participants: {name, club: {name, code}, country: {code2, code3, name}, tournaments:[]}
+ *  participants: {name, number, club?: {name, code}, country?: {code2, code3, name}, tournaments:[]}
  */
 Participants = new Mongo.Collection('participants');
 
@@ -7,9 +7,9 @@ Participants.before.insert(function(userId, doc) {
   doc.number = Participants.find().count() + 1;
   doc.tournaments = doc.tournaments || [];
 
-  if(!doc.country._id){
+  if(doc.country && !doc.country._id){
     doc.country = Countries.findOne({code2:doc.country.code2});
-  }
+  } 
 
   Meteor.call('updateTournamentSubscriptions', doc);
   Meteor.call('updateParticipantClub', doc);

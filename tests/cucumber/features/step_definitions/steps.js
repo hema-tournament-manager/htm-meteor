@@ -30,17 +30,21 @@
         url(url.resolve(process.env.ROOT_URL, relativePath));
     });
 
+    // For buttons w/ a title
     this.When(/^I click (button|link) "([^"]*)"$/, function (buttonOrLink, linkText) {
       return this.client.click((buttonOrLink === 'button' ? buttonOrLink : 'a') + '=' + linkText);
     });
 
+    // For buttons with a name w/o a title or icon
+    this.When(/^I click (.*) button$/, function (name) {
+      return this.client.click("button[name=\"" + name + "\"]");
+    });
+    // For buttons with an icon w/o a title or name
     this.When(/^I click the ([^ ]*) icon$/, function (icon) {
       return this.client.click(".glyphicon-" + icon);
     });
 
-    this.When(/^I click (.*) button$/, function (name) {
-      return this.client.click("button[name=\"" + name + "\"]");
-    });
+
     this.Then(/^I should see the title "([^"]*)"$/, function (expectedText) {
       return this.client
         .waitForVisible('h1,h2,h3,h4,h5,h6')
@@ -50,6 +54,28 @@
     this.Then(/^I should not see the title "([^"]*)"$/, function (expectedText) {
       return this.client
         .waitForVisible('h1,h2,h3,h4,h5,h6')
+        .getText('*').should.eventually.not.match(new RegExp(expectedText, 'g'));
+    });
+
+    this.Then(/^I should see the entry "([^"]*)"$/, function (expectedText) {
+      return this.client
+        .waitForVisible('td')
+        .getText('*').should.eventually.match(new RegExp(expectedText, 'g'));
+    });
+    this.Then(/^I should not see the entry "([^"]*)"$/, function (expectedText) {
+      return this.client
+        .waitForVisible('td')
+        .getText('*').should.eventually.not.match(new RegExp(expectedText, 'g'));
+    });
+
+    this.Then(/^I should see the label "([^"]*)"$/, function (expectedText) {
+      return this.client
+        .waitForVisible('label')
+        .getText('*').should.eventually.match(new RegExp(expectedText, 'g'));
+    });
+    this.Then(/^I should not see the label "([^"]*)"$/, function (expectedText) {
+      return this.client
+        .waitForVisible('label')
         .getText('*').should.eventually.not.match(new RegExp(expectedText, 'g'));
     });
 

@@ -33,37 +33,39 @@ Feature: Participants administration
     Then I should see the title "Import from Excel"
     
     When I drag "participants.xslt" and drop it on "target"
-    Then I should see the text "Finn"
-     And I should see the text "Jake"
-     And I should see the text "Marceline"
-     And I should see the text "Princess Bubblegum"
+    Then I should see the entry "Finn"
+     And I should see the entry "Jake"
+     And I should see the entry "Marceline"
+     And I should see the entry "Princess Bubblegum"
     
     When I click the button "Import Participants"
     Then I should not see the title "Import from Excel"
-     And I should see the text "Finn"
-     And I should see the text "Jake"
-     And I should see the text "Marceline"
-     And I should see the text "Princess Bubblegum"      
+     And I should see the entry "Finn"
+     And I should see the entry "Jake"
+     And I should see the entry "Marceline"
+     And I should see the entry "Princess Bubblegum"      
 
   @dev
   Scenario: Close add participant
     When I click button "Add"
     Then I should see the title "Add Participant"
      And I click button "Close"
-    
+
   @dev
   Scenario: Add Finn from the new Club Tree Fort from the Candy Kingdom
     When I click button "Add"
     Then I should see the title "Add Participant"
-    
+     And I should see the label "Club"
+     And I should see the label "Club Code"
+
     When I enter the name: "Finn"
      And I enter the club name: "Tree Fort"
      And I enter the club code: "TF"
      And I select the country: "Candy Kingdom"
      And I click button "Add Participant"
-    Then I should see the text "Finn"
-     And I should see the text "Tree Fort"
-     And I should see the text "CK"
+    Then I should see the entry "Finn"
+     And I should see the entry "Tree Fort"
+     And I should see the entry "CK"
 
   @dev
   Scenario: Add Jake from the existing club Tree Fort from The Land of Ooo
@@ -71,14 +73,16 @@ Feature: Participants administration
     
     When I click button "Add"
     Then I should see the title "Add Participant"
-    
+     And I should see the label "Club"
+     And I should not see the label "Club Code"
+
     When I enter the name: "Jake"
      And I select the club: "Tree Fort"
      And I select the country: "Land of Ooo"
      And I click button "Add Participant"
-    Then I should see the text "Jake"
-     And I should see the text "Tree Fort"
-     And I should see the text "IO"
+    Then I should see the entry "Jake"
+     And I should see the entry "Tree Fort"
+     And I should see the entry "IO"
 
 
   @dev
@@ -89,7 +93,7 @@ Feature: Participants administration
     Then I should see the title "Edit Participant"
     
     When I click button "Done"
-    Then I should not see the text "Edit Participant" 
+    Then I should not see the title "Edit Participant" 
 
   @dev
   Scenario: Change Finn's club to a new club Marceline's House
@@ -99,14 +103,14 @@ Feature: Participants administration
     Then I should see the title "Edit Participant"
     
     When I click add club button
-    Then I should see the text "Club"
-     And I should see the text "Club Code"
+    Then I should see the label "Club"
+     And I should see the label "Club Code"
      And I enter the club name: "Marceline's House"
      And I enter the club code: "Marceline's House"
     
     When I click button "Done"
     Then I should not see the title "Edit Participant" 
-     And I should see the text "Marceline's House"
+     And I should see the entry "Marceline's House"
 
   @dev
   Scenario: Change Finn's club to the existing club The Candy Castle
@@ -118,7 +122,7 @@ Feature: Participants administration
     When I select the club: "The Candy Castle"
      And I click button "Done"
     Then I should not see the title "Edit Participant" 
-     And I should see the text "The Candy Castle"
+     And I should see the entry "The Candy Castle"
 
   @dev
   Scenario: Change Finn's name to Fiona
@@ -130,8 +134,8 @@ Feature: Participants administration
     When I enter the name: "Fiona"
      And I click button "Done"
     Then I should not see the title "Edit Participant" 
-     And I should see the text "Fiona"
-     But I should not see the text "Finn" 
+     And I should see the entry "Fiona"
+     But I should not see the entry "Finn" 
     
 
   @dev
@@ -143,8 +147,8 @@ Feature: Participants administration
     
     When I select the country: "Land of Ooo"
      And I click button "Done"
-    Then I should see the text "IO" 
-     But I should not see the text "TF" 
+    Then I should see the entry "IO" 
+     But I should not see the entry "TF" 
 
 
   @dev
@@ -155,22 +159,22 @@ Feature: Participants administration
      And Princess Bubblegum exists
 
     When I enter the query: "Marceline"
-    Then I should see the text "Marceline"
-     But I should not see the text "Finn" 
-     But I should not see the text "Jake" 
-     But I should not see the text "Princess Bubblegum" 
+    Then I should see the entry "Marceline"
+     But I should not see the entry "Finn" 
+     But I should not see the entry "Jake" 
+     But I should not see the entry "Princess Bubblegum" 
     
     When I enter the query: "Finn"
-    Then I should see the text "Finn"
-     But I should not see the text "Marceline" 
-     And I should not see the text "Jake" 
-     And I should not see the text "Princess Bubblegum" 
+    Then I should see the entry "Finn"
+     But I should not see the entry "Marceline" 
+     And I should not see the entry "Jake" 
+     And I should not see the entry "Princess Bubblegum" 
    
     When I enter the query: ""
-    Then I should see the text "Finn"
-     And I should see the text "Marceline" 
-     And I should see the text "Jake" 
-     And I should see the text "Princess Bubblegum" 
+    Then I should see the entry "Finn"
+     And I should see the entry "Marceline" 
+     And I should see the entry "Jake" 
+     And I should see the entry "Princess Bubblegum" 
 
   @dev
   Scenario: Search participants by their club
@@ -180,20 +184,20 @@ Feature: Participants administration
      And Princess Bubblegum exists
 
     When I enter the query: "Marceline"
-    Then I should see the text "Marceline"
-     But I should not see the text "Finn" 
-     But I should not see the text "Jake" 
-     But I should not see the text "Princess Bubblegum" 
+    Then I should see the entry "Marceline"
+     But I should not see the entry "Finn" 
+     But I should not see the entry "Jake" 
+     But I should not see the entry "Princess Bubblegum" 
    
     When I enter the query: "Finn"
-    Then I should see the text "Finn"
-     But I should not see the text "Marceline" 
-     And I should not see the text "Jake" 
-     And I should not see the text "Princess Bubblegum" 
+    Then I should see the entry "Finn"
+     But I should not see the entry "Marceline" 
+     And I should not see the entry "Jake" 
+     And I should not see the entry "Princess Bubblegum" 
     
     When I enter the query: ""
-    Then I should see the text "Finn"
-     And I should see the text "Marceline" 
-     And I should see the text "Jake" 
-     And I should see the text "Princess Bubblegum"
+    Then I should see the entry "Finn"
+     And I should see the entry "Marceline" 
+     And I should see the entry "Jake" 
+     And I should see the entry "Princess Bubblegum"
 

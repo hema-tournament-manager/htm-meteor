@@ -51,8 +51,7 @@ angular.module('htm.administration')
 			this.newClub = _.isEmpty(this.clubs);
 
 			if(this.isNew){
-				var unknownCountry = _.findWhere(this.countries,{name:"Unknown"});
-				this.participant = Participants._transform({name: '', club: {name: '', code: ''}, country: unknownCountry, tournaments : []});
+				this.participant = Participants._transform({name: '', club: {name: '', code: ''}, country: undefined, tournaments : []});
 			} else {
 				this.participant = $scope.$meteorObject(Participants, $stateParams.participantId);
 			}
@@ -68,6 +67,7 @@ angular.module('htm.administration')
 
 angular.module('htm.administration')
 	.controller('ParticipantsCtrl', function($scope, $meteor, $state) {
+			var self = this;
 					
 			this.add = function() {
 				$state.go('administration.participants.add');
@@ -88,27 +88,17 @@ angular.module('htm.administration')
 				return $state.is('administration.participants');
 			};
 
-			this.country = function(participant){
-				return _.findWhere(this.countries,{_id: participant._countryId});
-			}
-			this.club = function(participant){
-				return _.findWhere(this.clubs, {_id: participant._clubId});
-			}
 
 			this.tournaments = $scope.$meteorCollection(Tournaments);
 			this.tournaments.subscribe('tournaments');
 
-			this.countries = $scope.$meteorCollection(Countries,false);
-			this.countries.subscribe('countries');
-
-			this.clubs = $scope.$meteorCollection(Clubs,false);
-			this.clubs.subscribe('clubs');
-
 			this.query = {q : '' };
-			this.list = $scope.$meteorCollection(Participants);
 			$scope.$meteorAutorun(function() {
 				var q = $scope.getReactively('participants.query.q');
-				$scope.$meteorSubscribe('participantsSearch', q || '');
+				var options = {sort: { number : -1 }}; //TODO: Make these toggable.
+				$scope.$meteorSubscribe('participantsSearch', q || '', options).then(function(subscriptionHandle){
+						self.list = $scope.$meteorCollection(Participants)
+				 });
 			});
 });
 
