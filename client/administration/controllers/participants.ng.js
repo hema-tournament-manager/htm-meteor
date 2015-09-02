@@ -51,7 +51,7 @@ angular.module('htm.administration')
 			this.newClub = true;
 			$scope.$meteorSubscribe('clubs').then(function(){
 				self.clubs = $scope.$meteorCollection(Clubs,false);
-				self.newClub = _.isEmpty(this.clubs);
+				self.newClub = _.isEmpty(self.clubs);
 			});
 
 			this.isNew = angular.isUndefined($stateParams.participantId);
