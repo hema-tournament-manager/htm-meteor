@@ -1,15 +1,14 @@
-<div class="ui ordered fluid steps">
-  <a class="step" ng-repeat="phase in tournament.object.phases" ui-sref=".phase({phaseIndex: $index})" ui-sref-active="active">
-    <div class="content">
-      <div class="title">{{phase.name}}</div>
-      <div class="description">{{phase.type}}</div>
+<div class="row">
+  <!-- tournaments list -->
+  <div class="col-md-3">
+    <div class="list-group">
+      <a ng-repeat="t in tournaments.list track by t._id" class="list-group-item" ui-sref-active="active" ui-sref="administration.tournaments.view({tournamentId: t._id})">
+        {{ t.name }}
+      </a>
     </div>
-  </a>
+  </div>
+  <!-- tournaments view -->
+  <div class="col-md-9">
+    <ui-view></ui-view>
+  </div>
 </div>
-
-<h2>participants</h2>
-<div ng-repeat="p in tournament.unsubscribedParticipants" ng-click="tournament.subscribeParticipant(p)">
-  {{p.name}}
-</div>
-
-<ui-view></ui-view>

@@ -5,13 +5,13 @@ angular.module('htm.administration').controller('TournamentsCtrl', function($met
 });
 
 angular.module('htm.administration').controller('TournamentViewCtrl', function($meteor, $scope, $stateParams) {
-  this.object = $scope.$meteorObject(Tournaments, {identifier: $stateParams.tournamentIdentifier}, true);
+  this.object = $scope.$meteorObject(Tournaments, $stateParams.tournamentId, true);
   var t = this.object;
   this.unsubscribedParticipants = $scope.$meteorCollection(function() {
-    return Participants.find({tournaments: {$ne: t._id}});
+    return Participants.find({tournaments: {$ne: $stateParams.tournamentId}});
   });
   this.subscribeParticipant = function(p) {
-    Meteor.call('subscribeParticipantToTournament', p._id, this.object._id);
+    Meteor.call('subscribeParticipantToTournament', p._id, $stateParams.tournamentId);
   };
 });
 
