@@ -1,0 +1,11 @@
+web:
+  build: .
+  ports:
+   - "3456:80"
+  links:
+   - mongo
+  environment:
+   - MONGO_URL=mongodb://mongo
+   - ROOT_URL=http://localhost
+mongo:
+  image: mongo
