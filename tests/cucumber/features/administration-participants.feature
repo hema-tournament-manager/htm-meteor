@@ -19,6 +19,7 @@ Feature: Participants administration
     When I navigate to "/administration/participants"
     Then I should see the title "Participants"
 
+
   @dev
   Scenario: Navigate to import screen
     When I click button "Upload"
@@ -91,7 +92,7 @@ Feature: Participants administration
   @dev
   Scenario: Add Jake from the existing club Tree Fort from The Land of Ooo
     Given Finn exists
-    
+
     When I click button "Add"
     Then I should see the title "Add Participant"
      And I should see the label "Club"
@@ -105,12 +106,11 @@ Feature: Participants administration
      And I should see the entry "Tree Fort"
      And I should see the entry "IO"
 
-
-
   @dev
   Scenario: Close edit participant
     Given Finn exists
-    
+    Then I should see the entry "Finn"
+
     When I click the wrench icon
     Then I should see the title "Edit Participant"
     
@@ -120,7 +120,8 @@ Feature: Participants administration
   @dev
   Scenario: Change Finn's club to a new club Marceline's House
     Given Finn exists
-    
+    Then I should see the entry "Finn"
+
     When I click the wrench icon
     Then I should see the title "Edit Participant"
     
@@ -137,8 +138,9 @@ Feature: Participants administration
   @dev
   Scenario: Change Finn's club to the existing club The Candy Castle
     Given Finn exists
-    Given The Candy Castle exists
-    
+     And The Candy Castle exists
+    Then I should see the entry "Finn"
+
     When I click the wrench icon
     Then I should see the title "Edit Participant"
     When I select the club: "The Candy Castle"
@@ -149,7 +151,8 @@ Feature: Participants administration
   @dev
   Scenario: Change Finn's name to Fiona
     Given Finn exists
-    
+    Then I should see the entry "Finn"
+   
     When I click the wrench icon
     Then I should see the title "Edit Participant"
     
@@ -163,7 +166,8 @@ Feature: Participants administration
   @dev
   Scenario: Change Finn's country to the Land of Ooo
     Given Finn exists
-    
+    Then I should see the entry "Finn"
+
     When I click the wrench icon
     Then I should see the title "Edit Participant"
     
@@ -179,7 +183,7 @@ Feature: Participants administration
      And Jake exists
      And Marceline exists
      And Princess Bubblegum exists
-
+     
     When I enter the query: "Marceline"
     Then I should see the entry "Marceline"
      But I should not see the entry "Finn" 
