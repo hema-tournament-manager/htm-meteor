@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+  - "0.10"
+services:
+  - mongodb
+before_install:
+  # set up the node_modules dir, so we know where it is
+  - "mkdir -p node_modules &"
+  # install meteor
+  - "curl https://install.meteor.com | /bin/sh"
+
+script: SELENIUM_BROWSER=phantomjs meteor --test
