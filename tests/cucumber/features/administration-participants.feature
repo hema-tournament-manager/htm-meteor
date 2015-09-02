@@ -27,25 +27,6 @@ Feature: Participants administration
     When I click button "Close"
     Then I should not see the title "Import from Excel"
 
-
-  #@dev TODO: Fix drag and drop simulation
-  Scenario: Import participants from file
-    When I click button "Upload"
-    Then I should see the title "Import from Excel"
-    
-    When I drag "participants.xslt" and drop it on "target"
-    Then I should see the entry "Finn"
-     And I should see the entry "Jake"
-     And I should see the entry "Marceline"
-     And I should see the entry "Princess Bubblegum"
-    
-    When I click the button "Import Participants"
-    Then I should not see the title "Import from Excel"
-     And I should see the entry "Finn"
-     And I should see the entry "Jake"
-     And I should see the entry "Marceline"
-     And I should see the entry "Princess Bubblegum"      
-
   @dev
   Scenario: Close add participant
     When I click button "Add"
@@ -183,7 +164,7 @@ Feature: Participants administration
      And Jake exists
      And Marceline exists
      And Princess Bubblegum exists
-     
+
     When I enter the query: "Marceline"
     Then I should see the entry "Marceline"
      But I should not see the entry "Finn" 
