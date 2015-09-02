@@ -1,8 +1,11 @@
-sudo: required
+sudo: false
+
 language: node_js
 node_js:
-  - "0.10"
+  - "0.10.36"
+
 before_install:
   - "curl https://install.meteor.com | /bin/sh"
+  - export PATH="$HOME/.meteor:$PATH"
 
 script: SELENIUM_BROWSER=phantomjs meteor --test --release velocity:METEOR@1.1.0.3_2
