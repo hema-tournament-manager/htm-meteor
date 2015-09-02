@@ -42,6 +42,11 @@ Meteor.methods({
       return;
     }
 
+    if(!participant.club.name && !participant.club.code){
+      return;
+    }
+
+
     var insertedId = Clubs.upsert(participant.club,participant.club);
     if(insertedId){
       participant.club = Clubs.find(insertedId);

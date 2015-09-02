@@ -4,8 +4,6 @@ Meteor.publish('participants', function(selector, options) {
 });
 
 Meteor.publish('participantsSearch', function (query,options) {
-  console.log(query);
-  console.log(options);
   return Participants.find(
   	{ $or: [ 
   				{'name': { $regex:query, $options: 'i'}},

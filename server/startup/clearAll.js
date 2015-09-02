@@ -1,7 +1,7 @@
 Meteor.startup(function() {
 
-	// Tournaments.remove({});
-	// Participants.remove({});
-	// Clubs.remove({});
-	// Countries.remove({});
+	Tournaments.remove({});
+	Participants.remove({});  
+	Clubs.remove({});
+	Countries.remove({});
 });

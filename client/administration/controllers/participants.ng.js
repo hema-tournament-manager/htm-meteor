@@ -37,18 +37,24 @@ angular.module('htm.administration')
 
 			this.participants = $meteor.collection(Participants);
 
-			this.tournaments = $scope.$meteorCollection(Tournaments);
-			this.tournaments.subscribe('tournaments');
+			this.tournaments = [];
+			$scope.$meteorSubscribe('tournaments').then(function(){
+				self.tournaments = $scope.$meteorCollection(Tournaments);
+			});
 
-			this.countries = $scope.$meteorCollection(Countries,false);
-			this.countries.subscribe('countries');
+			this.countries = [];
+			$scope.$meteorSubscribe('countries').then(function(){
+				self.countries = $scope.$meteorCollection(Countries,false);
+			});
 
-			this.clubs = $scope.$meteorCollection(Clubs,false);
-			this.clubs.subscribe('clubs');
-
+			this.clubs = [];
+			this.newClub = true;
+			$scope.$meteorSubscribe('clubs').then(function(){
+				self.clubs = $scope.$meteorCollection(Clubs,false);
+				self.newClub = _.isEmpty(this.clubs);
+			});
 
 			this.isNew = angular.isUndefined($stateParams.participantId);
-			this.newClub = _.isEmpty(this.clubs);
 
 			if(this.isNew){
 				this.participant = Participants._transform({name: '', club: {name: '', code: ''}, country: undefined, tournaments : []});
@@ -94,6 +100,7 @@ angular.module('htm.administration')
 
 			this.query = {q : '' };
 			$scope.$meteorAutorun(function() {
+
 				var q = $scope.getReactively('participants.query.q');
 				var options = {sort: { number : -1 }}; //TODO: Make these toggable.
 				$scope.$meteorSubscribe('participantsSearch', q || '', options).then(function(subscriptionHandle){

@@ -52,6 +52,27 @@ Feature: Participants administration
      And I click button "Close"
 
   @dev
+  Scenario: Add Finn and Jake (withouth club or country)
+    When I click button "Add"
+    Then I should see the title "Add Participant"
+     And I should see the label "Club"
+     And I should see the label "Club Code"
+
+    When I enter the name: "Finn"
+     And I click button "Add Participant"
+    Then I should see the entry "Finn"
+
+    When I click button "Add"
+    Then I should see the title "Add Participant"
+     And I should see the label "Club"
+     And I should see the label "Club Code"
+  
+    When I enter the name: "Jake"
+     And I click button "Add Participant"
+    Then I should see the entry "Jake"
+
+
+  @dev
   Scenario: Add Finn from the new Club Tree Fort from the Candy Kingdom
     When I click button "Add"
     Then I should see the title "Add Participant"
@@ -83,6 +104,7 @@ Feature: Participants administration
     Then I should see the entry "Jake"
      And I should see the entry "Tree Fort"
      And I should see the entry "IO"
+
 
 
   @dev
