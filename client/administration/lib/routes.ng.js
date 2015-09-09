@@ -104,10 +104,16 @@ angular.module('htm.administration')
         }
       }
     })
-    .state('administration.tournaments.view.phase', {
-      url: '/:phaseIndex',
-      templateUrl: 'client/administration/tournaments-view-phase.ng.html',
-      controller: 'TournamentViewPhaseCtrl',
-      controllerAs: 'phase'
+    .state('administration.tournaments.view.fights', {
+      url: '/fights',
+      templateUrl: 'client/administration/tournaments-view-fights.ng.html',
+    })
+    .state('administration.tournaments.view.participants', {
+      url: '/participants',
+      templateUrl: 'client/administration/tournaments-view-participants.ng.html',
+    })
+    .state('administration.tournaments.view.settings', {
+      url: '/settings',
+      templateUrl: 'client/administration/tournaments-view-settings.ng.html',
     });
 });

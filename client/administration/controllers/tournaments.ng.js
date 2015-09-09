@@ -14,7 +14,3 @@ angular.module('htm.administration').controller('TournamentViewCtrl', function($
     Meteor.call('subscribeParticipantToTournament', p._id, $stateParams.tournamentId);
   };
 });
-
-angular.module('htm.administration').controller('TournamentViewPhaseCtrl', function($meteor, $scope, $stateParams) {
-  this.object = $scope.tournament.object.phases[$stateParams.phaseIndex];
-});

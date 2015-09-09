@@ -1,0 +1,34 @@
+<form name="tournamentForm" class="form form-participant" novalidate>
+  <h3>Tournament</h3>
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input ng-model="tournament.object.name" type="text" class="form-control" name="name"/>
+  </div>
+
+  <div ng-repeat="phase in tournament.object.phases track by $index">
+    <hr/>
+    <h3>Phase {{ $index + 1}}: {{ phase.name }}</h3>
+    <div class="form-group">
+      <label for="phase.{{$index}}.name">Name</label>
+      <input ng-model="phase.name" type="text" class="form-control" name="phase.{{$index}}.name"/>
+    </div>
+    <div class="form-group">
+      <label for="phase.{{$index}}.ruleset">Ruleset</label>
+      <select name="phase.{{$index}}.ruleset" class="form-control"><option>1</option><option>2</option></select>
+    </div>
+    <div class="form-group" ng-if="phase.type === 'pool'">
+      <label for="phase.{{$index}}.pool-count">Number of pools</label>
+      <input ng-model="phase.poolCount" type="number" min="0" max="128" class="form-control" name="phase.{{$index}}.pool-count"/>
+    </div>
+    <div class="form-group" ng-if="phase.type === 'elimination'">
+      <label for="phase.{{$index}}.fighter-count">Number of fighters</label>
+      <br/>
+      <div class="btn-group">
+        <label class="btn btn-default" ng-model="phase.fighterCount" btn-radio="4">4</label>
+        <label class="btn btn-default" ng-model="phase.fighterCount" btn-radio="8">8</label>
+        <label class="btn btn-default" ng-model="phase.fighterCount" btn-radio="16">16</label>
+        <label class="btn btn-default" ng-model="phase.fighterCount" btn-radio="32">32</label>
+      </div>
+    </div>
+  </div>
+</form>
