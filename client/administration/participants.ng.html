@@ -82,7 +82,7 @@
 			</td>
 			<td><htm-flag country="p.country"></htm-flag></td>
 			<td ng-bind-html="p.country.code2 | highlight:participants.query.q"></td>
-			<td>{{p.number}}</td>
+			<td ng-bind-html="p.number | highlight:participants.query.q"></td>
 			<td ng-bind-html="p.name | highlight:participants.query.q"></td>
 			<td>
 				<span class="hidden-xs" ng-bind-html="p.club.name | highlight:participants.query.q"></span>

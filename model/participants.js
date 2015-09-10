@@ -4,13 +4,11 @@
 Participants = new Mongo.Collection('participants');
 
 Participants.before.insert(function(userId, doc) {
-  doc.number = Participants.find().count() + 1;
+  doc.number =  '' + (Participants.find().count() + 1); // Intentionally a string
   doc.tournaments = doc.tournaments || [];
 
-  if(doc.country && !doc.country._id){
-    doc.country = Countries.findOne({code2:doc.country.code2});
-  } 
-
+ 
+  Meteor.call('updateParticipantCountry', doc);
   Meteor.call('updateTournamentSubscriptions', doc);
   Meteor.call('updateParticipantClub', doc);
 });
@@ -36,6 +34,13 @@ Meteor.methods({
       Participants.insert(p);
     });
   },
+
+  updateParticipantCountry: function(participant) {
+    if(participant.country && !participant.country._id){
+      participant.country = Countries.findOne({code2:participant.country.code2});
+    } 
+  },
+
 
   updateParticipantClub: function(participant) {
     if(!participant.club || !!participant.club._id){
