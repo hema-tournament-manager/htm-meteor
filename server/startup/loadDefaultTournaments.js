@@ -13,6 +13,10 @@ Meteor.startup(function() {
           {
             type: 'elimination',
             name: 'Elimination'
+          },
+          {
+            type: 'finals',
+            name: 'Finals'
           }
         ]
       },
@@ -27,6 +31,10 @@ Meteor.startup(function() {
           {
             type: 'elimination',
             name: 'Elimination'
+          },
+          {
+            type: 'finals',
+            name: 'Finals'
           }
         ]
       }

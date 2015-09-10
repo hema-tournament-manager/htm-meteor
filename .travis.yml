@@ -4,8 +4,15 @@ language: node_js
 node_js:
   - "0.10.36"
 
+cache:
+  directories:
+    - $HOME/.meteor
+    - $HOME/.npm
+
 before_install:
-  - "curl https://install.meteor.com | /bin/sh"
+  # Only install meteor if it's not in the cache
+  - "if [ ! -e ~/.meteor/meteor ]; then curl https://install.meteor.com | /bin/sh; fi"
+  # This will let us use "meteor" in the script
   - export PATH="$HOME/.meteor:$PATH"
 
-script: SELENIUM_BROWSER=phantomjs meteor --test --release velocity:METEOR@1.1.0.3_2
+script: SELENIUM_BROWSER=phantomjs VELOCITY_CI=1 meteor --test --release velocity:METEOR@1.1.0.3_2

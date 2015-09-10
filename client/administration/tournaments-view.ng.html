@@ -1,15 +1,18 @@
-<div class="ui ordered fluid steps">
-  <a class="step" ng-repeat="phase in tournament.object.phases" ui-sref=".phase({phaseIndex: $index})" ui-sref-active="active">
-    <div class="content">
-      <div class="title">{{phase.name}}</div>
-      <div class="description">{{phase.type}}</div>
-    </div>
-  </a>
-</div>
+<h2>{{ tournament.object.name }}</h2>
 
-<h2>participants</h2>
-<div ng-repeat="p in tournament.unsubscribedParticipants" ng-click="tournament.subscribeParticipant(p)">
-  {{p.name}}
-</div>
+<ul class="nav nav-tabs">
+  <li role="presentation" ui-sref-active="active"><a ui-sref=".fights">
+    <span class="glyphicon glyphicon-knight"></span>
+    Fights
+  </a></li>
+  <li role="presentation" ui-sref-active="active"><a ui-sref=".participants">
+    <span class="glyphicon glyphicon-user"></span>
+    Participants
+  </a></li>
+  <li role="presentation" ui-sref-active="active"><a ui-sref=".settings">
+    <span class="glyphicon glyphicon-wrench"></span>
+    Settings
+  </a></li>
+</ul>
 
 <ui-view></ui-view>
