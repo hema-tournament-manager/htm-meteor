@@ -10,7 +10,10 @@ angular.module('htm.battle-station').config(['$stateProvider', function($statePr
       url: '/battle-station',
       views: {
         '': {
-          template: 'Battle Station'
+          templateUrl: 'client/battle-station/battle-station.ng.html',
+          controller: 'BattleStationCtrl',
+          controllerAs: 'battleStation'
+
         },
         'navigation': {
           templateUrl: 'client/battle-station/navigation.ng.html'

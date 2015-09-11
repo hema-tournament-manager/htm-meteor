@@ -1,0 +1,1 @@
+Fights = new Mongo.Collection('fights');
