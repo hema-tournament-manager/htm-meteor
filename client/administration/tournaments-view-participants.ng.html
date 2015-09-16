@@ -1,1 +1,24 @@
-Participants
+<table class="table table-condensed table-striped">
+  <thead>
+    <tr>
+      <th colspan="2">Country</th>
+      <th>Number</th>
+      <th>Name</th>
+      <th>Club</th>
+      <th>Pool</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="p in participants.list track by p._id">
+      <td><htm-flag country="p.country"></htm-flag></td>
+      <td ng-bind-html="p.country.code2 | highlight:participants.query.q"></td>
+      <td ng-bind-html="p.number | highlight:participants.query.q"></td>
+      <td ng-bind-html="p.name | highlight:participants.query.q"></td>
+      <td>
+        <span class="hidden-xs" ng-bind-html="p.club.name | highlight:participants.query.q"></span>
+        <span class="visible-xs-inline" ng-bind-html="p.club.code | highlight:participants.query.q"></span>
+      </td>
+      <td>A</td>
+    </tr>
+  </tbody>
+</table>
