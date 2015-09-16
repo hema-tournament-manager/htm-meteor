@@ -18,7 +18,7 @@
     </div>
     <div class="form-group" ng-if="phase.type === 'pool'">
       <label for="phase.{{$index}}.pool-count">Number of pools</label>
-      <input ng-model="phase.poolCount" type="number" min="0" max="128" class="form-control" name="phase.{{$index}}.pool-count"/>
+      <input ng-model="phase.poolCount" type="number" min="1" max="26" class="form-control" name="phase.{{$index}}.pool-count"/>
     </div>
     <div class="form-group" ng-if="phase.type === 'elimination'">
       <label for="phase.{{$index}}.fighter-count">Number of fighters</label>
