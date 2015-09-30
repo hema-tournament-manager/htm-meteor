@@ -101,6 +101,7 @@ angular.module('htm.administration')
       this.query = {q : '' };
       var options = {sort: { number : -1 }}; //TODO: Make these toggable.
       $scope.$meteorSubscribe('participants', {}, options).then(function(subscriptionHandle){
+        //TODO: This clears the list, shouldn't clear list untill new list has been fetched
         self.list = $scope.$meteorCollection(function() {
           var query = $scope.getReactively('participants.query.q');
           var q = { $or: [ 

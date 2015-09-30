@@ -8,23 +8,25 @@ angular.module('htm.battle-station')
 				side: 'red',
 				scoreType: 'single'
 			},{
-				name: 'Clean Hit',
+				name: 'Received After blow',
 				side: 'blue',
-				scoreType: 'single'
-			}],
-			[{
+				scoreType: 'double'
+			}],[{
 				name: 'Double Hit',
 				side: undefined,
 				scoreType: 'double'
-			}],
-			[{
+			},{
+				name: 'No Hit',
+				side: undefined,
+				scoreType: 'none'
+			}],[{
+				name: 'Clean Hit',
+				side: 'blue',
+				scoreType: 'single'
+			},{
 				name: 'Received After blow',
 				side: 'red',
 				scoreType: 'after'
-			},{
-				name: 'Received After blow',
-				side: 'blue',
-				scoreType: 'double'
 			}]
 		];
 

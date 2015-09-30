@@ -1,23 +1,11 @@
 <div class="container-fluid">
-	<div class="row">
-		<div class="col-lg-offset-3 col-md-offset-2 col-sm-offset-1 col-lg-6 col-md-8 col-sm-10 col-xs-12">
-			<div ng-repeat="hitGroup in battleStation.hitGroups" class="btn-group btn-group-justified" role="group">
-				<a ng-repeat="hit in hitGroup" type="button" class="text-center btn btn-default btn-lg">
+	<div ng-repeat="hitGroup in battleStation.hitGroups" class="col-xs-{{12/battleStation.hitGroups.length}}">
+		<div ng-repeat="hit in hitGroup" class="row" >
+			<div class="col-xs-12" style="margin-top:15px;margin-bottom:15px;">
+				<a class="text-center btn btn-default btn-block btn-lg">
 					{{hit.name}}
 				</a>
 			</div>
 		</div>
 	</div>
-	<div class="row">
-		<div class="col-md-8">
-			<div id="score-options">
-				<div class="btn-group" ng-repeat="scoreRow in battleStation.possiblePointsRows" style="display: block;">
-					<button type="button" ng-repeat="score in scoreRow" ng-click="scoreSelected(score)" data-ng-class="{red: 'btn btn-danger btn-lg', blue: 'btn btn-primary btn-lg'}[side]">{{score}}</button>
-					<button type="button" ng-click="cancelScoreSelect()" class="btn btn-default btn-lg" title="Cancel">
-						<span class="glyphicon glyphicon-remove-circle"></span>
-					</button>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>	
+</div>
