@@ -15,4 +15,4 @@ before_install:
   # This will let us use "meteor" in the script
   - export PATH="$HOME/.meteor:$PATH"
 
-script: SELENIUM_BROWSER=phantomjs meteor --test
+script: SELENIUM_BROWSER=phantomjs meteor --test --once --release velocity:METEOR@1.2.0.2_1 
