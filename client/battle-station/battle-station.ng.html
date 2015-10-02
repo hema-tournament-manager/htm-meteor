@@ -2,18 +2,31 @@
 	<div class="container-fluid">
 		<div ng-repeat="hits in battleStation.hitGroups" class="col-xs-{{12/battleStation.hitGroups.length}}">
 			<div ng-repeat="hit in hits" class="row" >
-				<div class="col-xs-12" style="margin-top:15px;margin-bottom:15px;">
-					<a class="text-center btn btn-default btn-block btn-lg"
-						ng-click="battleStation.add(hit)"
-						ng-hide="battleStation.isHitSelected(hit)">
-						{{battleStation.hitGroupName(hit)}}
-					</a>
-
-					<a class="text-center btn btn-default btn-block btn-lg"
-						ng-click="battleStation.selectPoints('1')"
-						ng-show="battleStation.isHitSelected(hit)">
-						points
-					</a>
+				<div class="col-xs-12" >
+					<div class="btn-group btn-group-justified btn-group-hit" 
+						 ng-hide="battleStation.isHitSelected(hit)"
+						 role="group" >
+						<a role="button" 
+							class="text-justify btn btn-default"
+							ng-click="battleStation.selectHit(hit)">
+							{{battleStation.hitName(hit)}}
+						</a>
+					</div>
+					<div class="btn-group btn-group-justified btn-group-hit" 
+						 ng-show="battleStation.isHitSelected(hit)"
+						 role="group" >
+						<a role="button"
+							class="text-justify btn btn-default"
+							ng-repeat="points in battleStation.hitPoints(hit)"
+							ng-click="battleStation.selectPoints('1')">
+							{{points}}
+						</a>
+						<a role="button"
+							class="text-justify btn btn-default"
+							ng-click="battleStation.cancelHit()">
+							<span class="glyphicon glyphicon-remove-sign"></span>
+						</a>
+					</div>
 				</div>
 			</div>
 		</div>

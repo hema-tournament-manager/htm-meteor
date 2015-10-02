@@ -8,7 +8,7 @@ angular.module('htm.battle-station')
 
 		self.scoreTypes = {
 			'single' : {points: [1,2,3], name:'Clean Hit'}, 
-			'double' : {points: [1,2,3], name:'Double Hit'},
+			'double' : {points: [1], name:'Double Hit'},
 			'after'  : {points: [1], name:'After Blow'},
 			'none'   : {points: [0], name:'No Hit'}
 		};
@@ -35,7 +35,7 @@ angular.module('htm.battle-station')
 			}]
 		];
 
-		self.hitGroupName = function(hit){
+		self.hitName = function(hit){
 			return self.scoreTypes[hit.scoreType].name;
 		}
 
@@ -43,7 +43,7 @@ angular.module('htm.battle-station')
 			return self.selectedHit === hit;
 		}
 
-		self.add = function(hit){
+		self.selectHit = function(hit){
 			self.selectedHit = undefined;
 
 			var scoreType = self.scoreTypes[hit.scoreType];
@@ -55,9 +55,17 @@ angular.module('htm.battle-station')
 			self.selectedHit = hit;
 		}
 
+		self.cancelHit = function(){
+			self.selectedHit = undefined;
+		}
+
 		self.selectPoints = function(points){
 			self.exchanges.push({side: self.selectedHit.side, type:self.selectedHit.scoreType, points: points});
 			self.selectedHit = undefined;
+		}
+
+		self.hitPoints = function(hit){
+			return self.scoreTypes[hit.scoreType].points;
 		}
 
 });
