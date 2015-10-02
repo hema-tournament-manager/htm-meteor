@@ -2,32 +2,62 @@ angular.module('htm.battle-station')
 	.controller('BattleStationCtrl', function($scope, $meteor, $state, $stateParams) {
 		var self = this;
 
+		self.exchanges  = [];
+
+		self.selectedHit = undefined;
+
+		self.scoreTypes = {
+			'single' : {points: [1,2,3], name:'Clean Hit'}, 
+			'double' : {points: [1,2,3], name:'Double Hit'},
+			'after'  : {points: [1], name:'After Blow'},
+			'none'   : {points: [0], name:'No Hit'}
+		};
+
 		self.hitGroups = [
 			[{
-				name: 'Clean Hit',
 				side: 'red',
 				scoreType: 'single'
 			},{
-				name: 'Received After blow',
-				side: 'blue',
-				scoreType: 'double'
+				side: 'red',
+				scoreType: 'after'
 			}],[{
-				name: 'Double Hit',
 				side: undefined,
 				scoreType: 'double'
 			},{
-				name: 'No Hit',
 				side: undefined,
 				scoreType: 'none'
 			}],[{
-				name: 'Clean Hit',
 				side: 'blue',
 				scoreType: 'single'
 			},{
-				name: 'Received After blow',
-				side: 'red',
+				side: 'blue',
 				scoreType: 'after'
 			}]
 		];
+
+		self.hitGroupName = function(hit){
+			return self.scoreTypes[hit.scoreType].name;
+		}
+
+		self.isHitSelected = function(hit){
+			return self.selectedHit === hit;
+		}
+
+		self.add = function(hit){
+			self.selectedHit = undefined;
+
+			var scoreType = self.scoreTypes[hit.scoreType];
+			if(scoreType.points.length === 1){
+				self.exchanges.push({side: hit.side, type:hit.scoreType, points: scoreType.points[0]});
+				return;
+			}
+
+			self.selectedHit = hit;
+		}
+
+		self.selectPoints = function(points){
+			self.exchanges.push({side: self.selectedHit.side, type:self.selectedHit.scoreType, points: points});
+			self.selectedHit = undefined;
+		}
 
 });
