@@ -2,11 +2,13 @@ angular.module('htm.battle-station')
 	.controller('BattleStationCtrl', function($scope, $meteor, $state, $stateParams) {
 		var self = this;
 
-		self.exchanges  = [];
+		self.fighterA = {name:'Finn'}
+		self.fighterB = {name:'Jake'}
 
-		self.selectedHit = undefined;
+		var exchanges  = [];
+		var selectedHit = undefined;
 
-		self.scoreTypes = {
+		var scoreTypes = {
 			'single' : {points: [1,2,3], name:'Clean Hit'}, 
 			'double' : {points: [1], name:'Double Hit'},
 			'after'  : {points: [1], name:'After Blow'},
@@ -35,37 +37,45 @@ angular.module('htm.battle-station')
 			}]
 		];
 
+		self.score = function(side){
+			return _.reduce(_.where(exchanges, {side:side}), 
+				function(memo, exchange){ return memo + exchange.points; }, 0)
+		}
+		self.exchange = function(){
+			return exchanges.length;
+		}
+
 		self.hitName = function(hit){
-			return self.scoreTypes[hit.scoreType].name;
+			return scoreTypes[hit.scoreType].name;
 		}
 
 		self.isHitSelected = function(hit){
-			return self.selectedHit === hit;
+			return selectedHit === hit;
 		}
 
 		self.selectHit = function(hit){
-			self.selectedHit = undefined;
+			selectedHit = undefined;
 
-			var scoreType = self.scoreTypes[hit.scoreType];
+			var scoreType = scoreTypes[hit.scoreType];
 			if(scoreType.points.length === 1){
-				self.exchanges.push({side: hit.side, type:hit.scoreType, points: scoreType.points[0]});
+				exchanges.push({side: hit.side, type:hit.scoreType, points: scoreType.points[0]});
 				return;
 			}
 
-			self.selectedHit = hit;
+			selectedHit = hit;
 		}
 
 		self.cancelHit = function(){
-			self.selectedHit = undefined;
+			selectedHit = undefined;
 		}
 
 		self.selectPoints = function(points){
-			self.exchanges.push({side: self.selectedHit.side, type:self.selectedHit.scoreType, points: points});
-			self.selectedHit = undefined;
+			exchanges.push({side: selectedHit.side, type:selectedHit.scoreType, points: points});
+			selectedHit = undefined;
 		}
 
 		self.hitPoints = function(hit){
-			return self.scoreTypes[hit.scoreType].points;
+			return scoreTypes[hit.scoreType].points;
 		}
 
 });
