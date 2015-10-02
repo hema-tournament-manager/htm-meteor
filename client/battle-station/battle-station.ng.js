@@ -2,8 +2,11 @@ angular.module('htm.battle-station')
 	.controller('BattleStationCtrl', function($scope, $meteor, $state, $stateParams) {
 		var self = this;
 
-		self.fighterA = {name:'Finn'}
-		self.fighterB = {name:'Jake'}
+		self.tournament = {name:'Authentic Grass Swords'};
+		self.arena = {name:'Arena 1'};
+
+		self.fighterA = {name:'Finn'};
+		self.fighterB = {name:'Jake'};
 
 		var exchanges  = [];
 		var selectedHit = undefined;
