@@ -9,6 +9,7 @@ angular.module('htm.battle-station')
 		self.fighterB = {name:'Jake'};
 
 		var exchanges  = [];
+		var redoQueue = [];
 		var selectedHit = undefined;
 
 		var scoreTypes = {
@@ -40,21 +41,45 @@ angular.module('htm.battle-station')
 			}]
 		];
 
+		self.undo = function(){
+			if(self.cantUndo()){
+				return;
+			}
+			redoQueue.push(exchanges.pop());
+		};
+
+		self.redo = function(){
+			if(self.cantRedo()){
+				return;
+			}
+
+			exchanges.push(redoQueue.pop());			
+		};
+
+		self.cantRedo = function(){
+			return _.isEmpty(redoQueue);
+		};
+
+		self.cantUndo = function(){
+			return _.isEmpty(exchanges);
+		};
+
 		self.score = function(side){
 			return _.reduce(_.where(exchanges, {side:side}), 
 				function(memo, exchange){ return memo + exchange.points; }, 0)
-		}
+		};
+
 		self.exchange = function(){
 			return exchanges.length;
-		}
+		};
 
 		self.hitName = function(hit){
 			return scoreTypes[hit.scoreType].name;
-		}
+		};
 
 		self.isHitSelected = function(hit){
 			return selectedHit === hit;
-		}
+		};
 
 		self.selectHit = function(hit){
 			selectedHit = undefined;
@@ -62,23 +87,25 @@ angular.module('htm.battle-station')
 			var scoreType = scoreTypes[hit.scoreType];
 			if(scoreType.points.length === 1){
 				exchanges.push({side: hit.side, type:hit.scoreType, points: scoreType.points[0]});
+				redoQueue = [];
 				return;
 			}
 
 			selectedHit = hit;
-		}
+		};
 
 		self.cancelHit = function(){
 			selectedHit = undefined;
-		}
+		};
 
 		self.selectPoints = function(points){
 			exchanges.push({side: selectedHit.side, type:selectedHit.scoreType, points: points});
+			redoQueue = [];
 			selectedHit = undefined;
-		}
+		};
 
 		self.hitPoints = function(hit){
 			return scoreTypes[hit.scoreType].points;
-		}
+		};
 
 });

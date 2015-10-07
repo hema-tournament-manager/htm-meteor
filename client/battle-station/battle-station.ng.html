@@ -9,6 +9,22 @@
 		<div class="panel-body">
 			<div class="container-fluid">
 				<div class="row" >
+					<a role="button" 
+						href="#"
+						class="btn btn-default" 
+						ng-class="{'disabled': battleStation.cantUndo()}"
+						ng-click="battleStation.undo()">
+							Undo
+						</a>
+					<a role="button"
+						href="#"
+						class="btn btn-default" 
+						ng-class="{'disabled': battleStation.cantRedo()}"
+						ng-click="battleStation.redo()">						
+						Redo
+					</a>
+				</div>
+				<div class="row" >
 					<div class="col-xs-4 text-left">{{battleStation.fighterA.name}}</div>
 					<div class="col-xs-4">
 						<div class="col-xs-4 text-left">{{battleStation.score('red')}}</div>
@@ -24,7 +40,8 @@
 								<div class="btn-group btn-group-justified btn-group-hit" 
 									 ng-hide="battleStation.isHitSelected(hit)"
 									 role="group" >
-									<a role="button" 
+									<a href="#" 
+										role="button" 
 										class="text-justify btn btn-default"
 										ng-click="battleStation.selectHit(hit)">
 										{{battleStation.hitName(hit)}}
@@ -33,13 +50,15 @@
 								<div class="btn-group btn-group-justified btn-group-hit" 
 									 ng-show="battleStation.isHitSelected(hit)"
 									 role="group" >
-									<a role="button"
+									<a href="#"
+										role="button"
 										class="text-justify btn btn-default"
 										ng-repeat="points in battleStation.hitPoints(hit)"
 										ng-click="battleStation.selectPoints(points)">
 										{{points}}
 									</a>
-									<a role="button"
+									<a href="#"
+										role="button"
 										class="text-justify btn btn-default"
 										ng-click="battleStation.cancelHit()">
 										<span class="glyphicon glyphicon-remove-sign"></span>
