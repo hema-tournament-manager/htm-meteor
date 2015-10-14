@@ -15,7 +15,13 @@ angular.module('htm.battle-station')
 		var currentCounter = undefined;
 
 		var counters = {
+			red: 'total-red',
+			neutral: 'exchanges',
+			blue: 'total-blue',
+		};
 
+		function addCounter(counters,name, points){
+			counters[name] = (counters[name] || 0) + points; 
 		}
 
 		var scoreTypes = {
@@ -23,26 +29,28 @@ angular.module('htm.battle-station')
 				{
 					points: [1,2,3],
 					action: function(counters, side, other, points){
-						counters['exchanges'] += 1;						
-						counters['clean-hit-' + side] += points;
-						counters['total-' + side] += points;
+						addCounter(counters,'exchanges', 1);						
+						addCounter(counters,'clean-hit-' + side, points);
+						addCounter(counters,'total-' + side, points);
 					}
 				}
 			]}, 
+
+
 			'double-hit': {name:'Double Hit', actions: [
 				{
 					points: [1],
 					action: function(counters, side, other, points){
-						counters['exchanges'] += 1;												
-						counters['double-hit'] += points;
-						counters['total-' + side] += points;
+						addCounter(counters,'exchanges', 1);												
+						addCounter(counters,'double-hit', points);
+						addCounter(counters,'total-' + side, points);
 					}
 				},{
 					points: [1],
 					action: function(counters, side, other, points){
-						counters['exchanges'] += 1;												
-						counters['double-hit'] += points;
-						counters['total-' + side] += points;
+						addCounter(counters,'exchanges', 1);												
+						addCounter(counters,'double-hit', points);
+						addCounter(counters,'total-' + side, points);
 					}
 				}
 			]},
@@ -50,16 +58,16 @@ angular.module('htm.battle-station')
 				{
 					points: [1,2,3],
 					action: function(counters, side, other, points){
-						counters['exchanges'] += 1;																		
-						counters['after-blow-' + side] += points;
-						counters['total-' + side] += points;
+						addCounter(counters,'exchanges', 1);																		
+						addCounter(counters,'after-blow-' + side, points);
+						addCounter(counters,'total-' + side, points);
 					}
 				},{
 					points: [1,2],
 					action: function(counters, side, other, points){
-						counters['exchanges'] += 1;												
-						counters['after-blow-' + other] += points;
-						counters['total-' + other] += points;						
+						addCounter(counters,'exchanges', 1);												
+						addCounter(counters,'after-blow-' + other, points);
+						addCounter(counters,'total-' + other, points);						
 					}
 				},
 			]},
@@ -67,8 +75,8 @@ angular.module('htm.battle-station')
 				{
 					points: [0],
 					action: function(counters, side, other, points){
-						counters['exchanges'] += 1;												
-						counters['no-hit'] += points;
+						addCounter(counters,'exchanges', 1);												
+						addCounter(counters,'no-hit', points);
 					}
 				}
 			]}
@@ -132,12 +140,16 @@ angular.module('htm.battle-station')
 			return _.isEmpty(exchanges);
 		};
 
+		function sum(memo, num){
+			return memo + (num || 0);
+		}
+
 		self.score = function(side){
-			return 0;
+			return _.reduce(_.pluck(exchanges, counters[side]), sum, 0);
 		};
 
 		self.exchange = function(){
-			return exchanges.length;
+			return _.reduce(_.pluck(exchanges, counters.neutral), sum, 0);
 		};
 
 		self.hitName = function(hit){
