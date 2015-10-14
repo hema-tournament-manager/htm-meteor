@@ -155,12 +155,20 @@ angular.module('htm.battle-station')
 		self.hitName = function(hit){
 			return scoreTypes[hit.scoreType].name;
 		};
-		self.hitClass = function(hit){
+		self.hitClass = function(hit, points){
+			var id = undefined;
+
 			if(angular.isDefined(hit.side)){
-				return hit.side + "-" + hit.scoreType;
+				id = hit.side + "-" + hit.scoreType;
 			} else {
-				return hit.scoreType;
+				id = hit.scoreType;
 			}
+
+			if(angular.isDefined(points)){
+				id += '-' + points;
+			}
+
+			return id;
 		};
 
 		self.isHitSelected = function(hit){

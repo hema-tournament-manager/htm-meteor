@@ -23,8 +23,8 @@
     
     this.When(/^I select (.*) for (red|blue) for (.*) points$/, function (scoreType, side, points) {
       client.click(toId('#' + side + '-' + scoreType));
-      client.waitForVisible('a='+points);
-      client.click('a='+points);
+      client.waitForVisible(toId('#' + side + '-' + scoreType + '-' + points));
+      client.click(toId('#' + side + '-' + scoreType + '-' + points));
     });
 
     this.Then(/^I should see the (.*) "([^"]*)"$/, function (id,expectedText) {

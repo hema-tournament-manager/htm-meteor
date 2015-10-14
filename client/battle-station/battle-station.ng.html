@@ -47,7 +47,7 @@
 										role="button" 
 										class="text-justify btn btn-default"
 										ng-click="battleStation.selectHit(hit)">
-										{{battleStation.hitName(hit)}}
+										<span>{{battleStation.hitName(hit)}}</span>
 									</a>
 								</div>
 								<div class="btn-group btn-group-justified btn-group-hit" 
@@ -57,8 +57,9 @@
 										role="button"
 										class="text-justify btn btn-default"
 										ng-repeat="points in battleStation.hitPoints(hit)"
+										ng-attr-id="{{battleStation.hitClass(hit,points)}}"
 										ng-click="battleStation.selectPoints(points)">
-										{{points}}
+										<span>{{points}}</span>
 									</a>
 									<a href="#"
 										role="button"

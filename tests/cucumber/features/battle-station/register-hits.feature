@@ -20,8 +20,8 @@ Feature: Register hits
 
   Scenario: Add double hit 
   	When I select double hit
-    Then I should see the score-red "0"
-    Then I should see the score-blue "0" 
+    Then I should see the score red "0"
+    Then I should see the score blue "0" 
 
 
   Scenario: Add single hit red
