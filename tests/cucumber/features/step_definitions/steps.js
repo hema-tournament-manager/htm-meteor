@@ -37,7 +37,7 @@
     this.When(/^I click (.*) button$/, function (name) {
       client.click("button[name=\"" + name + "\"]");
     });
-    
+
     // For buttons with an icon w/o a title or name
     this.When(/^I click the ([^ ]*) icon$/, function (icon) {
       client.click(".glyphicon-" + icon);
@@ -77,6 +77,7 @@
       expect(client.getText('body')).toMatch(new RegExp(expectedText, 'g'));
      
     });
+
     this.Then(/^I should not see the text "([^"]*)"$/, function (expectedText) {
       client.waitForVisible('body');
       expect(client.getText('body')).not.toMatch(new RegExp(expectedText, 'g'));

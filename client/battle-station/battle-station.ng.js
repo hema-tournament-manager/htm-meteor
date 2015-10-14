@@ -11,33 +11,94 @@ angular.module('htm.battle-station')
 		var exchanges  = [];
 		var redoQueue = [];
 		var selectedHit = undefined;
+		var selectedActions = [];
+		var currentCounter = undefined;
+
+		var counters = {
+
+		}
 
 		var scoreTypes = {
-			'single' : {points: [1,2,3], name:'Clean Hit'}, 
-			'double' : {points: [1], name:'Double Hit'},
-			'after'  : {points: [1], name:'After Blow'},
-			'none'   : {points: [0], name:'No Hit'}
+			'clean-hit': {name:'Clean Hit', actions: [
+				{
+					points: [1,2,3],
+					action: function(counters, side, other, points){
+						counters['exchanges'] += 1;						
+						counters['clean-hit-' + side] += points;
+						counters['total-' + side] += points;
+					}
+				}
+			]}, 
+			'double-hit': {name:'Double Hit', actions: [
+				{
+					points: [1],
+					action: function(counters, side, other, points){
+						counters['exchanges'] += 1;												
+						counters['double-hit'] += points;
+						counters['total-' + side] += points;
+					}
+				},{
+					points: [1],
+					action: function(counters, side, other, points){
+						counters['exchanges'] += 1;												
+						counters['double-hit'] += points;
+						counters['total-' + side] += points;
+					}
+				}
+			]},
+			'after-blow': {name:'After Blow',  actions: [
+				{
+					points: [1,2,3],
+					action: function(counters, side, other, points){
+						counters['exchanges'] += 1;																		
+						counters['after-blow-' + side] += points;
+						counters['total-' + side] += points;
+					}
+				},{
+					points: [1,2],
+					action: function(counters, side, other, points){
+						counters['exchanges'] += 1;												
+						counters['after-blow-' + other] += points;
+						counters['total-' + other] += points;						
+					}
+				},
+			]},
+			'none': {name:'No Hit',  actions: [
+				{
+					points: [0],
+					action: function(counters, side, other, points){
+						counters['exchanges'] += 1;												
+						counters['no-hit'] += points;
+					}
+				}
+			]}
 		};
 
 		self.hitGroups = [
 			[{
-				side: 'red',
-				scoreType: 'single'
+				side: 'blue',
+				other: 'red',
+				scoreType: 'clean-hit'
 			},{
-				side: 'red',
-				scoreType: 'after'
+				side: 'blue',
+				other: 'red',
+				scoreType: 'after-blow'
 			}],[{
 				side: undefined,
-				scoreType: 'double'
+				other: undefined,
+				scoreType: 'double-hit'
 			},{
 				side: undefined,
+				other: undefined,
 				scoreType: 'none'
 			}],[{
-				side: 'blue',
-				scoreType: 'single'
+				side: 'red',
+				other: 'blue',
+				scoreType: 'clean-hit'
 			},{
-				side: 'blue',
-				scoreType: 'after'
+				side: 'red',
+				other: 'blue',
+				scoreType: 'after-blow'
 			}]
 		];
 
@@ -45,6 +106,10 @@ angular.module('htm.battle-station')
 			if(self.cantUndo()){
 				return;
 			}
+
+			selectedHit = undefined;
+			currentCounter = undefined;
+
 			redoQueue.push(exchanges.pop());
 		};
 
@@ -52,6 +117,9 @@ angular.module('htm.battle-station')
 			if(self.cantRedo()){
 				return;
 			}
+
+			selectedHit = undefined;
+			currentCounter = undefined;
 
 			exchanges.push(redoQueue.pop());			
 		};
@@ -65,8 +133,7 @@ angular.module('htm.battle-station')
 		};
 
 		self.score = function(side){
-			return _.reduce(_.where(exchanges, {side:side}), 
-				function(memo, exchange){ return memo + exchange.points; }, 0)
+			return 0;
 		};
 
 		self.exchange = function(){
@@ -76,36 +143,77 @@ angular.module('htm.battle-station')
 		self.hitName = function(hit){
 			return scoreTypes[hit.scoreType].name;
 		};
+		self.hitClass = function(hit){
+			if(angular.isDefined(hit.side)){
+				return hit.side + "-" + hit.scoreType;
+			} else {
+				return hit.scoreType;
+			}
+		};
 
 		self.isHitSelected = function(hit){
 			return selectedHit === hit;
 		};
 
 		self.selectHit = function(hit){
-			selectedHit = undefined;
+			selectedHit = hit;
+			currentCounter = {};
+			finishOrContinue(scoreTypes[hit.scoreType].actions);
+		};
 
-			var scoreType = scoreTypes[hit.scoreType];
-			if(scoreType.points.length === 1){
-				exchanges.push({side: hit.side, type:hit.scoreType, points: scoreType.points[0]});
+		function finishOrContinue(actions){
+			selectedActions = advanceActions(actions);
+
+			if(_.isEmpty(selectedActions)){
 				redoQueue = [];
+				exchanges.push(currentCounter);
+				selectedHit = undefined;
+				currentCounter = undefined;
 				return;
 			}
+		}
 
-			selectedHit = hit;
-		};
+		function advanceActions(actions){
+			actions = actions.slice(0); // copy
+
+			while(!_.isEmpty(actions)){
+
+				if(actions[0].points.length > 1){
+					return actions;
+				}
+
+				var action = actions.shift();
+				if(_.isEmpty(action.points)){
+					applyAction();
+				} else {
+					applyAction(action, action.points[0]);
+				}
+			}
+
+			return actions; //empty
+		}
+
+		function applyAction(action, points){
+			action.action(currentCounter, selectedHit.side, selectedHit.other, points);
+		}
 
 		self.cancelHit = function(){
 			selectedHit = undefined;
+			currentCounter = undefined;
 		};
 
 		self.selectPoints = function(points){
-			exchanges.push({side: selectedHit.side, type:selectedHit.scoreType, points: points});
-			redoQueue = [];
-			selectedHit = undefined;
+			var action = selectedActions.shift();
+			applyAction(action,points);
+			finishOrContinue(selectedActions);
 		};
 
 		self.hitPoints = function(hit){
-			return scoreTypes[hit.scoreType].points;
+			if(_.isEmpty(selectedActions)){
+				return [];
+			}
+			
+			return selectedActions[0].points;
 		};
 
 });
