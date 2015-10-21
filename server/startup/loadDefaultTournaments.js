@@ -8,7 +8,8 @@ Meteor.startup(function() {
         phases: [
           {
             type: 'pool',
-            name: 'Pools'
+            name: 'Pools',
+            pools: [{name: 'A'}]
           },
           {
             type: 'elimination',
@@ -26,7 +27,8 @@ Meteor.startup(function() {
         phases: [
           {
             type: 'pool',
-            name: 'Pools'
+            name: 'Pools',
+            pools: [{name: 'A'}]
           },
           {
             type: 'elimination',

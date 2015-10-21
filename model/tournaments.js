@@ -6,24 +6,6 @@ Tournaments.before.insert(function(userId, doc) {
 
 Tournaments.before.update(function(userId, doc, fieldNames, modifier, options) {
   Meteor.call('updateParticipantSubscriptions', doc);
-
-  var poolPhase = _.findWhere(modifier.$set.phases, {type: 'pool'});
-  if (poolPhase) {
-    poolPhase.pools = poolPhase.pools || [];
-    poolPhase.poolCount = poolPhase.poolCount || 1;
-    if (poolPhase.poolCount > 26) {
-      poolPhase.poolCount = 26;
-    }
-    if (poolPhase.pools.length > poolPhase.poolCount) {
-      while (poolPhase.pools.length > poolPhase.poolCount) {
-        poolPhase.pools.pop();
-      }
-    } else {
-      while (poolPhase.pools.length < poolPhase.poolCount) {
-        poolPhase.pools.push({name: String.fromCharCode('A'.charCodeAt(0) + poolPhase.pools.length)});
-      }
-    }
-  }
 });
 
 Tournaments.helpers({
@@ -42,5 +24,22 @@ Meteor.methods({
       // everyone NOT in this tournament must NOT have this tournament in their list of tournaments
       Participants.direct.update({_id: {$nin: tournament.participants}}, {$pull: {tournaments: tournament._id}});
     }
+  },
+  'tournament.addPool': function(tournamentId) {
+    check(tournamentId, String);
+
+    var tournament = Tournaments.findOne(tournamentId);
+    var phases = tournament.phases;
+    for (var i = 0; i < phases.length; i++) {
+      var phase = phases[i];
+      if (phase.type === 'pool') {
+        phase.pools = phase.pools || [];
+        if (phase.pools.length < 26) {
+          var update = {$push: {}};
+          update['$push']['phases.'+i+'.pools'] = {name: String.fromCharCode('A'.charCodeAt(0) + phase.pools.length)};
+          Tournaments.update(tournament._id, update);
+        }
+      }
+    }
   }
-})
+});
