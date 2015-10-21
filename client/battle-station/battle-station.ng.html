@@ -1,78 +1,71 @@
 <div id="battle-station">
-	<div class="page-header">
+	<div class="page-header visible-sm-block visible-md-block visible-lg-block" >
 		<h1>{{battleStation.tournament.name}} <small>{{battleStation.arena.name}}</small></h1>
 	</div>
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<h3 class="panel-title">Current Fight</h3>
+	<div class="container-fluid">
+		<div class="row" >
+			<a role="button"
+				id="undo"
+				href="#"
+				class="btn btn-default" 
+				ng-class="{'disabled': battleStation.cantUndo()}"
+				ng-click="battleStation.undo()">
+					Undo
+				</a>
+			<a role="button"
+				id="redo"
+				href="#"
+				class="btn btn-default" 
+				ng-class="{'disabled': battleStation.cantRedo()}"
+				ng-click="battleStation.redo()">						
+					Redo
+			</a>
 		</div>
-		<div class="panel-body">
-			<div class="container-fluid">
-				<div class="row" >
-					<a role="button"
-						id="undo"
-						href="#"
-						class="btn btn-default" 
-						ng-class="{'disabled': battleStation.cantUndo()}"
-						ng-click="battleStation.undo()">
-							Undo
-						</a>
-					<a role="button"
-						id="redo"
-						href="#"
-						class="btn btn-default" 
-						ng-class="{'disabled': battleStation.cantRedo()}"
-						ng-click="battleStation.redo()">						
-							Redo
-					</a>
-				</div>
-				<div class="row" >
-					<div class="col-xs-4 text-left">{{battleStation.fighterA.name}}</div>
-					<div class="col-xs-4">
-						<div id="score-blue" class="col-xs-4 text-left">{{battleStation.score('blue')}}</div>
-						<div id="score-neutral" class="col-xs-4 text-center">({{battleStation.exchange()}})</div>
-						<div id="score-red" class="col-xs-4 text-right">{{battleStation.score('red')}}</div>				
-					</div>
-					<div class="col-xs-4 text-right">{{battleStation.fighterB.name}}</div>
-				</div>
-				<div class="row" >
-					<div ng-repeat="hits in battleStation.hitGroups" class="col-xs-{{12/battleStation.hitGroups.length}}">
-						<div ng-repeat="hit in hits" class="row" >
-							<div class="col-xs-12" >
-								<div class="btn-group btn-group-justified btn-group-hit" 
-									 ng-hide="battleStation.isHitSelected(hit)"
-									 role="group" >
-									<a href="#"
-										ng-attr-id="{{battleStation.hitClass(hit)}}"
-										role="button" 
-										class="text-justify btn btn-default"
-										ng-click="battleStation.selectHit(hit)">
-										<span>{{battleStation.hitName(hit)}}</span>
-									</a>
-								</div>
-								<div class="btn-group btn-group-justified btn-group-hit" 
-									 ng-show="battleStation.isHitSelected(hit)"
-									 role="group" >
-									<a href="#"
-										role="button"
-										class="text-justify btn btn-default"
-										ng-repeat="points in battleStation.hitPoints(hit)"
-										ng-attr-id="{{battleStation.hitClass(hit,points)}}"
-										ng-click="battleStation.selectPoints(points)">
-										<span>{{points}}</span>
-									</a>
-									<a href="#"
-										role="button"
-										class="text-justify btn btn-default"
-										ng-click="battleStation.cancelHit()">
-										<span class="glyphicon glyphicon-remove-sign"></span>
-									</a>
-								</div>
-							</div>
+		<div class="row" >
+			<div class="col-xs-4 text-left">{{battleStation.fighterA.name}}</div>
+			<div class="col-xs-4">
+				<div id="score-blue" class="col-xs-4 text-left">{{battleStation.score('blue')}}</div>
+				<div id="score-neutral" class="col-xs-4 text-center">({{battleStation.exchange()}})</div>
+				<div id="score-red" class="col-xs-4 text-right">{{battleStation.score('red')}}</div>				
+			</div>
+			<div class="col-xs-4 text-right">{{battleStation.fighterB.name}}</div>
+		</div>
+		<div class="row" >
+			<div ng-repeat="hits in battleStation.hitGroups" class="col-xs-{{12/battleStation.hitGroups.length}}">
+				<div ng-repeat="hit in hits" class="row" >
+					<div class="col-xs-12" >
+						<div class="btn-group btn-group-justified btn-group-hit" 
+							 ng-hide="battleStation.isHitSelected(hit)"
+							 role="group" >
+							<a href="#"
+								ng-attr-id="{{battleStation.hitClass(hit)}}"
+								role="button" 
+								class="text-justify btn btn-default"
+								ng-click="battleStation.selectHit(hit)">
+								<span>{{battleStation.hitName(hit)}}</span>
+							</a>
+						</div>
+						<div class="btn-group btn-group-justified btn-group-hit" 
+							 ng-show="battleStation.isHitSelected(hit)"
+							 role="group" >
+							<a href="#"
+								role="button"
+								class="text-justify btn btn-default"
+								ng-repeat="points in battleStation.hitPoints(hit)"
+								ng-attr-id="{{battleStation.hitClass(hit,points)}}"
+								ng-click="battleStation.selectPoints(points)">
+								<span>{{points}}</span>
+							</a>
+							<a href="#"
+								role="button"
+								class="text-justify btn btn-default"
+								ng-click="battleStation.cancelHit()">
+								<span class="glyphicon glyphicon-remove-sign"></span>
+							</a>
 						</div>
 					</div>
-				</div>			
+				</div>
 			</div>
-		</div>
+		</div>			
 	</div>
 </div>
