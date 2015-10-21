@@ -44,13 +44,8 @@ angular.module('htm.battle-station')
 						addCounter(counters,'exchanges', 1);												
 						addCounter(counters,'double-hit', points);
 						addCounter(counters,'total-' + side, points);
-					}
-				},{
-					points: [1],
-					action: function(counters, side, other, points){
-						addCounter(counters,'exchanges', 1);												
-						addCounter(counters,'double-hit', points);
-						addCounter(counters,'total-' + side, points);
+						addCounter(counters,'total-' + other, points);
+
 					}
 				}
 			]},
@@ -65,13 +60,12 @@ angular.module('htm.battle-station')
 				},{
 					points: [1,2],
 					action: function(counters, side, other, points){
-						addCounter(counters,'exchanges', 1);												
 						addCounter(counters,'after-blow-' + other, points);
 						addCounter(counters,'total-' + other, points);						
 					}
 				},
 			]},
-			'none': {name:'No Hit',  actions: [
+			'no-hit': {name:'No Hit',  actions: [
 				{
 					points: [0],
 					action: function(counters, side, other, points){
@@ -98,7 +92,7 @@ angular.module('htm.battle-station')
 			},{
 				side: undefined,
 				other: undefined,
-				scoreType: 'none'
+				scoreType: 'no-hit'
 			}],[{
 				side: 'red',
 				other: 'blue',
