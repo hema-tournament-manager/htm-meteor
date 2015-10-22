@@ -17,11 +17,24 @@
       <select name="phase.{{$index}}.ruleset" class="form-control"><option>1</option><option>2</option></select>
     </div>
     <div class="form-group" ng-if="phase.type === 'pool'">
-      <label for="phase.{{$index}}.pool-count">Number of pools</label>
-      <input ng-model="phase.poolCount" type="number" min="1" max="26" class="form-control" name="phase.{{$index}}.pool-count"/>
+      <label>Pools <span class="badge">{{phase.pools.length}}</span></label>
+      <br/>
+      <div>
+        <div ng-repeat="pool in phase.pools track by $index" class="col-md-1 col-xs-3 text-center">
+          <div class="well well-sm text-center">
+            {{pool.name}}
+          </div>
+        </div>
+        <div class="col-md-1 col-xs-3" ng-show="phase.pools.length < 26">
+          <button class="btn btn-default" ng-click="tournament.addPool(tournament.object)">
+            <span class="glyphicon glyphicon-plus"></span> Add pool
+          </button>
+        </div>
+      </div>
     </div>
+    <div class="clearfix"></div>
     <div class="form-group" ng-if="phase.type === 'elimination'">
-      <label for="phase.{{$index}}.fighter-count">Number of fighters</label>
+      <label>Number of fighters</label>
       <br/>
       <div class="btn-group">
         <label class="btn btn-default" ng-model="phase.fighterCount" btn-radio="4">4</label>

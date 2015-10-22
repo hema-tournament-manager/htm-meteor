@@ -18,7 +18,9 @@
         <span class="hidden-xs" ng-bind-html="p.club.name | highlight:participants.query.q"></span>
         <span class="visible-xs-inline" ng-bind-html="p.club.code | highlight:participants.query.q"></span>
       </td>
-      <td>A</td>
+      <td>
+        <select ng-model="p.pools[tournament.object._id]" ng-options="pool.name as pool.name for pool in tournament.object.poolPhase().pools" ng-change="p.save()"></select>
+      </td>
     </tr>
   </tbody>
 </table>
