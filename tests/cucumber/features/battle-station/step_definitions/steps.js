@@ -14,38 +14,38 @@
 
 		 // For battle-station buttons
 		this.When(/^I select (.*)$/, function (scoreType) {
-			client.click(toId('#' + scoreType));
+			this.client.click(toId('#' + scoreType));
 		});
 
 		this.When(/^I select (.*) for (red|blue)$/, function (scoreType, side) {
-			client.click(toId('#' + side + '-' + scoreType));
+			this.client.click(toId('#' + side + '-' + scoreType));
 		});
 		
 		this.When(/^I select (.*) for (red|blue) for (.*) points$/, function (scoreType, side, points) {
-			client.click(toId('#' + side + '-' + scoreType));
-			client.waitForVisible(toId('#' + side + '-' + scoreType + '-' + points));
-			client.click(toId('#' + side + '-' + scoreType + '-' + points));
+			this.client.click(toId('#' + side + '-' + scoreType));
+			this.client.waitForVisible(toId('#' + side + '-' + scoreType + '-' + points));
+			this.client.click(toId('#' + side + '-' + scoreType + '-' + points));
 		});
 
 		this.When(/^I select (.*) for (red|blue) for (.*) points, (red|blue) (.*) points$/, 
 			function (scoreType, side, points, side2, points2) {
-			client.click(toId('#' + side + '-' + scoreType));
-			client.waitForVisible(toId('#' + side + '-' + scoreType + '-' + points));
-			client.click(toId('#' + side + '-' + scoreType + '-' + points));
-			client.waitForVisible(toId('#' + side + '-' + scoreType + '-' + points2));
-			client.click(toId('#' + side + '-' + scoreType + '-' + points2));
+			this.client.click(toId('#' + side + '-' + scoreType));
+			this.client.waitForVisible(toId('#' + side + '-' + scoreType + '-' + points));
+			this.client.click(toId('#' + side + '-' + scoreType + '-' + points));
+			this.client.waitForVisible(toId('#' + side + '-' + scoreType + '-' + points2));
+			this.client.click(toId('#' + side + '-' + scoreType + '-' + points2));
 
 		});    
 
 		this.Then(/^I should see the (.*) "([^"]*)"$/, function (id,expectedText) {
-			client.waitForVisible(toId('#' + id));
-			expect(client.getText(toId('#' + id))).toMatch(new RegExp(expectedText, 'g'));
+			this.client.waitForVisible(toId('#' + id));
+			expect(this.client.getText(toId('#' + id))).toMatch(new RegExp(expectedText, 'g'));
 		 
 		});
 		
 		this.Then(/^I should see the (.*) "([^"]*)"$/, function (id,expectedText) {
-			client.waitForVisible(toId('#' + id));
-			expect(client.getText(toId('#' + id))).toMatch(new RegExp(expectedText, 'g'));
+			this.client.waitForVisible(toId('#' + id));
+			expect(this.client.getText(toId('#' + id))).toMatch(new RegExp(expectedText, 'g'));
 		 
 		});
 
