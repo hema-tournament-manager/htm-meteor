@@ -25,7 +25,7 @@
     });
 
     this.When(/^I navigate to "([^"]*)"$/, function (relativePath) {
-      client.url(url.resolve(process.env.ROOT_URL, relativePath));
+      this.client.url(url.resolve(process.env.ROOT_URL, relativePath));
     });
 
     // For buttons w/ a title
