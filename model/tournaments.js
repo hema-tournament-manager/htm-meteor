@@ -4,7 +4,7 @@ Tournaments.before.insert(function(userId, doc) {
   Meteor.call('updateParticipantSubscriptions', doc);
 });
 
-Tournaments.before.update(function(userId, doc, fieldNames, modifier, options) {
+Tournaments.after.update(function(userId, doc, fieldNames, modifier, options) {
   Meteor.call('updateParticipantSubscriptions', doc);
 });
 
@@ -16,13 +16,19 @@ Tournaments.helpers({
 
 Meteor.methods({
   updateParticipantSubscriptions: function(tournament) {
-    if (_.isArray(tournament.participants)) {
+    if (_.isObject(tournament.participants)) {
       console.log('updateParticipantSubscriptions');
 
       // everyone in this tournament must have this tournament in their list of tournaments
-      Participants.direct.update({_id: {$in: tournament.participants}}, {$addToSet: {tournaments: tournament._id}});
+      var t = {};
+      t['tournaments.' + tournament._id + '.id'] = tournament._id;
+      t['tournaments.' + tournament._id + '.name'] = tournament.name;
+      Participants.direct.update({_id: {$in: Object.keys(tournament.participants)}}, {$set: t});
+
+      var unset = {};
+      unset['participants.' + participant._id] = 1;
       // everyone NOT in this tournament must NOT have this tournament in their list of tournaments
-      Participants.direct.update({_id: {$nin: tournament.participants}}, {$pull: {tournaments: tournament._id}});
+      Participants.direct.update({_id: {$nin: Object.keys(tournament.participants)}}, {$unset: unset});
     }
   },
   'tournament.addPool': function(tournamentId) {

@@ -64,9 +64,10 @@ angular.module('htm.administration')
 
       this.toggleSubscription = function(tournament) {
         if(this.participant.inTournament(tournament)){
-          this.participant.tournaments = _.without(this.participant.tournaments, tournament._id);
+          delete this.participant.tournaments[tournament._id];
         } else {
-          this.participant.tournaments.push(tournament._id);  
+          this.participant.tournaments[tournament._id] = {id: tournament._id, name: tournament.name};  
+          console.log('tournaments', this.participant.tournaments);
         }
       };
 });
@@ -113,7 +114,7 @@ angular.module('htm.administration')
             {'country.name': { $regex:query, $options: 'i'}},
           ]};
           if (tournamentId) {
-            q.tournaments = tournamentId;
+            q['tournaments.' + tournamentId] = {$exists: true};
           }
           console.log('query', q);
           return Participants.find(q, options);
