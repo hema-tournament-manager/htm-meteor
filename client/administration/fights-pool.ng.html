@@ -1,0 +1,8 @@
+<div>
+  <div ng-repeat="pool in tournament.object.phases[fights.phase].pools track by pool.name">
+    {{pool.name}}
+    <div ng-repeat="p in tournament.object.participants | toArray | filter:{pool:pool.name}">
+      {{p.name}}
+    </div>
+  </div>
+</div>

@@ -102,6 +102,30 @@ angular.module('htm.administration')
     .state('administration.tournaments.view.fights', {
       url: '/fights',
       templateUrl: 'client/administration/tournaments-view-fights.ng.html',
+      controller: 'ParticipantsCtrl',
+      controllerAs: 'participants',
+      resolve: {
+        tournamentId: function($stateParams) {
+          return $stateParams.tournamentId;
+        }
+      }
+    })
+    .state('administration.tournaments.view.fights.phase', {
+      url: '/:phase',
+      templateUrl: function($stateParams) {
+        var tournament = Tournaments.findOne($stateParams.tournamentId);
+        var phaseType = tournament.phases[$stateParams.phase].type;
+        var template = 'client/administration/fights-' + phaseType + '.ng.html';
+        console.log(template);
+        return template;
+      },
+      controller: 'FightsCtrl',
+      controllerAs: 'fights',
+      resolve: {
+        phase: function($stateParams) {
+          return $stateParams.phase;
+        }
+      }
     })
     .state('administration.tournaments.view.participants', {
       url: '/participants',

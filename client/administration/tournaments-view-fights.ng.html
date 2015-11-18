@@ -1,1 +1,8 @@
-Fights
+<ul class="nav nav-tabs nav-justified">
+  <li role="presentation" ng-repeat="phase in tournament.object.phases track by $index" ui-sref-active="active"><a ui-sref=".phase({phase: $index})">
+    <span>Phase {{ $index + 1 }}:</span>
+    {{ phase.name }}
+  </a></li>
+</ul>
+
+<ui-view></ui-view>
