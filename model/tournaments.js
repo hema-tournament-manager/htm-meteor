@@ -26,7 +26,7 @@ Meteor.methods({
       Participants.direct.update({_id: {$in: Object.keys(tournament.participants)}}, {$set: t});
 
       var unset = {};
-      unset['participants.' + participant._id] = 1;
+      unset['tournaments.' + tournament._id] = 1;
       // everyone NOT in this tournament must NOT have this tournament in their list of tournaments
       Participants.direct.update({_id: {$nin: Object.keys(tournament.participants)}}, {$unset: unset});
     }

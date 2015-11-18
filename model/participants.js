@@ -76,7 +76,10 @@ Meteor.methods({
       p['participants.' + participant._id + '.id'] = participant._id;
       p['participants.' + participant._id + '.name'] = participant.name;
       // every tournament that this participant is participating in should have this participant in their list of participants
-      Tournaments.direct.update({_id: {$in: Object.keys(participant.tournaments)}}, {$set: p});
+      Object.keys(participant.tournaments).forEach(function(tournamentId) {
+        p['participants.' + participant._id + '.pool'] = participant.tournaments[tournamentId].pool;
+        Tournaments.direct.update(tournamentId, {$set: p});
+      });
 
       var unset = {};
       unset['participants.' + participant._id] = 1;
