@@ -7,28 +7,53 @@ Meteor.startup(function() {
         identifier: 'open-longsword',
         phases: [
           {
+            type: 'init',
+            name: 'Subscriptions',
+            participants: [],
+            fights: [],
+            settings: {}
+          }, {
             type: 'pool',
             name: 'Pools',
-            pools: [{name: 'A'}]
-          },
-          {
+            participants: [],
+            fights: [],
+            settings: {
+              pools: ['A', 'B']
+            }
+          }, {
             type: 'elimination',
-            name: 'Elimination'
-          },
-          {
+            name: '16th'
+          }, {
+            type: 'elimination',
+            name: '8th'
+          }, {
+            type: 'elimination',
+            name: 'Quarter'
+          }, {
+            type: 'elimination',
+            name: 'Semi'
+          }, {
             type: 'finals',
             name: 'Finals'
-          }
-        ]
+          }]
       },
       {
         name: 'Sabre',
         identifier: 'sabre',
         phases: [
           {
+            type: 'init',
+            name: 'Subscriptions',
+            participants: [],
+            fights: [],
+            settings: {}
+          }, 
+          {
             type: 'pool',
             name: 'Pools',
-            pools: [{name: 'A'}]
+            settings: {
+              pools: ['A']
+            }
           },
           {
             type: 'elimination',

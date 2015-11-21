@@ -63,11 +63,10 @@ angular.module('htm.administration')
       }
 
       this.toggleSubscription = function(tournament) {
-        if(this.participant.inTournament(tournament)){
-          delete this.participant.tournaments[tournament._id];
+        if(this.participant.inTournament(tournament)) {
+          // todo
         } else {
-          this.participant.tournaments[tournament._id] = {id: tournament._id, name: tournament.name};  
-          console.log('tournaments', this.participant.tournaments);
+          $meteor.call('subscribeParticipantToTournament', this.participant._id, tournament._id);
         }
       };
 });

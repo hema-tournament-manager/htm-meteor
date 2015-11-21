@@ -91,7 +91,6 @@
 			<!-- TODO: Tournaments expands horizontally in a vertically orientated table. Use a smarter solution. -->
 			<td ng-repeat="t in participants.tournaments">
 			 <span class="glyphicon" ng-class="p.inTournament(t) ? 'glyphicon-check' : 'glyphicon-unchecked'"></span>
-			 <span ng-if="p.inTournament(t)">{{ p.tournaments[t._id].pool }}</span>
 			</td>
 		</tr>
 		<tr ng-repeat-end ng-if="participants.isEditorActive(p)">
