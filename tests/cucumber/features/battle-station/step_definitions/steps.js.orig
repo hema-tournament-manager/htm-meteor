@@ -42,15 +42,23 @@
 			expect(this.client.getText(toId('#' + id))).toMatch(new RegExp(expectedText, 'g'));
 		 
 		});
-		
+<<<<<<< HEAD
+
 		this.Then(/^the (undo|redo) button should be (enabled|disabled)$/, function (id,expectedState) {
-			this.client.waitForVisible(toId('#' + id));
+			client.waitForVisible(toId('#' + id));
 			if(expectedState === 'enabled'){
-				expect(this.client.getAttribute(toId('#' + id),'class')).not.toMatch('disabled'); 	
+				expect(client.getAttribute(toId('#' + id),'class')).not.toMatch('disabled'); 	
 			} else {
-				expect(this.client.getAttribute(toId('#' + id),'class')).toMatch('disabled'); 	
+				expect(client.getAttribute(toId('#' + id),'class')).toMatch('disabled'); 	
 			}
 			
+=======
+		
+		this.Then(/^I should see the (.*) "([^"]*)"$/, function (id,expectedText) {
+			this.client.waitForVisible(toId('#' + id));
+			expect(this.client.getText(toId('#' + id))).toMatch(new RegExp(expectedText, 'g'));
+		 
+>>>>>>> a0d6f43b8fd69ac50f2300a04a2668962f224a0a
 		});
 
 
