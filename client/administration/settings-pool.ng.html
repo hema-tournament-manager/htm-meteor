@@ -1,0 +1,26 @@
+<form name="settingsForm" class="form" novalidate>
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input ng-model="phase.object.name" type="text" class="form-control" name="name"/>
+  </div>
+  <div class="form-group">
+    <label for="ruleset">Ruleset</label>
+    <select ng-model="phase.object.ruleset" name="ruleset" class="form-control"><option>1</option><option>2</option></select>
+  </div>
+  <div class="form-group">
+    <label>Pools <span class="badge">{{phase.object.settings.pools.length}}</span></label>
+    <br/>
+    <div>
+      <div ng-repeat="pool in phase.object.settings.pools track by $index" class="col-md-1 col-xs-3 text-center">
+        <div class="well well-sm text-center">
+          {{pool}}
+        </div>
+      </div>
+      <div class="col-md-1 col-xs-3" ng-show="phase.object.settings.pools.length < 26">
+        <button class="btn btn-default" ng-click="phase.addPool()">
+          <span class="glyphicon glyphicon-plus"></span> Add pool
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

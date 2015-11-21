@@ -1,3 +1,13 @@
-{{ tournament.object.name }}
+<ul class="nav nav-tabs">
+  <li role="presentation" ui-sref-active="active" ng-if="phase.index > 0"><a ui-sref=".fights">
+    Fights
+  </a></li>
+  <li role="presentation" ui-sref-active="active"><a ui-sref=".participants">
+    Participants
+  </a></li>
+  <li role="presentation" ui-sref-active="active"><a ui-sref=".settings">
+    Settings
+  </a></li>
+</ul>
 
-{{ phase.object.name }}
+<ui-view></ui-view>

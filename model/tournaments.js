@@ -24,7 +24,7 @@ Meteor.methods({
       }
     }
   },
-  'subscribeParticipantToTournament': function(participantId, tournamentId) {
+  'enrollParticipantInTournament': function(participantId, tournamentId) {
     check(participantId, String);
     check(tournamentId, String);
 

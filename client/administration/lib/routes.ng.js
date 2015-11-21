@@ -1,3 +1,11 @@
+var phaseTemplate = function(view) {
+  return function($stateParams) {
+    var template = 'client/administration/' + view + '-' + $stateParams.phaseType + '.ng.html';
+    console.log(template);
+    return template;
+  }
+};
+
 angular.module('htm.administration')
 .config(function($stateProvider) {
   $stateProvider
@@ -99,47 +107,45 @@ angular.module('htm.administration')
       controller: 'TournamentViewCtrl',
       controllerAs: 'tournament'
     })
-    .state('administration.tournaments.view.fights', {
-      url: '/fights',
-      templateUrl: 'client/administration/tournaments-view-fights.ng.html',
-      controller: 'ParticipantsCtrl',
-      controllerAs: 'participants',
+    .state('administration.tournaments.view.phase', {
+      url: '/:phaseIndex/:phaseType',
+      templateUrl: 'client/administration/tournaments-view-phase.ng.html',
+      controller: 'PhaseCtrl',
+      controllerAs: 'phase',
       resolve: {
         tournamentId: function($stateParams) {
           return $stateParams.tournamentId;
+        },
+        phaseIndex: function($stateParams) {
+          return $stateParams.phaseIndex;
         }
       }
     })
-    .state('administration.tournaments.view.fights.phase', {
-      url: '/:phase',
-      templateUrl: function($stateParams) {
-        var tournament = Tournaments.findOne($stateParams.tournamentId);
-        var phaseType = tournament.phases[$stateParams.phase].type;
-        var template = 'client/administration/fights-' + phaseType + '.ng.html';
-        console.log(template);
-        return template;
-      },
+    .state('administration.tournaments.view.phase.fights', {
+      url: '/fights',
+      templateUrl: phaseTemplate('fights'),
       controller: 'FightsCtrl',
       controllerAs: 'fights',
       resolve: {
-        phase: function($stateParams) {
-          return $stateParams.phase;
+        phaseIndex: function($stateParams) {
+          return $stateParams.phaseIndex;
         }
       }
     })
-    .state('administration.tournaments.view.participants', {
+    .state('administration.tournaments.view.phase.participants', {
       url: '/participants',
-      templateUrl: 'client/administration/tournaments-view-participants.ng.html',
-      controller: 'ParticipantsCtrl',
-      controllerAs: 'participants',
+      templateUrl: phaseTemplate('participants'),
       resolve: {
         tournamentId: function($stateParams) {
           return $stateParams.tournamentId;
+        },
+        phaseIndex: function($stateParams) {
+          return $stateParams.phaseIndex;
         }
-      },
+      }
     })
-    .state('administration.tournaments.view.settings', {
+    .state('administration.tournaments.view.phase.settings', {
       url: '/settings',
-      templateUrl: 'client/administration/tournaments-view-settings.ng.html',
+      templateUrl: phaseTemplate('settings'),
     });
 });

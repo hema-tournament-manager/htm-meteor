@@ -1,17 +1,8 @@
 <h2>{{ tournament.object.name }}</h2>
 
 <ul class="nav nav-tabs">
-  <li role="presentation" ui-sref-active="active"><a ui-sref=".fights">
-    <span class="glyphicon glyphicon-knight"></span>
-    Fights
-  </a></li>
-  <li role="presentation" ui-sref-active="active"><a ui-sref=".participants">
-    <span class="glyphicon glyphicon-user"></span>
-    Participants
-  </a></li>
-  <li role="presentation" ui-sref-active="active"><a ui-sref=".settings">
-    <span class="glyphicon glyphicon-wrench"></span>
-    Settings
+  <li role="presentation" ui-sref-active="active" ng-repeat="ph in tournament.object.phases"><a ui-sref=".phase({phaseIndex: $index, phaseType: ph.type})">
+    {{ ph.name }}
   </a></li>
 </ul>
 

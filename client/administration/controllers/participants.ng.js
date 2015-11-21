@@ -66,13 +66,13 @@ angular.module('htm.administration')
         if(this.participant.inTournament(tournament)) {
           // todo
         } else {
-          $meteor.call('subscribeParticipantToTournament', this.participant._id, tournament._id);
+          $meteor.call('enrollParticipantInTournament', this.participant._id, tournament._id);
         }
       };
 });
 
 angular.module('htm.administration')
-  .controller('ParticipantsCtrl', function($scope, $meteor, $state, tournamentId) {
+  .controller('ParticipantsCtrl', function($scope, $meteor, $state) {
       var self = this;
           
       this.add = function() {
@@ -112,9 +112,7 @@ angular.module('htm.administration')
             {'country.code2': { $regex:query, $options: 'i'}},
             {'country.name': { $regex:query, $options: 'i'}},
           ]};
-          if (tournamentId) {
-            q['tournaments.' + tournamentId] = {$exists: true};
-          }
+
           console.log('query', q);
           return Participants.find(q, options);
         });

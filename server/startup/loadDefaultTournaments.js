@@ -7,8 +7,8 @@ Meteor.startup(function() {
         identifier: 'open-longsword',
         phases: [
           {
-            type: 'init',
-            name: 'Subscriptions',
+            type: 'enrolled',
+            name: 'Enrolled',
             participants: [],
             fights: [],
             settings: {}
@@ -22,16 +22,7 @@ Meteor.startup(function() {
             }
           }, {
             type: 'elimination',
-            name: '16th'
-          }, {
-            type: 'elimination',
-            name: '8th'
-          }, {
-            type: 'elimination',
-            name: 'Quarter'
-          }, {
-            type: 'elimination',
-            name: 'Semi'
+            name: 'Elimination'
           }, {
             type: 'finals',
             name: 'Finals'
@@ -42,8 +33,8 @@ Meteor.startup(function() {
         identifier: 'sabre',
         phases: [
           {
-            type: 'init',
-            name: 'Subscriptions',
+            type: 'enrolled',
+            name: 'Enrolled',
             participants: [],
             fights: [],
             settings: {}

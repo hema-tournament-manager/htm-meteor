@@ -1,0 +1,20 @@
+<form name="settingsForm" class="form" novalidate>
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input ng-model="phase.object.name" type="text" class="form-control" name="name"/>
+  </div>
+  <div class="form-group">
+    <label for="ruleset">Ruleset</label>
+    <select ng-model="phase.object.ruleset" name="ruleset" class="form-control"><option>1</option><option>2</option></select>
+  </div>
+  <div class="form-group">
+    <label>Number of fighters</label>
+    <br/>
+    <div class="btn-group">
+      <label class="btn btn-default" ng-model="phase.object.settings.fighterCount" btn-radio="4">4</label>
+      <label class="btn btn-default" ng-model="phase.object.settings.fighterCount" btn-radio="8">8</label>
+      <label class="btn btn-default" ng-model="phase.object.settings.fighterCount" btn-radio="16">16</label>
+      <label class="btn btn-default" ng-model="phase.object.settings.fighterCount" btn-radio="32">32</label>
+    </div>
+  </div>
+</form>
