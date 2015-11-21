@@ -1,4 +1,3 @@
-@focus
 Feature: Register hits
 
 	As a jury member

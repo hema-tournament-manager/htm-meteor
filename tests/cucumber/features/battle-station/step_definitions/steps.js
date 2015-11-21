@@ -42,11 +42,15 @@
 			expect(client.getText(toId('#' + id))).toMatch(new RegExp(expectedText, 'g'));
 		 
 		});
-		
-		this.Then(/^I should see the (.*) "([^"]*)"$/, function (id,expectedText) {
+
+		this.Then(/^the (undo|redo) button should be (enabled|disabled)$/, function (id,expectedState) {
 			client.waitForVisible(toId('#' + id));
-			expect(client.getText(toId('#' + id))).toMatch(new RegExp(expectedText, 'g'));
-		 
+			if(expectedState === 'enabled'){
+				expect(client.getAttribute(toId('#' + id),'class')).not.toMatch('disabled'); 	
+			} else {
+				expect(client.getAttribute(toId('#' + id),'class')).toMatch('disabled'); 	
+			}
+			
 		});
 
 

@@ -127,11 +127,13 @@ angular.module('htm.battle-station')
 		};
 
 		self.cantRedo = function(){
-			return _.isEmpty(redoQueue);
+			return _.isEmpty(redoQueue)  // Can't redo when there are no exchanges to redo 
+				|| !_.isEmpty(selectedActions); // Can't redo when we have selected actions to process
 		};
 
 		self.cantUndo = function(){
-			return _.isEmpty(exchanges);
+			return _.isEmpty(exchanges)  // Can't undo when there are no exchanges to undo 
+			|| !_.isEmpty(selectedActions); // Can't undo when we have selected actions to process
 		};
 
 		function sum(memo, num){
