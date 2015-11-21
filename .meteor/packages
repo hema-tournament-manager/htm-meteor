@@ -20,7 +20,6 @@ huaming:js-xlsx
 angular:angular-sanitize
 angularui:ui-select
 underscore
-semantic:ui
 flemay:less-autoprefixer
 xolvio:cucumber
 dburles:collection-helpers
