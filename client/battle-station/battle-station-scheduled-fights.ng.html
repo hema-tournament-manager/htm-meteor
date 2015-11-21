@@ -1,0 +1,6 @@
+<ul>
+	<li ng-repeat="fight in scheduledFights.fights">
+		<a ui-sref="battle-station.fight({arenaId: scheduledFights.arenaId, fightId: fight._id })">{{fight.name}}</a>
+	</li>
+
+</ul>

@@ -4,4 +4,5 @@ Meteor.startup(function() {
 	Participants.remove({});  
 	Clubs.remove({});
 	Countries.remove({});
+	Arenas.remove({});
 });
