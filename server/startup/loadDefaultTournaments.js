@@ -100,6 +100,8 @@ Meteor.startup(function() {
       }
     ];
 
-    tournaments.forEach(Tournaments.insert);
+    tournaments.forEach(function(tournament) {
+      Tournaments.insert(tournament);
+    });
   }
 });

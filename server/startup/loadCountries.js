@@ -1,7 +1,7 @@
 Meteor.startup(function() {
   if (Countries.find().count() === 0) {
     var countries = [
-      {code2:undefined  , code3: undefined, name:"Unknown"},
+      {code2:undefined, code3: undefined, name:"Unknown"},
       {code2:"AF", code3: "AFG", name:"Afghanistan"},
       {code2:"AX", code3: "ALA", name:"Åland Islands"},
       {code2:"AL", code3: "ALB", name:"Albania"},
@@ -253,6 +253,8 @@ Meteor.startup(function() {
       {code2:"ZW", code3: "ZWE", name:"Zimbabwe"}
     ];
 
-    countries.forEach(Countries.insert);
+    countries.forEach(function(country) {
+      Countries.insert(country);
+    });
   }
 });
