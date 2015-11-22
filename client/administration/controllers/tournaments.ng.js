@@ -30,12 +30,12 @@ var PhaseCtrl = function ($meteor, $scope, $state, tournamentId, phaseIndex) {
 
   this.participants = function() {
     return phase().participants;
-  }
+  };
 
   this.nonParticipants = function() {
     var participantIds = _.pluck(this.participants(), 'id');
     return phaseIndex > 0 ? _.reject(previousPhase().participants, function(p) { return _.contains(participantIds, p.id); }) : [];
-  }
+  };
 
   this.pools = function() {
     if (phase().type === 'pool') {
@@ -43,11 +43,15 @@ var PhaseCtrl = function ($meteor, $scope, $state, tournamentId, phaseIndex) {
     } else {
       return [];
     }
+  };
+
+  this.settings = function() {
+    return phase().settings;
   }
 
   this.addPool = function() {
     if (phase().type === 'pool') {
-      phase().settings.pools.push('A');
+      phase().settings.pools.push(String.fromCharCode(65 + phase().settings.pools.length));
     }
   };
 

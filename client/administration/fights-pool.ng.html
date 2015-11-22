@@ -1,5 +1,5 @@
 <div>
-  <div ng-repeat="pool in phase.pools() track by $index" class="col-md-4">
+  <div ng-repeat="pool in phase.pools()" class="col-md-4">
     <h3>{{pool}}</h3>
     <div ng-repeat="fight in phase.object().fights.planned | filter:{pool:pool}">
       <span ng-repeat="p in phase.allParticipants | filter:{_id:fight.fighterA}">{{ p.name }}</span>
