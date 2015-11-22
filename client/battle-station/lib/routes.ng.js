@@ -1,15 +1,5 @@
 angular.module('htm.battle-station').config(['$stateProvider', function($stateProvider) {
   $stateProvider
-    .state('arenas', {
-      url: '/arenas',
-      views: {
-        '': {
-          templateUrl: 'client/battle-station/arenas.ng.html',
-          controller: 'ArenasCtrl',
-          controllerAs: 'arenas'
-        }
-      }
-    })
     .state('battle-station', {
       abstract: true,
       url: '/battle-station',
@@ -38,7 +28,7 @@ angular.module('htm.battle-station').config(['$stateProvider', function($statePr
       }
     })
     .state('battle-station.fight', {
-      url: '/battle-station/arena/:arenaId/fight/:fightId',
+      url: '/battle-station/arena/:arenaId/tournament/:tournamentId/fight/:fightId',
       views: {
         '': {
           templateUrl: 'client/battle-station/battle-station.ng.html',

@@ -3,7 +3,7 @@ angular.module('htm.battle-station')
 		var self = this;
 
 		self.tournament = {name:'Authentic Grass Swords'};
-		self.arena = {name:'Arena 1'};
+		self.arena = $scope.$meteorObject(Arenas, $stateParams.arenaId);
 
 		self.fighterA = {name:'Finn'};
 		self.fighterB = {name:'Jake'};

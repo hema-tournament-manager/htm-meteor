@@ -34,10 +34,7 @@ angular.module('htm.administration')
       },
       dsr: true,
       resolve: {
-        tournamentId: function() { return false; },
-        subscribe: function($meteor) {
-          return $meteor.subscribe('tournaments', {fields: {name: 1, identifier: 1}});
-        }
+        tournamentId: function() { return false; }
       }
     })
 
