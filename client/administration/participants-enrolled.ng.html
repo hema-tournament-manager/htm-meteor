@@ -1,3 +1,3 @@
-<div ng-repeat="p in phase.participants">
-{{ p.name }}
+<div ng-repeat="pp in phase.participants">
+  <div ng-repeat="p in phase.allParticipants | filter:{_id:pp.id}">{{ p.name }}</div>
 </div>
