@@ -64,7 +64,7 @@ angular.module('htm.administration')
 
       this.toggleSubscription = function(tournament) {
         if(this.participant.inTournament(tournament)) {
-          // todo
+          $meteor.call('withdrawParticipantFromTournament', this.participant._id, tournament._id);
         } else {
           $meteor.call('enrollParticipantInTournament', this.participant._id, tournament._id);
         }

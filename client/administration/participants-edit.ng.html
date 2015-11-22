@@ -59,8 +59,8 @@
 			<label for="Tournaments">Tournaments</label>
 			<div class="list-group">
   			<a href="#" class="list-group-item" ng-repeat="t in editor.tournaments" ng-click="editor.toggleSubscription(t)">
+					<span class="glyphicon" ng-class="editor.participant.inTournament(t) ? 'glyphicon-check' : 'glyphicon-unchecked'"></span>
   				<span>{{t.name}}</span>
-					<span class="glyphicon pull-right" ng-class="editor.participant.inTournament(t) ? 'glyphicon-check' : 'glyphicon-unchecked'"></span>
   			</a>
 			</div>
 		</div>

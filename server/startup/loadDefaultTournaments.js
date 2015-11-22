@@ -10,12 +10,6 @@ Meteor.startup(function() {
             type: 'enrolled',
             name: 'Enrolled',
             participants: [],
-            fights: {
-              planned: [],
-              scheduled: [],
-              inProgress: [],
-              finished: []
-            },
             settings: {}
           }, {
             type: 'pool',
@@ -62,12 +56,6 @@ Meteor.startup(function() {
             type: 'enrolled',
             name: 'Enrolled',
             participants: [],
-            fights: {
-              planned: [],
-              scheduled: [],
-              inProgress: [],
-              finished: []
-            },
             settings: {}
           }, 
           {
