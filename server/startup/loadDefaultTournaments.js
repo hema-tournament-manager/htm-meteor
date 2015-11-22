@@ -10,22 +10,48 @@ Meteor.startup(function() {
             type: 'enrolled',
             name: 'Enrolled',
             participants: [],
-            fights: [],
+            fights: {
+              planned: [],
+              scheduled: [],
+              inProgress: [],
+              finished: []
+            },
             settings: {}
           }, {
             type: 'pool',
             name: 'Pools',
             participants: [],
-            fights: [],
+            fights: {
+              planned: [],
+              scheduled: [],
+              inProgress: [],
+              finished: []
+            },
             settings: {
               pools: ['A', 'B']
             }
           }, {
             type: 'elimination',
-            name: 'Elimination'
+            name: 'Elimination',
+            participants: [],
+            fights: {
+              planned: [],
+              scheduled: [],
+              inProgress: [],
+              finished: []
+            },
+            settings: {}
           }, {
             type: 'finals',
-            name: 'Finals'
+            name: 'Finals',
+            participants: [],
+            fights: {
+              planned: [],
+              scheduled: [],
+              inProgress: [],
+              finished: []
+            },
+            settings: {}
           }]
       },
       {
@@ -36,23 +62,51 @@ Meteor.startup(function() {
             type: 'enrolled',
             name: 'Enrolled',
             participants: [],
-            fights: [],
+            fights: {
+              planned: [],
+              scheduled: [],
+              inProgress: [],
+              finished: []
+            },
             settings: {}
           }, 
           {
             type: 'pool',
             name: 'Pools',
+            participants: [],
+            fights: {
+              planned: [],
+              scheduled: [],
+              inProgress: [],
+              finished: []
+            },
             settings: {
-              pools: ['A']
+              pools: ['A', 'B']
             }
           },
           {
             type: 'elimination',
-            name: 'Elimination'
+            name: 'Elimination',
+            participants: [],
+            fights: {
+              planned: [],
+              scheduled: [],
+              inProgress: [],
+              finished: []
+            },
+            settings: {}
           },
           {
             type: 'finals',
-            name: 'Finals'
+            name: 'Finals',
+            participants: [],
+            fights: {
+              planned: [],
+              scheduled: [],
+              inProgress: [],
+              finished: []
+            },
+            settings: {}
           }
         ]
       }

@@ -4,54 +4,93 @@ angular.module('htm.administration').controller('TournamentsCtrl', function($met
   });
 });
 
-angular.module('htm.administration').controller('TournamentViewCtrl', function($meteor, $scope, $stateParams) {
-  this.object = $scope.$meteorObject(Tournaments, $stateParams.tournamentId, false);
-  this.unsubscribedParticipants = $scope.$meteorCollection(function() {
-    return Participants.find({tournaments: {$ne: $stateParams.tournamentId}});
-  });
+angular.module('htm.administration').controller('TournamentViewCtrl', function($meteor, $scope, tournamentId) {
+  this.object = $scope.$meteorObject(Tournaments, tournamentId, false);
 });
 
-angular.module('htm.administration').controller('PhaseCtrl', function($meteor, $scope, $state, tournamentId, phaseIndex) {
+var PhaseCtrl = function ($meteor, $scope, $state, tournamentId, phaseIndex) {
   var tournament = $scope.$meteorObject(Tournaments, tournamentId, true);
-  var phase = tournament.phases[phaseIndex];
+  var phase = function() { return tournament.phases[phaseIndex] };
+  var previousPhase = function() { return phaseIndex > 0 ? tournament.phases[phaseIndex - 1] : false; };
   this.index = phaseIndex;
   this.object = phase;
 
   var self = this;
   $scope.$meteorSubscribe('participants', {}, {sort: { number : -1 }}).then(function(subscriptionHandle) {
-    var participantIds = phase.participants.map(function(p) { return p.id; });
-    self.participants = $scope.$meteorCollection(function() {
-      return Participants.find({_id: {$in: participantIds}}, {order: {number: -1}, fields: {name: 1}});
-    });
-    self.nonParticipants = $scope.$meteorCollection(function() {
-      if (phaseIndex === 0) {
-        return Participants.find({_id: {$nin: participantIds}}, {order: {number: -1}, fields: {name: 1}});
-      } else {
-        var previousParticipantIds = tournament.phases[phaseIndex - 1].participants.map(function(p) { return p.id; });
-        return Participants.find({_id: {$in: _.difference(previousParticipantIds, participantIds)}}, {order: {number: -1}, fields: {name: 1}});
-      }
+    self.allParticipants = $scope.$meteorCollection(function() {
+      return Participants.find({}, {order: {number: -1}, fields: {name: 1}});
     });
   });
 
-  if (phaseIndex < 1 || this.object.fights.length == 0) {
-    $state.go('.participants');
+  if (phaseIndex < 1 || phase().fights.planned.length == 0) {
+    $state.go('administration.tournaments.view.phase.participants');
   } else {
-    $state.go('.fights');
+    $state.go('administration.tournaments.view.phase.fights');
+  }
+
+  this.participants = function() {
+    return phase().participants;
+  }
+
+  this.nonParticipants = function() {
+    var participantIds = _.pluck(this.participants(), 'id');
+    return phaseIndex > 0 ? _.reject(previousPhase().participants, function(p) { return _.contains(participantIds, p.id); }) : [];
+  }
+
+  this.pools = function() {
+    if (phase().type === 'pool') {
+      return phase().settings.pools;
+    } else {
+      return [];
+    }
   }
 
   this.addPool = function() {
-    if (this.object.type === 'pool') {
-      this.object.settings.pools.push('A');
+    if (phase().type === 'pool') {
+      phase().settings.pools.push('A');
     }
   };
 
   this.addParticipant = function(participant, attributes) {
-    var participantId = participant.id || participant._id;
-    var p = _.findWhere(this.object.participants, {id: participantId}) || _.findWhere(this.object.participants, {_id: participantId});
-    if (p) {
-      p.pool = attributes.pool;
-    } else {
-      this.object.participants.push(angular.extend(angular.extend(angular.copy(participant), attributes || {}), {id: participantId}));
+    if (participant) {
+      var p = _.findWhere(phase().participants, {id: participant.id});
+      if (p) {
+        Object.keys(attributes).forEach(function(key) {
+          p[key] = attributes[key];
+        });
+      } else {
+        phase().participants.push(angular.extend(angular.copy(participant), attributes || {}));
+      }
     }
   };
-});
+
+  this.dropParticipant = function(participant) {
+    if (participant) {
+      phase().participants = _.reject(phase().participants, function(p) { return p.id === participant.id; });
+    }
+  };
+
+  this.generatePoolFights = function(pool) {
+    if (phase().type === 'pool') {
+      var ps = _.where(phase().participants, {pool: pool});
+      if (ps.length > 1) {
+        for (var i = 0; i < ps.length - 1; i++) {
+          var a = ps[i];
+          var b = ps[i + 1];
+          phase().fights.planned.push({
+            id: new Meteor.Collection.ObjectID()._str,
+            number: i + 1,
+            pool: pool,
+            fighterA: a.id,
+            fighterB: b.id
+          });
+        }
+      }
+    }
+  };
+};
+
+angular.module('htm.administration').controller('EnrolledPhaseCtrl', PhaseCtrl);
+angular.module('htm.administration').controller('PoolPhaseCtrl', PhaseCtrl);
+angular.module('htm.administration').controller('EliminationPhaseCtrl', PhaseCtrl);
+angular.module('htm.administration').controller('FinalesPhasesCtrl', PhaseCtrl);

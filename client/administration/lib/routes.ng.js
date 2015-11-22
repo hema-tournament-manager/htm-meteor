@@ -105,19 +105,23 @@ angular.module('htm.administration')
       url: '/:tournamentId',
       templateUrl: 'client/administration/tournaments-view.ng.html',
       controller: 'TournamentViewCtrl',
-      controllerAs: 'tournament'
+      controllerAs: 'tournament',
+      resolve: {
+        tournamentId: function($stateParams) {
+          return $stateParams.tournamentId;
+        }
+      }
     })
     .state('administration.tournaments.view.phase', {
       url: '/:phaseIndex/:phaseType',
       templateUrl: 'client/administration/tournaments-view-phase.ng.html',
-      controller: 'PhaseCtrl',
+      controllerProvider: function($stateParams) {
+        return $stateParams.phaseType.charAt(0).toUpperCase() + $stateParams.phaseType.substring(1) + 'PhaseCtrl';
+      },
       controllerAs: 'phase',
       resolve: {
-        tournamentId: function($stateParams) {
-          return $stateParams.tournamentId;
-        },
         phaseIndex: function($stateParams) {
-          return $stateParams.phaseIndex;
+          return +$stateParams.phaseIndex;
         }
       }
     })
@@ -125,24 +129,11 @@ angular.module('htm.administration')
       url: '/fights',
       templateUrl: phaseTemplate('fights'),
       controller: 'FightsCtrl',
-      controllerAs: 'fights',
-      resolve: {
-        phaseIndex: function($stateParams) {
-          return $stateParams.phaseIndex;
-        }
-      }
+      controllerAs: 'fights'
     })
     .state('administration.tournaments.view.phase.participants', {
       url: '/participants',
-      templateUrl: phaseTemplate('participants'),
-      resolve: {
-        tournamentId: function($stateParams) {
-          return $stateParams.tournamentId;
-        },
-        phaseIndex: function($stateParams) {
-          return $stateParams.phaseIndex;
-        }
-      }
+      templateUrl: phaseTemplate('participants')
     })
     .state('administration.tournaments.view.phase.settings', {
       url: '/settings',
