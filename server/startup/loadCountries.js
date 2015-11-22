@@ -253,8 +253,6 @@ Meteor.startup(function() {
       {code2:"ZW", code3: "ZWE", name:"Zimbabwe"}
     ];
 
-    countries.forEach(function(country) {
-      Countries.insert(country);
-    });
+    countries.forEach(Countries.insert);
   }
 });
