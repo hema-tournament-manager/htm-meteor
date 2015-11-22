@@ -3,8 +3,8 @@ Meteor.startup(function() {
   if (Tournaments.find().count() === 0) {
     var tournaments = [
       {
-        name: 'Open Longsword',
-        identifier: 'open-longsword',
+        name: 'Authentic Grass Swords',
+        identifier: 'authentic-grass-swords',
         phases: [
           {
             type: 'enrolled',
@@ -55,8 +55,8 @@ Meteor.startup(function() {
           }]
       },
       {
-        name: 'Sabre',
-        identifier: 'sabre',
+        name: 'Finn Swords',
+        identifier: 'finn-swords',
         phases: [
           {
             type: 'enrolled',

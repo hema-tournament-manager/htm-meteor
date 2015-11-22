@@ -78,7 +78,7 @@ var PhaseCtrl = function ($meteor, $scope, $state, tournamentId, phaseIndex) {
           var a = ps[i];
           var b = ps[i + 1];
           phase().fights.planned.push({
-            id: new Meteor.Collection.ObjectID()._str,
+            _id: new Meteor.Collection.ObjectID()._str,
             number: i + 1,
             pool: pool,
             fighterA: a.id,

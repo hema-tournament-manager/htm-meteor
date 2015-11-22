@@ -15,7 +15,7 @@ angular.module('htm.battle-station').config(['$stateProvider', function($statePr
       }
     })    
     .state('battle-station.arena', {
-      url: '/battle-station/arena/:arenaId',
+      url: '/:arenaId',
       views: {
         '': {
           templateUrl: 'client/battle-station/battle-station-tutorial.ng.html',
@@ -28,7 +28,7 @@ angular.module('htm.battle-station').config(['$stateProvider', function($statePr
       }
     })
     .state('battle-station.fight', {
-      url: '/battle-station/arena/:arenaId/tournament/:tournamentId/fight/:fightId',
+      url: '/:arenaId/:tournamentId/fight/:fightId',
       views: {
         '': {
           templateUrl: 'client/battle-station/battle-station.ng.html',
