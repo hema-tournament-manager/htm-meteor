@@ -36,5 +36,19 @@ Meteor.methods({
         $push: {'phases.0.participants': {id: participantId}}
       }
     );
+  },
+  'withdrawParticipantFromTournament': function(participantId, tournamentId) {
+    check(participantId, String);
+    check(tournamentId, String);
+
+    if (!Tournaments.findOne({
+      _id: tournamentId,
+      'phases.1.participants.id': participantId
+    })) {
+      Tournaments.update(tournamentId, {$pull: {'phases.0.participants': {id: participantId}}});
+      return true;
+    } else {
+      return false;
+    }
   }
 });
