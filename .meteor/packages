@@ -37,3 +37,6 @@ random
 ejson
 check
 spacebars 
+sanjo:jasmine
+velocity:html-reporter
+angular:angular-mocks
