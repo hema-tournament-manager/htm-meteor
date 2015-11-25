@@ -5,13 +5,13 @@ angular.module('htm.battle-station').config(['$stateProvider', function($statePr
 			url: '/battle-station',
 			views: {
 				'': {
-					templateUrl: 'client/battle-station/battle-station-frame.ng.html',
+					template: '<ui-view/>'
 				},
 				'navigation': {
 					templateUrl: 'client/battle-station/navigation.ng.html',
 					controller: 'ArenasCtrl',
 					controllerAs: 'arenas'
-				}
+				}			
 			},
 			dsr: true,
 			resolve: {
@@ -32,11 +32,12 @@ angular.module('htm.battle-station').config(['$stateProvider', function($statePr
 				'': {
 					templateUrl: 'client/battle-station/battle-station-tutorial.ng.html',
 				},
-				'scheduled-fights': {
-						templateUrl: 'client/battle-station/battle-station-scheduled-fights.ng.html',
-						controller: 'ScheduledFightsCtrl',
-						controllerAs: 'scheduledFights'
-				}
+				'scheduled-fights@battle-station.arena': {
+					templateUrl: 'client/battle-station/battle-station-scheduled-fights.ng.html',
+					controller: 'ScheduledFightsCtrl',
+					controllerAs: 'scheduledFights'
+				}	
+
 			}
 		})
 		.state('battle-station.fight', {
@@ -47,11 +48,11 @@ angular.module('htm.battle-station').config(['$stateProvider', function($statePr
 					controller: 'BattleStationCtrl',
 					controllerAs: 'battleStation'
 				},
-				'scheduled-fights': {
-						templateUrl: 'client/battle-station/battle-station-scheduled-fights.ng.html',
-						controller: 'ScheduledFightsCtrl',
-						controllerAs: 'scheduledFights'
-				}
+				'scheduled-fights@battle-station.fight': {
+					templateUrl: 'client/battle-station/battle-station-scheduled-fights.ng.html',
+					controller: 'ScheduledFightsCtrl',
+					controllerAs: 'scheduledFights'
+				}	
 			}
 		})
 
