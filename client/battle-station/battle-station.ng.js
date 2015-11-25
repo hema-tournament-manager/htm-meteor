@@ -2,21 +2,16 @@ angular.module('htm.battle-station')
 	.controller('BattleStationCtrl', function($scope, $meteor, $state, $stateParams) {
 		var self = this;
 
-		//TODO: Resolve arena, tournament and fighters in route
 
-		$scope.$meteorSubscribe('arenas').then(function(){
-			self.arena = $scope.$meteorObject(Arenas, {identifier: $stateParams.arenaId});
-		});
+		self.arena = $scope.$meteorObject(Arenas, {identifier: $stateParams.arenaId});
 
-		$scope.$meteorSubscribe('tournaments').then(function(){
-			self.tournament =  $scope.$meteorObject(Tournaments, {identifier:$stateParams.tournamentId});
-			//TODO: Use scheduled
-			self.fight = _.findWhere(_.flatten(_.pluck(_.pluck(self.tournament.phases, 'fights'),'planned')),{_id: $stateParams.fightId});
-			self.fighterA = $scope.$meteorObject(Participants,self.fight.fighterA);
-			self.fighterA.subscribe('participants');
-			self.fighterB = $scope.$meteorObject(Participants,self.fight.fighterB);
-			self.fighterB.subscribe('participants');
-		});
+		self.tournament =  $scope.$meteorObject(Tournaments, {identifier:$stateParams.tournamentId});
+		//TODO: Use scheduled
+		self.fight = _.findWhere(_.flatten(_.pluck(_.pluck(self.tournament.phases.slice(1), 'fights'),'planned')),{_id: $stateParams.fightId});
+		self.fighterA = $scope.$meteorObject(Participants,self.fight.fighterA);
+		self.fighterA.subscribe('participants');
+		self.fighterB = $scope.$meteorObject(Participants,self.fight.fighterB);
+		self.fighterB.subscribe('participants');
 
 		var exchanges  = [];
 		var redoQueue = [];
