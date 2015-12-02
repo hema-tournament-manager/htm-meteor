@@ -4,26 +4,8 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
-# TODO: Clean up unused packages
-
+# Meteor
 insecure
-angular
-angularui:angular-ui-bootstrap
-angularui:angular-ui-router
-twbs:bootstrap
-accounts-ui
-accounts-password
-aramk:tinycolor
-u2622:persistent-session
-tmeasday:publish-counts
-huaming:js-xlsx
-angular:angular-sanitize
-angularui:ui-select
-underscore
-flemay:less-autoprefixer
-xolvio:cucumber
-dburles:collection-helpers
-matb33:collection-hooks
 standard-minifiers
 meteor-base
 mobile-experience
@@ -37,6 +19,29 @@ random
 ejson
 check
 spacebars 
+
+# Frontend
+angular
+angularui:angular-ui-bootstrap
+angularui:angular-ui-router
+twbs:bootstrap
+angular:angular-sanitize
+angularui:ui-select
+
+# Collection upgrades
+dburles:collection-helpers
+matb33:collection-hooks
+
+# Testing
+xolvio:cucumber
 sanjo:jasmine
 velocity:html-reporter
 angular:angular-mocks
+
+# Utils
+aramk:tinycolor
+u2622:persistent-session
+tmeasday:publish-counts
+underscore
+huaming:js-xlsx
+flemay:less-autoprefixer
