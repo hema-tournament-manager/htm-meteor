@@ -1,5 +1,5 @@
 <div class="well">
-	<h3>{{editor.isNew ? 'Add Participant' : 'Edit Participant'}}</h3>
+	<h3 ng-bind="editor.isNew ? 'Add Participant' : 'Edit Participant'"></h3>
 	<form name="participantForm" class="form form-participant" novalidate>
 		<div class="form-group">
 			<label for="name">Name</label>
@@ -17,7 +17,7 @@
 					</button>
 				</span>
 				<ui-select name="club" ng-model="editor.participant.club">
-					<ui-select-match placeholder="Select or search a club in the list...">{{$select.selected.name}}</ui-select-match>
+					<ui-select-match placeholder="Select or search a club in the list..." ng-bind="$select.selected.name"></ui-select-match>
 					<ui-select-choices repeat="club in editor.clubs | filter: $select.search">
 						<span ng-bind-html="club.code | highlight: $select.search"></span>
 						<span> - </span>
@@ -46,7 +46,7 @@
 					<htm-flag country="editor.participant.country"></htm-flag>
 				</span>
 				<ui-select name="country" ng-model="editor.participant.country" ng-disabled="disabled" required="true">
-					<ui-select-match placeholder="Select or search a country in the list...">{{$select.selected.name}}</ui-select-match>
+					<ui-select-match placeholder="Select or search a country in the list..." ng-bind="$select.selected.name"></ui-select-match>
 					<ui-select-choices repeat="country in editor.countries | filter: $select.search">
 						<span ng-bind-html="country.code2 | highlight: $select.search"></span>
 						<span ng-show="country.code2"> - </span>
@@ -60,12 +60,12 @@
 			<div class="list-group">
   			<a href="#" class="list-group-item" ng-repeat="t in editor.tournaments" ng-click="editor.toggleSubscription(t)">
 					<span class="glyphicon" ng-class="editor.participant.inTournament(t) ? 'glyphicon-check' : 'glyphicon-unchecked'"></span>
-  				<span>{{t.name}}</span>
+  				<span ng-bind="t.name"></span>
   			</a>
 			</div>
 		</div>
 		<div class="pull-right">
-			<button class="btn btn-primary" ng-click="editor.save()">{{editor.isNew ? 'Add Participant' : 'Done'}}</button>
+			<button class="btn btn-primary" ng-click="editor.save()" ng-bind="editor.isNew ? 'Add Participant' : 'Done'"></button>
 			<button class="btn btn-danger" ng-click="editor.closeEditor()" ng-show="editor.isNew">Close</button>
 		</div>
 		<div class="clearfix"></div>

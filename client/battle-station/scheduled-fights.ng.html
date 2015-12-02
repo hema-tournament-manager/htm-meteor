@@ -1,8 +1,8 @@
 <div>
 	<div ng-repeat="tournament in scheduledFights.tournaments">
-		<h3>{{tournament.name}}</h3>
+		<h3 ng-bind="tournament.name"></h3>
 		<div class="panel panel-default" ng-repeat="phase in tournament.phases">
-			<div class="panel-heading">{{phase.name}}</div>
+			<div class="panel-heading" ng-bind="phase.name"></div>
 			<div class="list-group">
 				<a 
 					ui-sref="battle-station.fight({arenaId: scheduledFights.arenaIdentifier, tournamentId: tournament.identifier, fightId: fight._id})"

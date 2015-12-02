@@ -1,15 +1,15 @@
 <div class="col-md-3">
   <h3 ng-click="phase.dropParticipant(phase.selectedParticipant); phase.generatePoolFights(phase.selectedParticipant.pool); phase.selectedParticipant = false;">Bucket</h3>
-  <div>{{phase.selectedParticipant}}</div>
+  <div ng-bind="phase.selectedParticipant"></div>
   <div ng-repeat="pp in phase.nonParticipants()" ng-click="phase.selectedParticipant = pp">
-    <div ng-repeat="p in phase.allParticipants | filter:{_id:pp.id}">{{ p.name }}</div>
+    <div ng-repeat="p in phase.allParticipants | filter:{_id:pp.id}" ng-bind="p.name"></div>
   </div>
 </div>
 <div class="col-md-9">
   <div ng-repeat="pool in phase.pools()" class="col-md-3">
-    <h3 ng-click="phase.addParticipant(phase.selectedParticipant, {pool: pool}); phase.selectedParticipant = false; phase.generatePoolFights(pool);">{{pool}}</h3>
+    <h3 ng-click="phase.addParticipant(phase.selectedParticipant, {pool: pool}); phase.selectedParticipant = false; phase.generatePoolFights(pool);" ng-bind="pool"></h3>
     <div ng-repeat="pp in phase.participants() | filter:{pool:pool}" ng-click="phase.selectedParticipant = pp">
-      <div ng-repeat="p in phase.allParticipants | filter:{_id:pp.id}">{{ p.name }}</div>
+      <div ng-repeat="p in phase.allParticipants | filter:{_id:pp.id}" ng-bind="p.name"></div>
     </div>
   </div>
 </div>

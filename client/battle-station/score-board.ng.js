@@ -9,9 +9,7 @@ angular.module('htm.battle-station')
 		//TODO: Use scheduled
 		self.fight = _.findWhere(_.flatten(_.pluck(_.pluck(self.tournament.phases.slice(1), 'fights'),'planned')),{_id: $stateParams.fightId});
 		self.fighterA = $scope.$meteorObject(Participants,self.fight.fighterA);
-		self.fighterA.subscribe('participants');
 		self.fighterB = $scope.$meteorObject(Participants,self.fight.fighterB);
-		self.fighterB.subscribe('participants');
 
 		var exchanges  = [];
 		var redoQueue = [];

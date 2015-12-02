@@ -68,9 +68,7 @@
 			<th>Number</th>
 			<th>Name</th>
 			<th>Club</th>
-			<th ng-repeat="t in participants.tournaments">
-			 {{t.name}}
-			</th>
+			<th ng-repeat="t in participants.tournaments" ng-bind="t.name"></th>
 		</tr>
 	</thead>
 	<tbody>

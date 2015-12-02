@@ -8,10 +8,10 @@
     <tbody>
       <tr ng-repeat="p in importer.participants" ng-class="p.selected ? 'success' : 'danger'" ng-click="p.selected = !p.selected">
         <td><span class="glyphicon" ng-class="p.selected ? 'glyphicon-ok' : 'glyphicon-remove'"></span></td>
-        <td>{{p.name}}</td>
-        <td>{{p.club.name}}</td>
-        <td>{{p.club.code}}</td>
-        <td>{{p.country.code2}}</td>
+        <td ng-bind="p.name"></td>
+        <td ng-bind="p.club.name"></td>
+        <td ng-bind="p.club.code"></td>
+        <td ng-bind="p.country.code2"></td>
       </tr>
     </tbody>
     </table>
