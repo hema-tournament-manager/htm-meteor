@@ -10,7 +10,9 @@ Meteor.startup(function() {
             type: 'enrolled',
             name: 'Enrolled',
             participants: [],
-            settings: {}
+            settings: {
+              participantCount: 16
+            }
           }, {
             type: 'pool',
             name: 'Pools',
@@ -22,7 +24,9 @@ Meteor.startup(function() {
               finished: []
             },
             settings: {
-              pools: ['A', 'B']
+              pools: ['A', 'B', 'C', 'D'],
+              poolSize: 4,
+              poolCount: 4
             }
           }, {
             type: 'elimination',

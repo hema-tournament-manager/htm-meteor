@@ -1,3 +1,6 @@
-<div ng-repeat="pp in phase.participants()">
-  <div ng-repeat="p in phase.allParticipants | filter:{_id:pp.id}" ng-bind="p.name"></div>
+<div class="progress">
+  <div class="progress-bar" role="progressbar" aria-valuenow="{{phase.participants().length}}" aria-valuemin="0" aria-valuemax="{{phase.settings().participantCount}}" ng-style="{width: (100 * phase.participants().length / phase.settings().participantCount) + '%'}" ng-bind-template="{{phase.participants().length}}/{{phase.settings().participantCount}}">
+  </div>
+</div>
+<div ng-repeat="pp in phase.participants()" ng-bind="pp">
 </div>
