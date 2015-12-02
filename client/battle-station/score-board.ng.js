@@ -1,5 +1,5 @@
 angular.module('htm.battle-station')
-	.controller('BattleStationCtrl', function($scope, $meteor, $state, $stateParams) {
+	.controller('ScoreBoardCtrl', function($scope, $meteor, $state, $stateParams) {
 		var self = this;
 
 

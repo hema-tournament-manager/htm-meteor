@@ -13,7 +13,7 @@ angular.module('htm.battle-station')
 		self.tournaments = $scope.$meteorCollection(Tournaments);
 		participants = $scope.$meteorCollection(Participants);
 
-  		self.fighterName = function(fighterId){
-  			return _.findWhere(participants,{_id:fighterId}).name;
+  		self.participant = function(fighterId){
+  			return _.findWhere(participants,{_id:fighterId});
   		}
 });

@@ -8,8 +8,14 @@
 					ui-sref="battle-station.fight({arenaId: scheduledFights.arenaIdentifier, tournamentId: tournament.identifier, fightId: fight._id})"
 					class="list-group-item" 
 					ng-repeat="fight in phase.fights.planned">
-						<p>{{scheduledFights.fighterName(fight.fighterA)}}</p> 
-						<p>{{scheduledFights.fighterName(fight.fighterB)}}</p>
+					<p>
+						<span><htm-flag country="scheduledFights.participant(fight.fighterA).country"></htm-flag></span>
+						<span ng-bind="scheduledFights.participant(fight.fighterA).name"></span>
+					</p>
+					<p>
+						<span><htm-flag country="scheduledFights.participant(fight.fighterB).country"></htm-flag></span>
+						<span ng-bind="scheduledFights.participant(fight.fighterB).name"></span>
+					</p>
 				</a>
 			</div>
 		</div>		

@@ -1,6 +1,8 @@
 angular.module('htm.battle-station', [
   'angular-meteor',
   'ui.router',
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'htm.core',
+
 ]);
 
