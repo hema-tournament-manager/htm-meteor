@@ -54,6 +54,10 @@ var PhaseCtrl = function ($meteor, $scope, $state, tournamentId, phaseIndex) {
     }
   };
 
+  this.participantByNumber = function(number) {
+    return tournament.phases[0].participants[number - 1] || 'Fighter ' + number;
+  };
+
   /// ENROLLED
   this.participantNumbers = function() {
     return _.range(1, phase().settings.participantCount + 1);
