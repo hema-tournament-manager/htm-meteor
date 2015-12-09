@@ -17,7 +17,9 @@
 					</button>
 				</span>
 				<ui-select name="club" ng-model="editor.participant.club">
-					<ui-select-match placeholder="Select or search a club in the list..." ng-bind="$select.selected.name"></ui-select-match>
+					<ui-select-match placeholder="Select or search a club in the list...">
+						<span ng-bind="$select.selected.name"></span>
+					</ui-select-match>
 					<ui-select-choices repeat="club in editor.clubs | filter: $select.search">
 						<span ng-bind-html="club.code | highlight: $select.search"></span>
 						<span> - </span>
@@ -46,7 +48,9 @@
 					<htm-flag country="editor.participant.country"></htm-flag>
 				</span>
 				<ui-select name="country" ng-model="editor.participant.country" ng-disabled="disabled" required="true">
-					<ui-select-match placeholder="Select or search a country in the list..." ng-bind="$select.selected.name"></ui-select-match>
+					<ui-select-match placeholder="Select or search a country in the list...">
+						<span ng-bind="$select.selected.name"></span>
+					</ui-select-match>
 					<ui-select-choices repeat="country in editor.countries | filter: $select.search">
 						<span ng-bind-html="country.code2 | highlight: $select.search"></span>
 						<span ng-show="country.code2"> - </span>
