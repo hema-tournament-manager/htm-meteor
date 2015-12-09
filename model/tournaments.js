@@ -57,11 +57,12 @@ Tournaments.helpers({
 Tournaments.before.update(function(userId, doc, fieldNames, modifier, options) {
   console.log('before tournament update');
   modifier.$set = modifier.$set || {};
-  modifier.$set['phases.0.settings.participantCount'] = doc.phases[1].settings.poolCount * doc.phases[1].settings.poolSize;
   var poolSize = +modifier.$set['phases.1.settings.poolSize'] || doc.phases[1].settings.poolSize;
   var poolCount = +modifier.$set['phases.1.settings.poolCount'] || doc.phases[1].settings.poolCount;
   
-   // force count and size to be numbers in the database
+  modifier.$set['phases.0.settings.participantCount'] = poolCount * poolSize;
+
+  // force count and size to be numbers in the database
   modifier.$set['phases.1.settings.poolSize'] = poolSize;
   modifier.$set['phases.1.settings.poolCount'] = poolCount;
 
@@ -117,6 +118,15 @@ Meteor.methods({
     check(participantId, String);
     check(tournamentId, String);
 
+    // first try to put this participant in an empty slot
+    Tournaments.update({
+      _id: tournamentId,
+      'phases.0.participants': {$nin: [participantId], $elemMatch: {$in: [null], $exists: true}}
+    }, {
+      $set: {'phases.0.participants.$': participantId}
+    });
+
+    // if there was no empty slot we add the participant at the end of the list
     Tournaments.update({
       _id: tournamentId,
       'phases.0.participants': {$nin: [participantId]}
@@ -128,14 +138,12 @@ Meteor.methods({
     check(participantId, String);
     check(tournamentId, String);
 
-    if (!Tournaments.findOne({
+    // other participants shouldn't get different numbers, so we put a null in the participant list
+    Tournaments.update({
       _id: tournamentId,
-      'phases.1.participants': participantId
-    })) {
-      Tournaments.update(tournamentId, {$pull: {'phases.0.participants': participantId}});
-      return true;
-    } else {
-      return false;
-    }
+      'phases.0.participants': participantId
+    }, {
+      $unset: {'phases.0.participants.$': true}
+    });
   }
 });

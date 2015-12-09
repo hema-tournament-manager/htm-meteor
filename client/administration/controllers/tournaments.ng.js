@@ -31,23 +31,9 @@ var PhaseCtrl = function ($meteor, $scope, $state, tournamentId, phaseIndex) {
     return phaseIndex > 0 ? _.reject(previousPhase().participants, function(p) { return _.contains(participantIds, p.id); }) : [];
   };
 
-  this.pools = function() {
-    if (phase().type === 'pool') {
-      return phase().settings.pools;
-    } else {
-      return [];
-    }
-  };
-
   this.settings = function() {
     return phase().settings;
   }
-
-  this.addPool = function() {
-    if (phase().type === 'pool') {
-      phase().settings.pools.push(String.fromCharCode(65 + phase().settings.pools.length));
-    }
-  };
 
   this.addParticipant = function(participant, attributes) {
     if (participant) {
@@ -68,24 +54,26 @@ var PhaseCtrl = function ($meteor, $scope, $state, tournamentId, phaseIndex) {
     }
   };
 
-  this.generatePoolFights = function(pool) {
+  /// ENROLLED
+  this.participantNumbers = function() {
+    return _.range(1, phase().settings.participantCount + 1);
+  };
+
+  /// POOLS
+  this.pools = function() {
     if (phase().type === 'pool') {
-      var ps = _.where(phase().participants, {pool: pool});
-      if (ps.length > 1) {
-        for (var i = 0; i < ps.length - 1; i++) {
-          var a = ps[i];
-          var b = ps[i + 1];
-          phase().fights.planned.push({
-            _id: new Meteor.Collection.ObjectID()._str,
-            number: i + 1,
-            pool: pool,
-            fighterA: a.id,
-            fighterB: b.id
-          });
-        }
-      }
+      return phase().settings.pools;
+    } else {
+      return [];
     }
   };
+
+  this.addPool = function() {
+    if (phase().type === 'pool') {
+      phase().settings.pools.push(String.fromCharCode(65 + phase().settings.pools.length));
+    }
+  };
+
 };
 
 angular.module('htm.administration').controller('EnrolledPhaseCtrl', PhaseCtrl);
