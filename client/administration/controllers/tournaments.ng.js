@@ -22,12 +22,6 @@ var PhaseCtrl = function ($meteor, $scope, $state, tournamentId, phaseIndex) {
     });
   });
 
-  if (phaseIndex < 1 || phase().fights.planned.length == 0) {
-    $state.go('administration.tournaments.view.phase.participants');
-  } else {
-    $state.go('administration.tournaments.view.phase.fights');
-  }
-
   this.participants = function() {
     return phase().participants;
   };

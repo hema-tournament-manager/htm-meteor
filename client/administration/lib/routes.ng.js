@@ -1,11 +1,3 @@
-var phaseTemplate = function(view) {
-  return function($stateParams) {
-    var template = 'client/administration/' + view + '-' + $stateParams.phaseType + '.ng.html';
-    console.log(template);
-    return template;
-  }
-};
-
 angular.module('htm.administration')
 .config(function($stateProvider) {
   $stateProvider
@@ -111,7 +103,9 @@ angular.module('htm.administration')
     })
     .state('administration.tournaments.view.phase', {
       url: '/:phaseIndex/:phaseType',
-      templateUrl: 'client/administration/tournaments-view-phase.ng.html',
+      templateUrl: function($stateParams) {
+        return 'client/administration/phase-' + $stateParams.phaseType + '.ng.html';
+      },
       controllerProvider: function($stateParams) {
         return $stateParams.phaseType.charAt(0).toUpperCase() + $stateParams.phaseType.substring(1) + 'PhaseCtrl';
       },
@@ -121,19 +115,5 @@ angular.module('htm.administration')
           return +$stateParams.phaseIndex;
         }
       }
-    })
-    .state('administration.tournaments.view.phase.fights', {
-      url: '/fights',
-      templateUrl: phaseTemplate('fights'),
-      controller: 'FightsCtrl',
-      controllerAs: 'fights'
-    })
-    .state('administration.tournaments.view.phase.participants', {
-      url: '/participants',
-      templateUrl: phaseTemplate('participants')
-    })
-    .state('administration.tournaments.view.phase.settings', {
-      url: '/settings',
-      templateUrl: phaseTemplate('settings'),
     });
 });
