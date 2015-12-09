@@ -73,7 +73,9 @@ Meteor.startup(function() {
               finished: []
             },
             settings: {
-              pools: ['A', 'B']
+              pools: ['A', 'B'],
+              poolSize: 4,
+              poolCount: 4
             }
           },
           {

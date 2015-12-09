@@ -16,7 +16,7 @@ Participants.after.update(function(userId, doc, fieldNames, modifier, options) {
 
 Participants.helpers({
   inTournament: function(t) {
-    return !!_.findWhere(t.phases[0].participants, {id: this._id});
+    return _.contains(t.phases[0].participants, this._id);
   }
 });
 
