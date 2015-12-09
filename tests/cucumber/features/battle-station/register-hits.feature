@@ -1,3 +1,4 @@
+@ignore
 Feature: Register hits
 
 	As a jury member

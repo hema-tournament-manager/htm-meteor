@@ -1,3 +1,4 @@
+@ignore
 Feature: Undo and redo battlestation actions
 
 	As a jury member
