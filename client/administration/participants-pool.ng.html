@@ -1,6 +1,6 @@
 <div ng-repeat="pool in phase.pools()" class="col-md-3">
   <h3 ng-click="phase.addParticipant(phase.selectedParticipant, {pool: pool}); phase.selectedParticipant = false; phase.generatePoolFights(pool);" ng-bind="pool"></h3>
   <div ng-repeat="pp in phase.participants() | filter:{pool:pool}" ng-click="phase.selectedParticipant = pp">
-    <div ng-bind-template="Participant {{pp.index + 1}}"></div>
+    <div ng-bind-template="Fighter {{pp.number}}"></div>
   </div>
 </div>
