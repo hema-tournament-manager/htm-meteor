@@ -1,5 +1,4 @@
-angular.module('htm.administration')
-.config(function($stateProvider) {
+HtmAdministration.config(function($stateProvider) {
   $stateProvider
     .state('administration', {
       abstract: true,
@@ -10,7 +9,8 @@ angular.module('htm.administration')
         },
         'navigation': {
           templateUrl: 'client/administration/navigation.ng.html',
-          controller: 'CountsCtrl'
+          controller: 'CountsCtrl',
+          controllerAs: 'counts'
         }
       }
     })
@@ -81,8 +81,8 @@ angular.module('htm.administration')
       controller: 'TournamentsCtrl',
       controllerAs: 'tournaments',
       resolve: {
-        subscribe: function($meteor) {
-          return $meteor.subscribe('tournaments');
+        subscribe: function(waitForSubscription) {
+          return waitForSubscription('tournaments');
         }
       }
     })

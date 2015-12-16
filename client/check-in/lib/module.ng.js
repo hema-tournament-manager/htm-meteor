@@ -1,10 +1,10 @@
-angular.module('htm.check-in', [
+HtmCheckIn = angular.module('htm.check-in', [
   'angular-meteor',
   'ui.router',
   'ui.bootstrap'
 ]);
 
-angular.module('htm.check-in').config(
+HtmCheckIn.config(
   ['$urlRouterProvider', '$stateProvider', '$locationProvider',
   function($urlRouterProvider, $stateProvider, $locationProvider) {
   $stateProvider

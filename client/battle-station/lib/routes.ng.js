@@ -1,4 +1,4 @@
-angular.module('htm.battle-station').config(['$stateProvider', function($stateProvider) {
+HtmBattleStation.config(function($stateProvider) {
 	$stateProvider
 		.state('battle-station', {
 			abstract: true,
@@ -14,15 +14,15 @@ angular.module('htm.battle-station').config(['$stateProvider', function($statePr
 				}			
 			},
 			resolve: {
-				subscribeArenas: function($meteor,$stateParams) { 
-					return $meteor.subscribe('arenas');
+				subscribeArenas: function(waitForSubscription) { 
+					return waitForSubscription('arenas');
 				},
-				subscribeTournaments: function($meteor,$stateParams) { 
-					return $meteor.subscribe('tournaments');
+				subscribeTournaments: function(waitForSubscription) { 
+					return waitForSubscription('tournaments');
 				},
-				subscribeParticipants: function($meteor,$stateParams) { 
-					return $meteor.subscribe('participants');
-				}				
+				subscribeParticipants: function(waitForSubscription) { 
+					return waitForSubscription('participants');
+				}
 			}
 		})    
 		.state('battle-station.arena', {
@@ -56,4 +56,4 @@ angular.module('htm.battle-station').config(['$stateProvider', function($statePr
 		})
 
 		;
-}]);
+});

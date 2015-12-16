@@ -1,19 +1,25 @@
-angular.module('htm.battle-station')
-	.controller('ScheduledFightsCtrl', function($scope, $meteor, $stateParams) {
-		var self = this;
-		self.tournaments = [];
-		var participants = [];
+HtmBattleStation.controller('ScheduledFightsCtrl', function($scope, $reactive, $stateParams) {
+  $reactive(this).attach($scope);
 
-		if($stateParams.arenaId){
-			self.arenaIdentifier = $stateParams.arenaId;	
-		} else {
-			self.arenaIdentifier = $scope.$meteorCollection(Arenas)[0].identifier;
-		}
+  var self = this;
 
-		self.tournaments = $scope.$meteorCollection(Tournaments);
-		participants = $scope.$meteorCollection(Participants);
+  this.helpers({
+    arenaIdentifier() {
+      if($stateParams.arenaId){
+        return $stateParams.arenaId;  
+      } else {
+        return Arenas.findOne().identifier;
+      }
+    },
+    tournaments() {
+      return Tournaments.find();
+    },
+    participants() {
+      return Participants.find();
+    }
+  });
 
-  		self.participant = function(fighterId){
-  			return _.findWhere(participants,{_id:fighterId});
-  		}
+  self.participant = function(fighterId) {
+    return _.findWhere(self.participants, {_id:fighterId});
+  }
 });

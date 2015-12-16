@@ -1,4 +1,4 @@
-angular.module('htm.administration', [
+HtmAdministration = angular.module('htm.administration', [
   'angular-meteor',
   'ui.router',
   'ui.bootstrap',

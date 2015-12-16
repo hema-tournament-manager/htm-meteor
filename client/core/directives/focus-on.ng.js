@@ -1,4 +1,4 @@
-angular.module('htm.core').directive('htmFocusOn', function($timeout) {
+HtmCore.directive('htmFocusOn', function($timeout) {
   return {
     restrict : 'A',
     link : function($scope, element, attr) {
@@ -16,8 +16,7 @@ angular.module('htm.core').directive('htmFocusOn', function($timeout) {
   };
 });
 
-
-angular.module('htm.core').directive('htmSelect', function($timeout) {
+HtmCore.directive('htmSelect', function($timeout) {
   return {
     restrict : 'A',
     link : function($scope, element, attr) {

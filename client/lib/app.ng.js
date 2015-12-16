@@ -1,4 +1,4 @@
-angular.module('htm.app', [
+HtmApp = angular.module('htm.app', [
   'angular-meteor',
   'ui.router',
   'ct.ui.router.extras.dsr',
@@ -10,7 +10,7 @@ angular.module('htm.app', [
   'htm.viewers',
 ]);
 
-angular.module('htm.app').config(function($urlRouterProvider, $stateProvider, $locationProvider) {
+HtmApp.config(function($urlRouterProvider, $stateProvider, $locationProvider) {
   $locationProvider.html5Mode(true);
 
   $stateProvider

@@ -1,3 +1,3 @@
-angular.module('htm.administration').controller('FightsCtrl', function($meteor, $scope, phaseIndex) {
+HtmAdministration.controller('FightsCtrl', function($scope, phaseIndex) {
   this.phaseIndex = phaseIndex;
 });

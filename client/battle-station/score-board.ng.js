@@ -1,238 +1,249 @@
-angular.module('htm.battle-station')
-	.controller('ScoreBoardCtrl', function($scope, $meteor, $state, $stateParams) {
-		var self = this;
+HtmBattleStation.controller('ScoreBoardCtrl', function($scope, $reactive, $state, $stateParams) {
+  $reactive(this).attach($scope);
+
+  var self = this;
+
+  this.helpers({
+    arena() {
+      return Arenas.findOne({identifier: $stateParams.arenaId});
+    },
+    tournament() {
+      return Tournaments.findOne({identifier:$stateParams.tournamentId});
+    },
+    //TODO: Use scheduled
+    fight() {
+      return _.findWhere(_.flatten(_.pluck(_.pluck(self.tournament.phases.slice(1), 'fights'),'planned')),{_id: $stateParams.fightId});
+    },
+    fighterA() {
+      return Participants.findOne(self.fight.fighterA);
+    },
+    fighterB() {
+      return Participants.findOne(self.fight.fighterB);
+    }
+  });
+
+  
+  var exchanges  = [];
+  var redoQueue = [];
+  var selectedHit = undefined;
+  var selectedActions = [];
+  var currentCounter = undefined;
+
+  var counters = {
+    red: 'total-red',
+    neutral: 'exchanges',
+    blue: 'total-blue',
+  };
+
+  function addCounter(counters,name, points){
+    counters[name] = (counters[name] || 0) + points; 
+  }
+
+  var scoreTypes = {
+    'clean-hit': {name:'Clean Hit', actions: [
+      {
+        points: [1,2,3],
+        action: function(counters, side, other, points){
+          addCounter(counters,'exchanges', 1);            
+          addCounter(counters,'clean-hit-' + side, points);
+          addCounter(counters,'total-' + side, points);
+        }
+      }
+    ]}, 
 
 
-		self.arena = $scope.$meteorObject(Arenas, {identifier: $stateParams.arenaId});
+    'double-hit': {name:'Double Hit', actions: [
+      {
+        points: [1],
+        action: function(counters, side, other, points){
+          addCounter(counters,'exchanges', 1);                        
+          addCounter(counters,'double-hit', points);
+          addCounter(counters,'total-' + side, points);
+          addCounter(counters,'total-' + other, points);
 
-		self.tournament =  $scope.$meteorObject(Tournaments, {identifier:$stateParams.tournamentId});
-		//TODO: Use scheduled
-		self.fight = _.findWhere(_.flatten(_.pluck(_.pluck(self.tournament.phases.slice(1), 'fights'),'planned')),{_id: $stateParams.fightId});
-		self.fighterA = $scope.$meteorObject(Participants,self.fight.fighterA);
-		self.fighterB = $scope.$meteorObject(Participants,self.fight.fighterB);
+        }
+      }
+    ]},
+    'after-blow': {name:'After Blow',  actions: [
+      {
+        points: [1,2,3],
+        action: function(counters, side, other, points){
+          addCounter(counters,'exchanges', 1);                                    
+          addCounter(counters,'after-blow-' + side, points);
+          addCounter(counters,'total-' + side, points);
+        }
+      },{
+        points: [1,2],
+        action: function(counters, side, other, points){
+          addCounter(counters,'after-blow-' + other, points);
+          addCounter(counters,'total-' + other, points);            
+        }
+      },
+    ]},
+    'no-hit': {name:'No Hit',  actions: [
+      {
+        points: [0],
+        action: function(counters, side, other, points){
+          addCounter(counters,'exchanges', 1);                        
+          addCounter(counters,'no-hit', points);
+        }
+      }
+    ]}
+  };
 
-		var exchanges  = [];
-		var redoQueue = [];
-		var selectedHit = undefined;
-		var selectedActions = [];
-		var currentCounter = undefined;
+  self.hitGroups = [
+    [{
+      side: 'blue',
+      other: 'red',
+      scoreType: 'clean-hit'
+    },{
+      side: 'blue',
+      other: 'red',
+      scoreType: 'after-blow'
+    }],[{
+      side: undefined,
+      other: undefined,
+      scoreType: 'double-hit'
+    },{
+      side: undefined,
+      other: undefined,
+      scoreType: 'no-hit'
+    }],[{
+      side: 'red',
+      other: 'blue',
+      scoreType: 'clean-hit'
+    },{
+      side: 'red',
+      other: 'blue',
+      scoreType: 'after-blow'
+    }]
+  ];
 
-		var counters = {
-			red: 'total-red',
-			neutral: 'exchanges',
-			blue: 'total-blue',
-		};
+  self.undo = function(){
+    if(self.cantUndo()){
+      return;
+    }
 
-		function addCounter(counters,name, points){
-			counters[name] = (counters[name] || 0) + points; 
-		}
+    selectedHit = undefined;
+    currentCounter = undefined;
 
-		var scoreTypes = {
-			'clean-hit': {name:'Clean Hit', actions: [
-				{
-					points: [1,2,3],
-					action: function(counters, side, other, points){
-						addCounter(counters,'exchanges', 1);						
-						addCounter(counters,'clean-hit-' + side, points);
-						addCounter(counters,'total-' + side, points);
-					}
-				}
-			]}, 
+    redoQueue.push(exchanges.pop());
+  };
 
+  self.redo = function(){
+    if(self.cantRedo()){
+      return;
+    }
 
-			'double-hit': {name:'Double Hit', actions: [
-				{
-					points: [1],
-					action: function(counters, side, other, points){
-						addCounter(counters,'exchanges', 1);												
-						addCounter(counters,'double-hit', points);
-						addCounter(counters,'total-' + side, points);
-						addCounter(counters,'total-' + other, points);
+    selectedHit = undefined;
+    currentCounter = undefined;
 
-					}
-				}
-			]},
-			'after-blow': {name:'After Blow',  actions: [
-				{
-					points: [1,2,3],
-					action: function(counters, side, other, points){
-						addCounter(counters,'exchanges', 1);																		
-						addCounter(counters,'after-blow-' + side, points);
-						addCounter(counters,'total-' + side, points);
-					}
-				},{
-					points: [1,2],
-					action: function(counters, side, other, points){
-						addCounter(counters,'after-blow-' + other, points);
-						addCounter(counters,'total-' + other, points);						
-					}
-				},
-			]},
-			'no-hit': {name:'No Hit',  actions: [
-				{
-					points: [0],
-					action: function(counters, side, other, points){
-						addCounter(counters,'exchanges', 1);												
-						addCounter(counters,'no-hit', points);
-					}
-				}
-			]}
-		};
+    exchanges.push(redoQueue.pop());      
+  };
 
-		self.hitGroups = [
-			[{
-				side: 'blue',
-				other: 'red',
-				scoreType: 'clean-hit'
-			},{
-				side: 'blue',
-				other: 'red',
-				scoreType: 'after-blow'
-			}],[{
-				side: undefined,
-				other: undefined,
-				scoreType: 'double-hit'
-			},{
-				side: undefined,
-				other: undefined,
-				scoreType: 'no-hit'
-			}],[{
-				side: 'red',
-				other: 'blue',
-				scoreType: 'clean-hit'
-			},{
-				side: 'red',
-				other: 'blue',
-				scoreType: 'after-blow'
-			}]
-		];
+  self.cantRedo = function(){
+    return _.isEmpty(redoQueue)  // Can't redo when there are no exchanges to redo 
+      || !_.isEmpty(selectedActions); // Can't redo when we have selected actions to process
+  };
 
-		self.undo = function(){
-			if(self.cantUndo()){
-				return;
-			}
+  self.cantUndo = function(){
+    return _.isEmpty(exchanges)  // Can't undo when there are no exchanges to undo 
+    || !_.isEmpty(selectedActions); // Can't undo when we have selected actions to process
+  };
 
-			selectedHit = undefined;
-			currentCounter = undefined;
+  function sum(memo, num){
+    return memo + (num || 0);
+  }
 
-			redoQueue.push(exchanges.pop());
-		};
+  self.score = function(side){
+    return _.reduce(_.pluck(exchanges, counters[side]), sum, 0);
+  };
 
-		self.redo = function(){
-			if(self.cantRedo()){
-				return;
-			}
+  self.exchange = function(){
+    return _.reduce(_.pluck(exchanges, counters.neutral), sum, 0);
+  };
 
-			selectedHit = undefined;
-			currentCounter = undefined;
+  self.hitName = function(hit){
+    return scoreTypes[hit.scoreType].name;
+  };
+  self.hitClass = function(hit, points){
+    var id = undefined;
 
-			exchanges.push(redoQueue.pop());			
-		};
+    if(angular.isDefined(hit.side)){
+      id = hit.side + "-" + hit.scoreType;
+    } else {
+      id = hit.scoreType;
+    }
 
-		self.cantRedo = function(){
-			return _.isEmpty(redoQueue)  // Can't redo when there are no exchanges to redo 
-				|| !_.isEmpty(selectedActions); // Can't redo when we have selected actions to process
-		};
+    if(angular.isDefined(points)){
+      id += '-' + points;
+    }
 
-		self.cantUndo = function(){
-			return _.isEmpty(exchanges)  // Can't undo when there are no exchanges to undo 
-			|| !_.isEmpty(selectedActions); // Can't undo when we have selected actions to process
-		};
+    return id;
+  };
 
-		function sum(memo, num){
-			return memo + (num || 0);
-		}
+  self.isHitSelected = function(hit){
+    return selectedHit === hit;
+  };
 
-		self.score = function(side){
-			return _.reduce(_.pluck(exchanges, counters[side]), sum, 0);
-		};
+  self.selectHit = function(hit){
+    selectedHit = hit;
+    currentCounter = {};
+    finishOrContinue(scoreTypes[hit.scoreType].actions);
+  };
 
-		self.exchange = function(){
-			return _.reduce(_.pluck(exchanges, counters.neutral), sum, 0);
-		};
+  function finishOrContinue(actions){
+    selectedActions = advanceActions(actions);
 
-		self.hitName = function(hit){
-			return scoreTypes[hit.scoreType].name;
-		};
-		self.hitClass = function(hit, points){
-			var id = undefined;
+    if(_.isEmpty(selectedActions)){
+      redoQueue = [];
+      exchanges.push(currentCounter);
+      selectedHit = undefined;
+      currentCounter = undefined;
+      return;
+    }
+  }
 
-			if(angular.isDefined(hit.side)){
-				id = hit.side + "-" + hit.scoreType;
-			} else {
-				id = hit.scoreType;
-			}
+  function advanceActions(actions){
+    actions = actions.slice(0); // copy
 
-			if(angular.isDefined(points)){
-				id += '-' + points;
-			}
+    while(!_.isEmpty(actions)){
 
-			return id;
-		};
+      if(actions[0].points.length > 1){
+        return actions;
+      }
 
-		self.isHitSelected = function(hit){
-			return selectedHit === hit;
-		};
+      var action = actions.shift();
+      if(_.isEmpty(action.points)){
+        applyAction();
+      } else {
+        applyAction(action, action.points[0]);
+      }
+    }
 
-		self.selectHit = function(hit){
-			selectedHit = hit;
-			currentCounter = {};
-			finishOrContinue(scoreTypes[hit.scoreType].actions);
-		};
+    return actions; //empty
+  }
 
-		function finishOrContinue(actions){
-			selectedActions = advanceActions(actions);
+  function applyAction(action, points){
+    action.action(currentCounter, selectedHit.side, selectedHit.other, points);
+  }
 
-			if(_.isEmpty(selectedActions)){
-				redoQueue = [];
-				exchanges.push(currentCounter);
-				selectedHit = undefined;
-				currentCounter = undefined;
-				return;
-			}
-		}
+  self.cancelHit = function(){
+    selectedHit = undefined;
+    currentCounter = undefined;
+  };
 
-		function advanceActions(actions){
-			actions = actions.slice(0); // copy
+  self.selectPoints = function(points){
+    var action = selectedActions.shift();
+    applyAction(action,points);
+    finishOrContinue(selectedActions);
+  };
 
-			while(!_.isEmpty(actions)){
-
-				if(actions[0].points.length > 1){
-					return actions;
-				}
-
-				var action = actions.shift();
-				if(_.isEmpty(action.points)){
-					applyAction();
-				} else {
-					applyAction(action, action.points[0]);
-				}
-			}
-
-			return actions; //empty
-		}
-
-		function applyAction(action, points){
-			action.action(currentCounter, selectedHit.side, selectedHit.other, points);
-		}
-
-		self.cancelHit = function(){
-			selectedHit = undefined;
-			currentCounter = undefined;
-		};
-
-		self.selectPoints = function(points){
-			var action = selectedActions.shift();
-			applyAction(action,points);
-			finishOrContinue(selectedActions);
-		};
-
-		self.hitPoints = function(hit){
-			if(_.isEmpty(selectedActions)){
-				return [];
-			}
-			
-			return selectedActions[0].points;
-		};
-
+  self.hitPoints = function(hit){
+    if(_.isEmpty(selectedActions)){
+      return [];
+    }
+    
+    return selectedActions[0].points;
+  };
 });

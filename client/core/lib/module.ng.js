@@ -1,7 +1,6 @@
-var core = angular.module('htm.core', []);
+HtmCore = angular.module('htm.core', []);
 
-
-core.filter('highlight', function($sce) {
+HtmCore.filter('highlight', function($sce) {
   return function(text, phrase) {
     if (phrase && text) {
       text = text.replace(new RegExp('('+phrase+')', 'gi'),'<span class="highlighted">$1</span>');
@@ -11,7 +10,7 @@ core.filter('highlight', function($sce) {
   }
 });
 
-core.filter('toArray', function () {
+HtmCore.filter('toArray', function () {
   return function (obj) {
     if (angular.isObject(obj)) {
       return Object.keys(obj).map(function(key) {

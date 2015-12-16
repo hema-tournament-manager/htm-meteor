@@ -1,86 +1,87 @@
-angular.module('htm.administration').controller('TournamentsCtrl', function($meteor, $scope) {
-  this.list = $scope.$meteorCollection(function() {
-    return Tournaments.find({}, {order: {name: 1}, fields: {name: 1, identifier: 1}});
+HtmAdministration.controller('TournamentsCtrl', function($reactive, $scope) {
+  $reactive(this).attach($scope);
+
+  this.helpers({
+    list() {
+      return Tournaments.find({}, {order: {name: 1}, fields: {name: 1, identifier: 1}});
+    }
   });
 });
 
-angular.module('htm.administration').controller('TournamentViewCtrl', function($meteor, $scope, tournamentId) {
-  this.object = $scope.$meteorObject(Tournaments, tournamentId, false);
+HtmAdministration.controller('TournamentViewCtrl', function($reactive, $scope, tournamentId) {
+  $reactive(this).attach($scope);
+  this.helpers({
+    object() {
+      return Tournaments.findOne(Tournaments, tournamentId);
+    }
+  });
 });
 
-var PhaseCtrl = function ($meteor, $scope, $state, tournamentId, phaseIndex) {
-  var tournament = $scope.$meteorObject(Tournaments, tournamentId, true);
-  var phase = function() { return tournament.phases[phaseIndex] };
-  var previousPhase = function() { return phaseIndex > 0 ? tournament.phases[phaseIndex - 1] : false; };
-  this.index = phaseIndex;
-  this.object = phase;
+var PhaseCtrl = function ($reactive, $scope, $state, tournamentId, phaseIndex) {
+  $reactive(this).attach($scope);
 
   var self = this;
-  $scope.$meteorSubscribe('participants', {}, {sort: { number : -1 }}).then(function(subscriptionHandle) {
-    self.allParticipants = $scope.$meteorCollection(function() {
+
+  this.helpers({
+    tournament() {
+      return Tournaments.findOne(tournamentId);
+    },
+    phase() {
+      return this.tournament.phases[phaseIndex];
+    },
+    previousPhase() {
+      return phaseIndex > 0 ? tournament.phases[phaseIndex - 1] : false;
+    },
+    index: phaseIndex,
+    object() {
+      return this.phase;
+    },
+    allParticipants() {
       return Participants.find({}, {order: {number: -1}, fields: {name: 1}});
-    });
+    },
+    participants() {
+      return this.phase.participants;  
+    },
+    nonParticipants() {
+      var participantIds = _.pluck(this.participants, 'id');
+      return phaseIndex > 0 ? _.reject(this.previousPhase.participants, function(p) { return _.contains(participantIds, p.id); }) : [];
+    },
+    settings() {
+      return this.phase.settings;  
+    }
   });
 
-  this.participants = function() {
-    return phase().participants;
-  };
-
-  this.nonParticipants = function() {
-    var participantIds = _.pluck(this.participants(), 'id');
-    return phaseIndex > 0 ? _.reject(previousPhase().participants, function(p) { return _.contains(participantIds, p.id); }) : [];
-  };
-
-  this.settings = function() {
-    return phase().settings;
-  }
-
-  this.addParticipant = function(participant, attributes) {
-    if (participant) {
-      var p = _.findWhere(phase().participants, {id: participant.id});
-      if (p) {
-        Object.keys(attributes).forEach(function(key) {
-          p[key] = attributes[key];
-        });
-      } else {
-        phase().participants.push(angular.extend(angular.copy(participant), attributes || {}));
-      }
-    }
-  };
-
-  this.dropParticipant = function(participant) {
-    if (participant) {
-      phase().participants = _.reject(phase().participants, function(p) { return p.id === participant.id; });
-    }
-  };
-
   this.participantByNumber = function(number) {
-    return tournament.phases[0].participants[number - 1] || 'Fighter ' + number;
+    return this.tournament.phases[0].participants[number - 1] || 'Fighter ' + number;
   };
 
   /// ENROLLED
-  this.participantNumbers = function() {
-    return _.range(1, phase().settings.participantCount + 1);
-  };
+  this.helpers({
+    participantNumbers() {
+      return _.range(1, this.phase.settings.participantCount + 1);
+    }
+  });
 
   /// POOLS
-  this.pools = function() {
-    if (phase().type === 'pool') {
-      return phase().settings.pools;
-    } else {
-      return [];
+  this.helpers({
+    pools() {
+      if (this.phase.type === 'pool') {
+        return this.phase.settings.pools;
+      } else {
+        return [];
+      }
     }
-  };
+  });
 
   this.addPool = function() {
-    if (phase().type === 'pool') {
-      phase().settings.pools.push(String.fromCharCode(65 + phase().settings.pools.length));
+    if (this.phase.type === 'pool') {
+      this.phase.settings.pools.push(String.fromCharCode(65 + this.phase.settings.pools.length));
     }
   };
 
 };
 
-angular.module('htm.administration').controller('EnrolledPhaseCtrl', PhaseCtrl);
-angular.module('htm.administration').controller('PoolPhaseCtrl', PhaseCtrl);
-angular.module('htm.administration').controller('EliminationPhaseCtrl', PhaseCtrl);
-angular.module('htm.administration').controller('FinalesPhasesCtrl', PhaseCtrl);
+HtmAdministration.controller('EnrolledPhaseCtrl', PhaseCtrl);
+HtmAdministration.controller('PoolPhaseCtrl', PhaseCtrl);
+HtmAdministration.controller('EliminationPhaseCtrl', PhaseCtrl);
+HtmAdministration.controller('FinalesPhasesCtrl', PhaseCtrl);

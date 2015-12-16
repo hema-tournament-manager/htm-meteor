@@ -1,10 +1,9 @@
-angular.module('htm.battle-station')
-	.controller('ArenasCtrl', function($scope, $meteor) {
-		var self = this;
-		self.arenas = [];
-
-		$scope.$meteorSubscribe('arenas').then(function(subscription){
-			self.arenas = $meteor.collection(Arenas);
-		});
-
+HtmBattleStation.controller('ArenasCtrl', function($scope, $reactive) {
+  $reactive(this).attach($scope);
+  this.helpers({
+    arenas() {
+      return Arenas.find();
+    }
+  });
+  this.subscribe('arenas');
 });
