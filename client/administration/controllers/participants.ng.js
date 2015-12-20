@@ -9,13 +9,22 @@ HtmAdministration.controller('ParticipantEditCtrl', function($scope, $reactive, 
 
       this.save = function() {
 
-        if(this.isNew){
-          //TODO: Handle exceptions
-          this.participants.save(this.participant).then(function(){
-            self.closeEditor();   
+        if(self.isNew) {
+          Participants.insert(angular.copy(self.participant), function(error, result) {
+            if (error) {
+              //TODO: Handle exceptions
+            } else {
+              self.closeEditor();   
+            }
           });
         } else {
-          self.closeEditor();
+          Participants.update(self.participant._id, angular.copy(self.participant), function(error, result) {
+            if (error) {
+              //TODO: Handle exceptions
+            } else {
+              self.closeEditor();   
+            }
+            });
         }
       };
 
@@ -117,6 +126,7 @@ HtmAdministration.controller('ParticipantsCtrl', function($scope, $reactive, $st
     query: {q : '' },
     options: {sort: { number : -1 }}
   });
+  this.subscribe('participants');
   this.subscribe('tournaments');
 });
 
