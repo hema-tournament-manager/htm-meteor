@@ -55,7 +55,6 @@ Tournaments.helpers({
 });
 
 Tournaments.before.update(function(userId, doc, fieldNames, modifier, options) {
-  console.log('before tournament update');
   modifier.$set = modifier.$set || {};
   var poolSize = +modifier.$set['phases.1.settings.poolSize'] || doc.phases[1].settings.poolSize;
   var poolCount = +modifier.$set['phases.1.settings.poolCount'] || doc.phases[1].settings.poolCount;
