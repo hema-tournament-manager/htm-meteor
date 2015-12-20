@@ -2,7 +2,7 @@ sudo: false
 
 language: node_js
 node_js:
-  - "0.10.40"
+  - "0.12"
 
 cache:
   directories:
@@ -17,4 +17,4 @@ before_install:
   # Install Chimp which actually runs the tests
   - npm install chimp
 
-script: SELENIUM_BROWSER=phantomjs node tests/run.js
+script: node tests/run.js
