@@ -111,6 +111,8 @@ HtmAdministration.controller('ParticipantsCtrl', function($scope, $reactive, $st
     tournaments() {
       return Tournaments.find();
     },
+    query: {q : '' },
+    options: {sort: { number : -1 }},
     list() {
       var query = self.query.q;
       var q = { $or: [ 
@@ -122,9 +124,7 @@ HtmAdministration.controller('ParticipantsCtrl', function($scope, $reactive, $st
         {'country.name': { $regex:query, $options: 'i'}},
       ]};
       return Participants.find(q, self.options);
-    },
-    query: {q : '' },
-    options: {sort: { number : -1 }}
+    }
   });
   this.subscribe('participants');
   this.subscribe('tournaments');
