@@ -30,9 +30,11 @@ var PhaseCtrl = function ($reactive, $scope, $state, tournamentIdentifier, phase
       return this.tournament.phases[phaseIndex];
     },
     previousPhase() {
-      return phaseIndex > 0 ? tournament.phases[phaseIndex - 1] : false;
+      return phaseIndex > 0 ? this.tournament.phases[phaseIndex - 1] : false;
     },
-    index: phaseIndex,
+    index() {
+      return phaseIndex;
+    },
     object() {
       return this.phase;
     },
@@ -58,7 +60,7 @@ var PhaseCtrl = function ($reactive, $scope, $state, tournamentIdentifier, phase
   /// ENROLLED
   this.helpers({
     participantNumbers() {
-      return _.range(1, this.phase.settings.participantCount + 1);
+      return _.range(1, (this.phase.settings.participantCount || 0) + 1);
     }
   });
 
@@ -73,11 +75,17 @@ var PhaseCtrl = function ($reactive, $scope, $state, tournamentIdentifier, phase
     }
   });
 
-  this.addPool = function() {
-    if (this.phase.type === 'pool') {
-      this.phase.settings.pools.push(String.fromCharCode(65 + this.phase.settings.pools.length));
-    }
-  };
+  $scope.$watch(() => this.settings.poolCount, function(newValue) {
+    var setter = {};
+    setter['phases.' + phaseIndex + '.settings.poolCount'] = newValue;
+    Tournaments.update(self.tournament._id, {$set: setter});
+  });
+
+  $scope.$watch(() => this.settings.poolSize, function(newValue) {
+    var setter = {};
+    setter['phases.' + phaseIndex + '.settings.poolSize'] = newValue;
+    Tournaments.update(self.tournament._id, {$set: setter});
+  });
 
 };
 

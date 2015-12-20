@@ -6,9 +6,9 @@
     </tr>
   </thead>
   <tbody>
-    <tr ng-repeat="number in phase.participantNumbers()" ng-class="{warning: !phase.participants()[number - 1]}">
+    <tr ng-repeat="number in phase.participantNumbers" ng-class="{warning: !phase.participants[number - 1]}">
       <td class="text-right" ng-bind="number"></td>
-      <td ng-bind="phase.participants()[number - 1]"></td>
+      <td ng-bind="phase.participants[number - 1]"></td>
     </tr>
   </tbody>
 </table>

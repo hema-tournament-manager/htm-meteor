@@ -2,31 +2,31 @@
   <form name="settingsForm" class="form" novalidate>
     <div class="form-group">
       <label for="ruleset">Ruleset</label>
-      <select ng-model="phase.settings().ruleset" name="ruleset" class="form-control"><option>1</option><option>2</option></select>
+      <select ng-model="phase.settings.ruleset" name="ruleset" class="form-control"><option>1</option><option>2</option></select>
     </div>
     <div class="form-group">
-      <label for="poolCount">Number of pools <span class="badge">{{phase.settings().poolCount}}</span></label>
-      <input ng-model="phase.settings().poolCount" name="poolCount" class="form-control" type="range" min="1" max="26"/>
+      <label for="poolCount">Number of pools <span class="badge" ng-bind="phase.settings.poolCount">4</span></label>
+      <input ng-model="phase.settings.poolCount" name="poolCount" class="form-control" type="range" min="1" max="26"/>
     </div>
     <div class="form-group">
-      <label for="poolSize">Number of people per pool <span class="badge">{{phase.settings().poolSize}}</span></label>
-      <input ng-model="phase.settings().poolSize" name="poolSize" class="form-control" type="range" min="2" max="10"/>
+      <label for="poolSize">Number of people per pool <span class="badge" ng-bind="phase.settings.poolSize">4</span></label>
+      <input ng-model="phase.settings.poolSize" name="poolSize" class="form-control" type="range" min="2" max="10"/>
     </div>
     <div class="form-group">
       <label>Maximum number of participants</label>
-      <p class="form-control">{{phase.settings().poolCount}} &times; {{phase.settings().poolSize}} = <b>{{phase.settings().poolCount * phase.settings().poolSize}}</b></p>
+      <p class="form-control"><span ng-bind="phase.settings.poolCount">4</span> &times; <span ng-bind="phase.settings.poolSize">4</span> = <b ng-bind="phase.settings.poolCount * phase.settings.poolSize">16</b></p>
     </div>
     <div class="form-group">
       <label>Total number of fights</label>
-      <p class="form-control">{{phase.settings().poolCount}} &times; {{phase.settings().poolSize * (phase.settings().poolSize - 1) / 2}} = <b>{{phase.settings().poolCount * (phase.settings().poolSize * (phase.settings().poolSize - 1) / 2)}}</b></p>
+      <p class="form-control"><span ng-bind="phase.settings.poolCount">4</span> &times; <span ng-bind="phase.settings.poolSize * (phase.settings.poolSize - 1) / 2">6</span> = <b ng-bind="phase.settings.poolCount * (phase.settings.poolSize * (phase.settings.poolSize - 1) / 2)"></b></p>
     </div>
   </form>
-  <div ng-repeat="pool in phase.pools()" class="col-md-3">
+  <div ng-repeat="pool in phase.pools" class="col-md-3">
     <h3 ng-bind="pool"></h3>
-    <div ng-repeat="pp in phase.participants() | filter:{pool:pool}" ng-click="phase.selectedParticipant = pp">
+    <div ng-repeat="pp in phase.participants | filter:{pool:pool}" ng-click="phase.selectedParticipant = pp">
       <div ng-bind="phase.participantByNumber(pp.number)"></div>
     </div>
-    <div ng-repeat="fight in phase.object().fights.planned | filter:{pool:pool}">
+    <div ng-repeat="fight in phase.object.fights.planned | filter:{pool:pool}">
       <span ng-bind="phase.participantByNumber(fight.fighterA.number)">A</span>
       vs
       <span ng-bind="phase.participantByNumber(fight.fighterB.number)">B</span>
