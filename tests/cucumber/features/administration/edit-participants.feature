@@ -1,3 +1,4 @@
+@focus
 Feature: Manage the administration of participants
 
   As a tournament administrator

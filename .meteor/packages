@@ -33,10 +33,10 @@ dburles:collection-helpers
 matb33:collection-hooks
 
 # Testing
-xolvio:cucumber
 sanjo:jasmine
 velocity:html-reporter
 angular:angular-mocks
+fixtures
 
 # Utils
 aramk:tinycolor

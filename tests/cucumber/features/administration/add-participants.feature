@@ -1,3 +1,4 @@
+@focus
 Feature: Add participants
 
   As a tournament administrator
@@ -10,7 +11,7 @@ Feature: Add participants
     Given the Land of Ooo exists
     When I navigate to "/administration/participants"
     Then I should see the title "Participants"
-    
+  
   Scenario: Close add participant
     When I click button "Add"
     Then I should see the title "Add Participant"

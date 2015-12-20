@@ -35,6 +35,7 @@ ecmascript@0.1.6
 ecmascript-runtime@0.2.6
 ejson@1.0.7
 fastclick@1.0.7
+fixtures@0.0.1
 flemay:less-autoprefixer@1.2.0
 geojson-utils@1.0.4
 hot-code-push@1.0.0
@@ -100,4 +101,3 @@ velocity:shim@0.1.0
 velocity:source-map-support@0.3.2_1
 webapp@1.2.3
 webapp-hashing@1.0.5
-xolvio:cucumber@0.22.0

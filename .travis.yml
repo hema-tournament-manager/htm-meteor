@@ -2,7 +2,7 @@ sudo: false
 
 language: node_js
 node_js:
-  - "0.10.36"
+  - "0.10.40"
 
 cache:
   directories:
@@ -14,5 +14,7 @@ before_install:
   - "if [ ! -e ~/.meteor/meteor ]; then curl https://install.meteor.com | /bin/sh; fi"
   # This will let us use "meteor" in the script
   - export PATH="$HOME/.meteor:$PATH"
+  # Install Chimp which actually runs the tests
+  - npm install chimp
 
-script: SELENIUM_BROWSER=phantomjs meteor --test --once --release velocity:METEOR@1.2.1_2
+script: SELENIUM_BROWSER=phantomjs node tests/run.js
