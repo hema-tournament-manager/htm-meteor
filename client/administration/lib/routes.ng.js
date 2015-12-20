@@ -91,13 +91,13 @@ HtmAdministration.config(function($stateProvider) {
       templateUrl: 'client/administration/tournaments-dashboard.ng.html'
     })
     .state('administration.tournaments.view', {
-      url: '/:tournamentId',
+      url: '/:tournamentIdentifier',
       templateUrl: 'client/administration/tournaments-view.ng.html',
       controller: 'TournamentViewCtrl',
       controllerAs: 'tournament',
       resolve: {
-        tournamentId: function($stateParams) {
-          return $stateParams.tournamentId;
+        tournamentIdentifier: function($stateParams) {
+          return $stateParams.tournamentIdentifier;
         }
       }
     })

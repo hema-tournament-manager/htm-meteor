@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-4" ng-repeat="t in tournaments.list track by t._id">
-    <a ui-sref="administration.tournaments.view({tournamentId: t._id})">
+    <a ui-sref="administration.tournaments.view({tournamentIdentifier: t.identifier})">
       <div class="well">
         <h3 ng-bind="t.name"></h3>
         <p>

@@ -8,23 +8,23 @@ HtmAdministration.controller('TournamentsCtrl', function($reactive, $scope) {
   });
 });
 
-HtmAdministration.controller('TournamentViewCtrl', function($reactive, $scope, tournamentId) {
+HtmAdministration.controller('TournamentViewCtrl', function($reactive, $scope, tournamentIdentifier) {
   $reactive(this).attach($scope);
   this.helpers({
     object() {
-      return Tournaments.findOne(Tournaments, tournamentId);
+      return Tournaments.findOne({identifier: tournamentIdentifier});
     }
   });
 });
 
-var PhaseCtrl = function ($reactive, $scope, $state, tournamentId, phaseIndex) {
+var PhaseCtrl = function ($reactive, $scope, $state, tournamentIdentifier, phaseIndex) {
   $reactive(this).attach($scope);
 
   var self = this;
 
   this.helpers({
     tournament() {
-      return Tournaments.findOne(tournamentId);
+      return Tournaments.findOne({identifier: tournamentIdentifier});
     },
     phase() {
       return this.tournament.phases[phaseIndex];
