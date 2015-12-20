@@ -17,4 +17,6 @@ before_install:
   # Install Chimp which actually runs the tests
   - npm install chimp
 
+after_failure: "cat .meteor/local/log/cucumber.log"
+
 script: node tests/run.js
