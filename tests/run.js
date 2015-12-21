@@ -9,7 +9,7 @@ var meteor = spawn('meteor', ['--release','velocity:METEOR@1.2.1_2'], {env: env}
 var errorCode = 1;
 
 function runChimp() {
-  var chimp = spawn('chimp', ['--ddp=http://localhost:3000', '--path=tests/cucumber']);
+  var chimp = spawn('node_modules/chimp/bin/chimp', ['--ddp=http://localhost:3000', '--path=tests/cucumber', '--browser=phantomjs']);
 
   chimp.stdout.on('data', function(data) {
     console.log(('' + data).trim());
