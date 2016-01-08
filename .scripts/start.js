@@ -10,7 +10,6 @@ var baseDir = path.resolve(__dirname, '..'),
    chimpBin = path.resolve(baseDir, 'node_modules/.bin/chimp');
 
 var appOptions = {
-  settings: 'settings.json',
   port: 3000,
   env: {
     ROOT_URL: 'http://localhost:3000/',
@@ -19,7 +18,6 @@ var appOptions = {
 };
 
 var mirrorOptions = {
-  settings: appOptions.settings,
   port: 3100,
   env: {
     IS_MIRROR: 1,
@@ -81,7 +79,7 @@ function chimpNoMirror() {
 function startApp(callback) {
   startProcess({
     name: 'Meteor App',
-    command: 'meteor --settings ' + appOptions.settings + ' --port ' + appOptions.port,
+    command: 'meteor --port ' + appOptions.port,
     waitForMessage: appOptions.waitForMessage,
     options: {
       cwd: srcDir,
@@ -93,7 +91,7 @@ function startApp(callback) {
 function startMirror(callback) {
   startProcess({
     name: 'Meteor Mirror',
-    command: 'meteor --settings ' + mirrorOptions.settings + ' --port ' + mirrorOptions.port,
+    command: 'meteor --port ' + mirrorOptions.port,
     silent: true,
     logFile: mirrorOptions.logFile,
     waitForMessage: 'App running at',

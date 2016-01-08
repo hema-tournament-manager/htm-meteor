@@ -13,7 +13,6 @@ function cacheVelocityMeteorRelease() {
   var childProcess = spawn('meteor',
      [
        '--raw-logs',
-       '--settings', 'settings.json',
        '--release', 'velocity:METEOR@1.2.1_2'
      ],
      {
