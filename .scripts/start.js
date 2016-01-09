@@ -6,8 +6,8 @@ var path = require('path'),
    processes = [];
 
 var baseDir = path.resolve(__dirname, '..'),
-   srcDir = path.resolve(baseDir, 'src'),
-   chimpBin = path.resolve(baseDir, 'node_modules/.bin/chimp');
+    srcDir = baseDir,
+    chimpBin = path.resolve(baseDir, 'node_modules/.bin/chimp');
 
 var appOptions = {
   port: 3000,
@@ -29,9 +29,7 @@ var mirrorOptions = {
 
 var chimpSwitches =
    ' --path=' + path.resolve('tests/features') +
-   ' -r=' + path.resolve('tests/features/step_definitions/domain') +
-   ' --criticalSteps=' + path.resolve('tests/features/step_definitions/critical' +
-   ' --singleSnippetPerFile=1');
+   ' -r=' + path.resolve('tests/features/step_definitions');
 
 if (process.env.CI || process.env.TRAVIS || process.env.CIRCLECI) {
   // when not in Watch mode, Chimp existing will exit Meteor too

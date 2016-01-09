@@ -4,7 +4,7 @@ var path = require('path'),
    spawn = require('child_process').spawn;
 
 var baseDir = path.resolve(__dirname, '..'),
-   srcDir = path.resolve(baseDir, 'src');
+    srcDir = baseDir;
 
 cacheVelocityMeteorRelease();
 
@@ -22,9 +22,6 @@ function cacheVelocityMeteorRelease() {
        })
      }
   );
-  childProcess.on('error', function(error) {
-    console.log('ERROR', error);
-  });
   childProcess.stdout.setEncoding('utf8');
   childProcess.stderr.setEncoding('utf8');
   childProcess.stdout.on('data', function (line) {

@@ -4,18 +4,18 @@ var path = require('path'),
    exec = require('child_process').exec;
 
 var baseDir = path.resolve(__dirname, '..'),
-   srcDir = path.resolve(baseDir, 'src'),
-   velocityBin = path.resolve(baseDir, 'node_modules/.bin/velocity'),
-   chimpScript = path.resolve(__dirname, 'start.js');
+    srcDir = baseDir,
+    velocityBin = path.resolve(baseDir, 'node_modules/.bin/velocity'),
+    chimpScript = path.resolve(__dirname, 'start.js');
 
 runTests();
 
 function runTests() {
-  runVelocity(function () {
+  // runVelocity(function () {
     runChimp(function () {
       console.log('Yay!');
     });
-  });
+  // });
 }
 
 function runVelocity(callback) {
